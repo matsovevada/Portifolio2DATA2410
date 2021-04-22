@@ -1,12 +1,13 @@
 import React from 'react'
 import * as RBS from 'react-bootstrap'
+import logo from '../pics/NewNewNideoVova.svg'
 
 
 
 const Header = () => {
     return (
         <RBS.Navbar bg="light" expand="md">
-            <RBS.Navbar brand={require('../pics/NideoVova.png')}href="/"/>
+            <img src={logo} alt='logo' id='headerLogo'></img>
             <RBS.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <RBS.Navbar.Collapse id="basic-navbar-nav">
             <RBS.Nav className="mr-auto">

@@ -15,3 +15,8 @@ code {
 #searchbar {
   margin-right: 50px;
 }
+
+#headerLogo {
+  height: 5vh;
+  padding-right: 10px;
+}
