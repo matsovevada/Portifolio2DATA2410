@@ -7,6 +7,7 @@ const db = mongoose.connection;
 
 const webShop = require('./routes/webShop')
 const user = require('./routes/user')
+const admin = require('./routes/admin')
 
 db.once('open', () => {
   console.log('DB connected')
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use('/webShop', webShop)
 app.use('/user', user)
+app.use('/admin', admin)
 
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
