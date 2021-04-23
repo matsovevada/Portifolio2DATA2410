@@ -5,6 +5,7 @@ mongoose.connect('mongodb://localhost:27017/WebShop', {useNewUrlParser: true, us
 const db = mongoose.connection;
 
 const webShop = require('./routes/webShop')
+const user = require('./routes/user')
 
 db.once('open', () => {
   console.log('DB connected')
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 app.use('/webShop', webShop)
+app.use('/user', user)
 
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
