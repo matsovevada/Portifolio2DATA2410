@@ -15,3 +15,19 @@ code {
 #searchbar {
   margin-right: 50px;
 }
+
+#headerLogo {
+  height: 5vh;
+  padding-right: 10px;
+}
+
+@media all and (min-width: 480px) {
+  .Login {
+    padding: 60px 0;
+  }
+
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}

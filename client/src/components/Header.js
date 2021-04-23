@@ -1,12 +1,13 @@
 import React from 'react'
 import * as RBS from 'react-bootstrap'
+import logo from '../pics/NewNewNideoVova.svg'
 
 
 
 const Header = () => {
     return (
         <RBS.Navbar bg="light" expand="md">
-            <RBS.Navbar brand={require('../pics/NideoVova.png')}href="/"/>
+            <img src={logo} alt='logo' id='headerLogo'></img>
             <RBS.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <RBS.Navbar.Collapse id="basic-navbar-nav">
             <RBS.Nav className="mr-auto">
@@ -24,11 +25,7 @@ const Header = () => {
                     <RBS.Button variant="outline-success" id='searchbar'>Search</RBS.Button>
                 </RBS.Form>
                 <RBS.Navbar.Brand href="/cart">Cart: </RBS.Navbar.Brand>
-                <RBS.Form inline>
-                    <RBS.FormControl type="username" placeholder="Username" className="mr-sm-2" />
-                    <RBS.FormControl type="password" placeholder="Password" className="mr-sm-2" />
-                    <RBS.Button variant="outline-success" id='searchbar' type='submit'>Login</RBS.Button>
-                </RBS.Form>
+                <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/login'>Login</RBS.Button>
             </RBS.Navbar.Collapse>
         </RBS.Navbar>
     )
