@@ -25,11 +25,7 @@ const Header = () => {
                     <RBS.Button variant="outline-success" id='searchbar'>Search</RBS.Button>
                 </RBS.Form>
                 <RBS.Navbar.Brand href="/cart">Cart: </RBS.Navbar.Brand>
-                <RBS.Form inline>
-                    <RBS.FormControl type="username" placeholder="Username" className="mr-sm-2" />
-                    <RBS.FormControl type="password" placeholder="Password" className="mr-sm-2" />
-                    <RBS.Button variant="outline-success" id='searchbar' type='submit'>Login</RBS.Button>
-                </RBS.Form>
+                <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/login'>Login</RBS.Button>
             </RBS.Navbar.Collapse>
         </RBS.Navbar>
     )
