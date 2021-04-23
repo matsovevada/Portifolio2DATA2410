@@ -56,7 +56,6 @@ router.put('/', (req, res) => {
 
     User.findById(req.body._id)
         .then((data) => {
-            console.log(data)
             data.email = req.body.email
             data.password = req.body.password
             data.firstname = req.body.firstname
@@ -64,23 +63,20 @@ router.put('/', (req, res) => {
             data.address = req.body.address
             data.zipcode = req.body.zipcode
             data.city = req.body.city
-            console.log(data)
-            
+                 
                 data.save()
                     .then((data) => {
                         res.status(200).json(data)
                 }) 
                 
                 .catch(err => { 
-                    console.log(err)
-                    res.status(400).json({
+                res.status(400).json({
                 'Status' : 400,
                 'Message' : "Error while updating user"
                 })
             })
 
             .catch(err => {
-                console.log(err)
                 res.status(400).json({
                 'Status' : 400,
                 'Message' : "Error while updating user" 
@@ -116,14 +112,12 @@ router.put('/checkout', (req, res) => {
                 }) 
             
                 .catch(err => { 
-                    console.log(err)
                     res.status(400).json({
                 'Status' : 400,
                 'Message' : "Error while saving order"
                 })
             })
             .catch(err => {
-                console.log(err)
                 res.status(400).json({
                 'Status' : 400,
                 'Message' : "Error while updating orders" 
