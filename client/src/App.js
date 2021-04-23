@@ -2,16 +2,18 @@ import React from 'react'
 import Header from './components/Header.js'
 import Login from './components/Login.js'
 import Home from './components/Home.js'
-import ContactUs from './components/Contact.js'
-import { Switch, Route } from 'react-router-dom';
+import AboutUs from './components/About.js'
+import Register from './components/Register.js'
+import {Route} from 'react-router-dom';
 
 function App() {
   return (
     <div>
       <Header/>
       <Route exact path='/' component={Home}/>
-      <Route path='/contact-us' component={ContactUs}/>
+      <Route path='/about-us' component={AboutUs}/>
       <Route path='/login' component={Login}/>
+      <Route path='/register' component={Register}/>
     </div>
   );
 }

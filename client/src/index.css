@@ -30,4 +30,22 @@ code {
     margin: 0 auto;
     max-width: 320px;
   }
+
+  .Login p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .Register {
+    padding: 60px 0;
+  }
+
+  .Register form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
 }
+
+
+
