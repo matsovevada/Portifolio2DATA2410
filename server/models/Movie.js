@@ -6,8 +6,7 @@ const MovieSchema = mongoose.Schema({
     longDescription: Object,
     price: Number,
     genre: String,
-    creationDate: Date.now,
-    pictureLinks: [String]
+    creationDate: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('Movie', MovieSchema)
