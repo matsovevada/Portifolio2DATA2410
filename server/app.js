@@ -8,6 +8,8 @@ const db = mongoose.connection;
 const webShop = require('./routes/webShop')
 const user = require('./routes/user')
 
+mongoose.set('useFindAndModify', false);
+
 db.once('open', () => {
   console.log('DB connected')
 })
