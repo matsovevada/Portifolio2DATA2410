@@ -22,7 +22,21 @@ export default function Register() {
         && city.length > 2;
     }
 
-    function parseReg(firstName, lastName, email, address, zipcode, city, password){
+    // function parseReg(firstName, lastName, email, address, zipcode, city, password){
+    //     let user={
+    //         'email': email,
+    //         'password': password,
+    //         'firstname': firstName,
+    //         'lastname': lastName,
+    //         'address': address,
+    //         'zipcode': zipcode,
+    //         'city': city
+    //     }
+    //     return user;
+    // }
+
+    function regUser(firstName, lastName, email, address, zipcode, city, password){
+
         let user={
             'email': email,
             'password': password,
@@ -32,25 +46,44 @@ export default function Register() {
             'zipcode': zipcode,
             'city': city
         }
-        return user;
-    }
 
-    function regUser(user){
-        const Url='http://localhost:8080/user'
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        };
+        fetch('http://localhost:8080/user', requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
     
-        const othePram={
-            headers:{
-               'content-type':'application/json; charset=UTF-8'
-            },
-            body: user,
-            method:'POST'
-        }
-
-        fetch(Url, othePram)
-        .then(data=>{return data.json()})
-        .then(res=>{console.log(res)})
-        .catch(error=>console.log(error))
+                // check for error response
+                if (!response.ok) {
+                    // get error message from body or default to response status
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                }
+    
+                this.setState({ postId: data.id })
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
     }
+
+    // function regUser(user){
+    //     const Url='http://localhost:8080/user'
+    
+    //     const othePram={
+    //         headers:{
+    //            'content-type':'application/json; charset=UTF-8'
+    //         },
+    //         data: JSON.stringify(user),
+    //         method:'POST'
+    //     }
+
+    //     fetch(Url, othePram).then(data=>{return data.json()}).then(res=>{console.log(res)}).catch(error=>console.log(error))
+    // }
 
     return (
         <div className='Register'>
@@ -114,7 +147,7 @@ export default function Register() {
                         onChange={(e) => setCity(e.target.value)}
                     />
                 </Form.Group>
-                <Button block size='lg' type='submit' disabled={!checkLength()} onClick={regUser(parseReg(firstname, lastname, email, address, zipcode, city, password))}>Register</Button>
+                <Button block size='lg' type='submit' disabled={!checkLength()} onClick={regUser(firstname, lastname, email, address, zipcode, city, password)}>Register</Button>
             </Form>        
         </div>
     )
