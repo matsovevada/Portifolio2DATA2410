@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require('mongoose');
+const cors = require('cors')
 const Movie = require('./models/Movie');
 const User = require('./models/User')
 mongoose.connect('mongodb://localhost:27017/WebShop', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -20,6 +21,10 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// middleware for cors policy
+app.use(cors())
+
 
 app.use('/webShop', webShop)
 app.use('/user', user)

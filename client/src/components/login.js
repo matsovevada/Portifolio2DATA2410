@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 
+
 export default function Login() {
 
     const [email, setEmail] = useState("")
@@ -34,6 +35,8 @@ export default function Login() {
                     />
                 </Form.Group>
                 <Button block size='lg' type='submit' disabled={!checkLength()}>Login</Button>
+                <p id='loginOR'>-------OR-------</p>
+                <Button block size='lg' type='submit' href='/register'>Register here</Button>
             </Form>
         </div>
     )

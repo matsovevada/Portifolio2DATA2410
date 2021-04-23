@@ -6,7 +6,7 @@ import logo from '../pics/NewNewNideoVova.svg'
 
 const Header = () => {
     return (
-        <RBS.Navbar bg="light" expand="md">
+        <RBS.Navbar bg="light" expand="lg">
             <img src={logo} alt='logo' id='headerLogo'></img>
             <RBS.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <RBS.Navbar.Collapse id="basic-navbar-nav">
@@ -18,7 +18,7 @@ const Header = () => {
                     <RBS.NavDropdown.Item href="/clothes">Drama</RBS.NavDropdown.Item>
                     <RBS.NavDropdown.Item href="/furniture">Rom-Com</RBS.NavDropdown.Item>
                 </RBS.NavDropdown>
-                <RBS.Nav.Link href="/contact-us">Contact us</RBS.Nav.Link>
+                <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
                 </RBS.Nav>
                 <RBS.Form inline>
                     <RBS.FormControl type="text" placeholder="Search" className="mr-sm-2" />
