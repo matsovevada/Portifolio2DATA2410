@@ -5,6 +5,7 @@ const router = express.Router();
 
 // Add a new movie
 router.post('/movie', (req, res) => {
+    
     const movie = new Movie({
         title: req.body.title,
         shortDescription: req.body.shortDescription,
@@ -39,6 +40,29 @@ router.delete('/movie/:id', (req, res) => {
         })
 })
 
-// Edit a movie
+// Update a movie
+router.put('/movie', (req, res) => {
+
+    Movie.findById(req.body._id)
+        .then(data => {
+      
+            data.title = req.body.title;
+            data.shortDescription = req.body.shortDescription;
+            data.longDescription = req.body.longDescription;
+            data.price = req.body.price;
+            data.genre = req.body.genre;
+    
+            data.save()
+                .then(data => {
+                    res.status(200).json(data)
+                })
+                .catch((err) => {
+                    res.status(400).json({
+                        "Status": 400,
+                        "Message": "Couldn't update movie"
+                    })
+                })
+        })
+})
 
 module.exports = router; 
