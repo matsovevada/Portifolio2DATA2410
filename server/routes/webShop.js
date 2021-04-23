@@ -5,9 +5,6 @@ const router = express.Router();
 
 router.get('/movies', (req, res) => {
 
-    console.log(req.body.title)
-    console.log(req.body.genre)
-
     // get all movies matching search param
     if (req.body.title) {
         Movie.find({title: req.body.title})
@@ -49,36 +46,6 @@ router.get('/movies', (req, res) => {
             })
         });
     }
-})
-
-// Get all movies by genre
-router.get('/', (req, res) => {
-
-    Movie.find()
-        .then((data) => {
-            res.json(data)
-        });
-})
-
-router.post('/movie', (req, res) => {
-    const movie = new Movie({
-        title: req.body.title,
-        shortDescription: req.body.shortDescription,
-        longDescription: req.body.longDescription,
-        price: req.body.price,
-        genre: req.body.genre,
-    }) 
-
-    movie.save()
-        .then((data) => {
-            res.status(200).json(data)
-        })
-        .catch(err => {
-            res.status(400).json({
-                "Status": 400,
-                "Message": "Couldn't add movie"
-            })
-        })
 })
 
 module.exports = router;
