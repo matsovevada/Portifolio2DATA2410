@@ -6,7 +6,9 @@ const UserSchema = mongoose.Schema({
     firstname: String,
     lastname: String,
     address: String,
-    orderHistory: {type : String, "default" : [] }
+    zipcode: String,
+    city: String,
+    orderHistory: {type : [Object], default : [] }
 
 });
 
