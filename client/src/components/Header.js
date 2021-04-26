@@ -19,6 +19,7 @@ const Header = () => {
                     <RBS.NavDropdown.Item href="/furniture">Rom-Com</RBS.NavDropdown.Item>
                 </RBS.NavDropdown>
                 <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
+                <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>
                 </RBS.Nav>
                 <RBS.Form inline>
                     <RBS.FormControl type="text" placeholder="Search" className="mr-sm-2" />
