@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Input from './Input.js'
 
 export default function Register() {
 
@@ -12,6 +13,7 @@ export default function Register() {
     const [zipcode, setZipcode] = useState('')
     const [city, setCity] = useState('')
 
+
     function checkLength() {
         return email.length > 5 
         && firstname.length > 2 
@@ -22,35 +24,23 @@ export default function Register() {
         && city.length > 2;
     }
 
-    // function parseReg(firstName, lastName, email, address, zipcode, city, password){
-    //     let user={
-    //         'email': email,
-    //         'password': password,
-    //         'firstname': firstName,
-    //         'lastname': lastName,
-    //         'address': address,
-    //         'zipcode': zipcode,
-    //         'city': city
-    //     }
-    //     return user;
-    // }
 
-    function regUser(firstName, lastName, email, address, zipcode, city, password){
-
-        let user={
+    function regUser(e){
+        e.preventDefault()
+        const data = {
             'email': email,
             'password': password,
-            'firstname': firstName,
-            'lastname': lastName,
+            'firstname': firstname,
+            'lastname': lastname,
             'address': address,
             'zipcode': zipcode,
-            'city': city
-        }
+            'city': city,
+            'orderhistory': []}
 
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
+            body: JSON.stringify(data)
         };
         fetch('http://localhost:8080/user', requestOptions)
             .then(async response => {
@@ -64,91 +54,25 @@ export default function Register() {
                     return Promise.reject(error);
                 }
     
-                this.setState({ postId: data.id })
             })
             .catch(error => {
                 console.error('There was an error!', error);
             });
-    }
+        }
 
-    // function regUser(user){
-    //     const Url='http://localhost:8080/user'
-    
-    //     const othePram={
-    //         headers:{
-    //            'content-type':'application/json; charset=UTF-8'
-    //         },
-    //         data: JSON.stringify(user),
-    //         method:'POST'
-    //     }
-
-    //     fetch(Url, othePram).then(data=>{return data.json()}).then(res=>{console.log(res)}).catch(error=>console.log(error))
-    // }
 
     return (
         <div className='Register'>
             <Form>
-                <Form.Group size='lg' controlId='firstname'>
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="firstname"
-                        value={firstname}
-                        onChange={(e) => setFirstname(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" controlId="lastname">
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                        type="lastname"
-                        value={lastname}
-                        onChange={(e) => setLastname(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size='lg' controlId='email'>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size='lg' controlId='address'>
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" controlId="zipcode">
-                    <Form.Label>Zipcode</Form.Label>
-                    <Form.Control
-                        type="zipcode"
-                        value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" controlId="city">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                        type="city"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                    />
-                </Form.Group>
-                <Button block size='lg' type='submit' disabled={!checkLength()} onClick={regUser(firstname, lastname, email, address, zipcode, city, password)}>Register</Button>
+                <Input title='First name' value={firstname} type='firstname' set={setFirstname}/>
+                <Input title='Last name' value={lastname} type='lastname' set={setLastname}/>
+                <Input title='Email' value={email} type='email' set={setEmail}/>
+                <Input title='Password' value={password} type='password' set={setPassword}/>
+                <Input title='Address' value={address} type='address' set={setAddress}/>
+                <Input title='Zipcode' value={zipcode} type='zipcode' set={setZipcode}/>
+                <Input title='City' value={city} type='city' set={setCity}/>
+                <Button block size='lg' type='submit' disabled={!checkLength()} onClick={regUser}
+                >Register</Button>
             </Form>        
         </div>
-    )
-}
+    )};
