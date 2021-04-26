@@ -1,25 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function getMovies() {
 
-const home = () => {
+export default function GetMovies() {
 
-    return (
-        <div>
-            <p>movies!!!</p>
-        </div>    
-    )
-}
+
+//array 
+const [movie, setMovie] = useState()
 
 const requestOptions = {
     method: 'GET',
-    body: formData
-
 };
-fetch(url, requestOptions)
+
+fetch('http://localhost:8080/webshop/movies', requestOptions)
     .then(async response => {
         const isJson = response.headers.get('content-type')?.includes('application/json');
         const data = isJson && await response.json();
+        setMovie(data)
+        
 
         // check for error response
         if (!response.ok) {
@@ -35,6 +32,9 @@ fetch(url, requestOptions)
 
 
 return (
-
+    <div className='showMovies'>
+        {console.log(movie)}
+        {movie.forEach(movie => {<div>{console.log}</div>}) }
+    </div>
 )
 }
