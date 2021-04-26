@@ -6,6 +6,10 @@ const MovieSchema = mongoose.Schema({
     longDescription: Object,
     price: Number,
     genre: String,
+    img: {
+        data: Buffer,
+        contentType: String
+    },
     creationDate: {type: Date, default: Date.now}
 });
 
