@@ -1,6 +1,15 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const cors = require('cors')
+
+const https = require('https')
+const fs = require('fs')
+
+//const options = {
+//  key: fs.readFileSync("/srv/www/keys/my-site-key.pem"),
+//  cert: fs.readFileSync("/srv/www/keys/chain.pem")
+// };
+
 const Movie = require('./models/Movie');
 const User = require('./models/User')
 mongoose.connect('mongodb://localhost:27017/WebShop', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -9,6 +18,9 @@ const db = mongoose.connection;
 const webShop = require('./routes/webShop')
 const user = require('./routes/user')
 const admin = require('./routes/admin')
+
+
+
 
 mongoose.set('useFindAndModify', false);
 
@@ -38,3 +50,5 @@ app.get("/api", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
   });
+
+//https.createServer(options, app).listen(8000);
