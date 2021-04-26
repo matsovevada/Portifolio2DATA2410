@@ -85,6 +85,24 @@ router.put('/', (req, res) => {
     })
 })
 
+// Delete user for given _id
+router.delete('/', (req, res) => {
+
+    User.findById(req.body._id)
+        .then((data) => {
+            User.deleteOne(data)
+                .then((data) => {
+                    res.status(200).json(data)
+                }) 
+                
+            .catch(err => { 
+            res.status(400).json({
+            'Status' : 400,
+            'Message' : "Error while deleting user"
+            })
+        })
+    })
+})
 
 // Get orderhistory
 router.get('/orders', (req, res) => {

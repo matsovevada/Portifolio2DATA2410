@@ -89,6 +89,4 @@ router.put('/movie', upload.single('image'), (req, res) => {
         })
 })
 
-
-
 module.exports = router; 
