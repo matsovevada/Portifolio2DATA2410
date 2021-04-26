@@ -59,6 +59,7 @@ export default function Register() {
                         autoFocus
                         name="longDescription"
                         type="longDescription"
+                        as='textarea'
                     />
                 </Form.Group>
                 <Form.Group size="lg" controlId="price">
