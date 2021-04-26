@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const { db } = require('../models/User');
 const User = require('../models/User')
 
 
@@ -87,21 +88,31 @@ router.put('/', (req, res) => {
 
 // Delete user for given _id
 router.delete('/', (req, res) => {
-
-    User.findById(req.body._id)
-        .then((data) => {
-            User.deleteOne(data)
-                .then((data) => {
-                    res.status(200).json(data)
-                }) 
-                
-            .catch(err => { 
-            res.status(400).json({
-            'Status' : 400,
-            'Message' : "Error while deleting user"
+    if(req.body._id){
+        User.findById(req.body._id)
+            .then((data) => {
+                User.deleteOne(data)
+                    .then((data) => {
+                        res.status(200).json(data)
+                    }) 
+                    
+                .catch(err => { 
+                    res.status(400).json({
+                    'Status' : 400,
+                    'Message' : "Error while deleting user"
+                })
             })
         })
-    })
+    }
+    else{
+        User.deleteMany({})
+        .then((data) => {
+            res.status(200).json(data)
+        }) .catch(err => res.status(400)({
+            'Status' : 400,
+            'Message' : "Error while deleting all users"
+        }))
+    }
 })
 
 // Get orderhistory
