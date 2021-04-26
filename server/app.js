@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const cors = require('cors')
+const path = require('path')
 const Movie = require('./models/Movie');
 const User = require('./models/User')
 mongoose.connect('mongodb://localhost:27017/WebShop', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -37,6 +38,10 @@ app.use('/admin', admin)
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
   });
+
+app.get("/test", (req, res) => {
+  res.sendFile(path.join(__dirname, 'test.html'))
+});
   
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);

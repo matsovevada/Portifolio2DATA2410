@@ -9,7 +9,7 @@ const multer = require('multer')
 //Multer (image-uploading)
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../imageUploads')
+        cb(null, path.join(__dirname,".","imageUploads"));
     },
     filename: (req, file, cb) => {
         cb(null, file.fieldname)
@@ -28,7 +28,7 @@ router.post('/movie', upload.single('image'), (req, res) => {
         longDescription: req.body.longDescription,
         price: req.body.price,
         img: {
-            data: fs.readFileSync(path.join(__dirname + "../imageUploads/" + req.file.filename)),
+            data: fs.readFileSync(path.join(__dirname + "/imageUploads/" + req.file.filename)),
             contentType: 'image/png'
         },
         genre: req.body.genre,
@@ -38,7 +38,8 @@ router.post('/movie', upload.single('image'), (req, res) => {
         .then((data) => {
             res.status(200).json(data)
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(err)
             res.status(400).json({
                 "Status": 400,
                 "Message": "Couldn't add movie"
