@@ -1,20 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Movie = ({movie}) => {
 
-    const [showGenre, setShowGenre] = React.useState(false)
-    const [showLongDesc, setLongDesc] = React.useState(false)
 
-    const showMore = () => {setShowGenre(true); setLongDesc(true)} 
+    //  { showLongDesc ? <h3>Long desc: </h3> : null
+    const [showExtendedInformation, setShowExtendedInformation] = useState(false);
+
+    const toggleShowExtendedInformation = () => {
+    if (showExtendedInformation) {setShowExtendedInformation(false)}
+    else setShowExtendedInformation(true)
+
+    // showExtendedInformation ? setShowExtendedInformation(false) : setShowExtendedInformation(true)
+}
+
 
     return (
         <div>
-            <h3>Title: </h3>
-            <h3>Description: </h3>
-            <h3>Price: </h3>
-            { showGenre ? <h3>Genre: </h3> : null }
-            { showLongDesc ? <h3>Long desc: </h3> : null }
-            <button onClick={showMore()}>Show more</button>
+            <h3>Title: {movie.title}</h3>
+            <h3>Description: {movie.description}</h3>
+            <h3>Price: {movie.price}</h3>
+            { showExtendedInformation ? <h3>Genre: </h3> : null }
+            <button onClick={() => toggleShowExtendedInformation()}>Show more</button>
         </div>
     )
 }

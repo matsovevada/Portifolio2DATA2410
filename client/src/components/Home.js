@@ -11,7 +11,6 @@ const [movies, setMovies] = useState([])
 useEffect(() => {
     async function getMovies() {
         const movies = await fetchMovies();
-        console.log(movies)
         setMovies(movies)
     }
     getMovies()
@@ -48,6 +47,7 @@ async function fetchMovies() {
 //         console.error('There was an error!', error);
 //     });
 // } 
+
 
 
 
