@@ -8,7 +8,8 @@ const UserSchema = mongoose.Schema({
     address: String,
     zipcode: String,
     city: String,
-    orderHistory: {type : [Object], default : [] }
+    orderHistory: {type : [Object], default : [] },
+    shoppingCart: {type : [Object], default : [] }
 
 });
 
