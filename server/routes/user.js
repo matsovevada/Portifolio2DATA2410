@@ -89,26 +89,29 @@ router.put('/', (req, res) => {
     })
 })
 
-// Delete user for given _id, delete all if id not given
-router.delete('/', (req, res) => {
-    if(req.body._id){
-        User.findById(req.body._id)
-            .then((data) => {
-                User.deleteOne(data)
-                    .then((data) => {
-                        res.status(200).json(data)
-                    }) 
-                    
-                .catch(err => { 
-                    res.status(400).json({
-                    'Status' : 400,
-                    'Message' : "Error while deleting user"
-                })
+// Delete user for given _id
+router.delete('/id', (req, res) => {
+    
+    User.findById(req.params.id)
+        .then((data) => {
+            User.deleteOne(data)
+                .then((data) => {
+                    res.status(200).json(data)
+                }) 
+                
+            .catch(err => { 
+                res.status(400).json({
+                'Status' : 400,
+                'Message' : "Error while deleting user"
             })
         })
-    }
-    else{
-        User.deleteMany({})
+    })
+})
+
+// Delete all users 
+router.delete('/', (req, res) => {
+
+    User.deleteMany({})
         .then((data) => {
             res.status(200).json(data)
         }) .catch(err => res.status(400)({
@@ -116,7 +119,7 @@ router.delete('/', (req, res) => {
             'Message' : "Error while deleting all users"
         }))
     }
-})
+)
 
 // Get orderhistory
 router.get('/orders', (req, res) => {
