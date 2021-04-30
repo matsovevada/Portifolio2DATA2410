@@ -1,6 +1,7 @@
 const express = require('express');
 const { db } = require('../models/User');
 const User = require('../models/User')
+const Movie = require('../models/Movie')
 
 
 const router = express.Router()
@@ -86,7 +87,7 @@ router.put('/', (req, res) => {
     })
 })
 
-// Delete user for given _id
+// Delete user for given _id, delete all if id not given
 router.delete('/', (req, res) => {
     if(req.body._id){
         User.findById(req.body._id)
@@ -129,16 +130,17 @@ router.get('/orders', (req, res) => {
 
 // Add order to orderhistory
 router.put('/checkout', (req, res) => {
-    const order = req.body.orderHistory
+    const order = req.body.shoppingCart
 
     User.findById(req.body._id)
         .then((data) => {
             data.orderHistory.push(order)
             data.save()
-            
-                    .then((data) => {
-                        res.status(200).json(data)
-                }) 
+            deleteShoppingCart()
+
+                .then((data) => {
+                    res.status(200).json(data)
+            }) 
             
                 .catch(err => { 
                     res.status(400).json({
@@ -154,5 +156,87 @@ router.put('/checkout', (req, res) => {
         })
     })
 })
+
+// Get shoppingcart
+router.get('/shoppingCart', (req, res) => {
+
+    if (!req.body._id) {
+        res.status(401).json('Log-in to get shoppingcart')
+    }
+
+    User.findById(req.body._id)
+        .then((data) => {
+            res.status(200).json(data.shoppingCart)
+        }) .catch(err => res.status(400)({
+            'Status' : 400,
+            'Message' : "Error while fetching orders"
+        })
+    );    
+}) 
+
+// Add item to shoppingcart
+router.put('/shoppingCart', (req, res) => {
+
+    if (!req.body._id) {
+        res.status(401).json('Log-in to add to shoppingcart')
+    }
+
+    const movieID = req.body.movieID
+    let movie = ""
+
+    Movie.findById(req.body.movieID)
+        .then((data) => {
+            movie = data
+        })
+
+    User.findById(req.body._id)
+        .then((data) => {
+            data.shoppingCart.push(movie)
+            data.save()
+
+                .then((data) => {
+                    res.status(200).json(data.shoppingCart)
+            }) 
+
+                        .catch(err => { 
+                            res.status(400).json({
+                        'Status' : 400,
+                        'Message' : "Error while saving shoppingcart"
+                        })
+                    })
+                    .catch(err => {
+                        res.status(400).json({
+                        'Status' : 400,
+                        'Message' : "Error while updating shoppingcart" 
+                    })
+                })
+            })
+        })
+    
+
+// Update field shoppingcart to empty array
+function deleteShoppingCart() {
+    router.put('/shoppingCart/delete', (req, res) => {
+
+        if (!req.body._id) {
+            res.status(401).json('Log-in to add to shoppingcart')
+        }
+
+        User.findById(req.body._id)
+            .then((data) => {
+                data.shoppingCart = {}
+                data.save()
+                res.status(200).json(data)
+            })       
+                
+            .catch(err => { 
+                res.status(400).json({
+                'Status' : 400,
+                'Message' : "Error while deleting shoppingcart"
+            })
+        })
+    })
+}
+
 
 module.exports = router;
