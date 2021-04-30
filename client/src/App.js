@@ -5,6 +5,7 @@ import Home from './components/Home.js'
 import AboutUs from './components/About.js'
 import Register from './components/Register.js'
 import FormMovie from './components/FormMovie.js'
+import Cart from './components/Cart.js'
 import Movies from './components/Movies.js'
 import {Route} from 'react-router-dom';
 
@@ -45,12 +46,12 @@ useEffect(() => {
     getCart();
 }, []);
 
-function updateCart() {
+function updateCart(movie) {
 
   // only update database if user is logged in
   if (user) {
     async function updateCart() {
-      const user = await addMovieToCart();
+      const cart = await addMovieToCart(movie.id);
       setCart(cart)
     }
     updateCart();
@@ -61,14 +62,12 @@ function updateCart() {
   }
 }
 
-async function addMovieToCart(movie) {
-
-  const data = movie;
+async function addMovieToCart(id) {
 
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+    body: JSON.stringify(id)
   };
 
   const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
@@ -116,13 +115,14 @@ async function fetchCart() {
 
   return (
     <div>
-      <Header/>
+      <Header cart={cart}/>
       <Route exact path='/' component={Home}/>
       <Route path='/about-us' component={AboutUs}/>
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
-      <Movies movies={movies}/>
+      <Route path='/cart' component={Cart}/>
+      <Movies movies={movies} updateCart={updateCart}/>
     </div>
   );
 }
