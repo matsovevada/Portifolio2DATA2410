@@ -21,6 +21,10 @@ code {
   padding-right: 10px;
 }
 
+.ModalPop img{
+  max-height: 20vh;
+}
+
 @media all and (min-width: 480px) {
   .Login {
     padding: 60px 0;

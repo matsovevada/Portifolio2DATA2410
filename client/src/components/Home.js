@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Movies from './Movies.js'
 
 
-export default function Home() {
+export default function Home(movies) {
 
 
 
@@ -11,6 +11,7 @@ export default function Home() {
 
 return (
     <>
+        <Movies movies={movies}/>
     </>
 )
 }
