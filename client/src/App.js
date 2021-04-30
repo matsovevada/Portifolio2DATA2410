@@ -5,12 +5,14 @@ import Home from './components/Home.js'
 import AboutUs from './components/About.js'
 import Register from './components/Register.js'
 import FormMovie from './components/FormMovie.js'
+import Cart from './components/Cart.js'
 import Movies from './components/Movies.js'
 import {Route} from 'react-router-dom';
 
 function App() {
 
-  // user
+// user
+const [user, setUser] = useState(true)
 
 // movies
 const [movies, setMovies] = useState([])
@@ -34,6 +36,9 @@ async function fetchMovies() {
 const [cart, setCart] = useState([])
 
 useEffect(() => {
+
+    if (!user) return; // only get shopping cart if user is logged in 
+
     async function getCart() {
         const cart = await fetchCart();
         setCart(cart)
@@ -41,8 +46,34 @@ useEffect(() => {
     getCart();
 }, []);
 
-function updateCart() {
+function updateCart(movie) {
 
+  // only update database if user is logged in
+  if (user) {
+    async function updateCart() {
+      const cart = await addMovieToCart(movie.id);
+      setCart(cart)
+    }
+    updateCart();
+  }
+
+  else {
+    setCart(...cart, movie)
+  }
+}
+
+async function addMovieToCart(id) {
+
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(id)
+  };
+
+  const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
+  const data = await res.json()
+
+  return data
 }
 
 async function fetchCart() {
@@ -84,13 +115,15 @@ async function fetchCart() {
 
   return (
     <div>
-      <Header/>
+      <Header cart={cart}/>
       <Route exact path='/' component={Home}/>
       <Route path='/about-us' component={AboutUs}/>
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
-      <Movies movies={movies}/>
+      <Route path='/cart' component={Cart} cart={cart}/>
+      <Movies movies={movies} updateCart={updateCart}/>
+      <CartItems cartItems={cart}/>
     </div>
   );
 }
