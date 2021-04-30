@@ -10,7 +10,8 @@ import {Route} from 'react-router-dom';
 
 function App() {
 
-  // user
+// user
+const [user, setUser] = useState(true)
 
 // movies
 const [movies, setMovies] = useState([])
@@ -34,6 +35,9 @@ async function fetchMovies() {
 const [cart, setCart] = useState([])
 
 useEffect(() => {
+
+    if (!user) return; // only get shopping cart if user is logged in 
+
     async function getCart() {
         const cart = await fetchCart();
         setCart(cart)
@@ -43,6 +47,34 @@ useEffect(() => {
 
 function updateCart() {
 
+  // only update database if user is logged in
+  if (user) {
+    async function updateCart() {
+      const user = await addMovieToCart();
+      setCart(cart)
+    }
+    updateCart();
+  }
+
+  else {
+    setCart(...cart, movie)
+  }
+}
+
+async function addMovieToCart(movie) {
+
+  const data = movie;
+
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+  };
+
+  const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
+  const data = await res.json()
+
+  return data
 }
 
 async function fetchCart() {
