@@ -1,11 +1,18 @@
 import React from 'react'
-import CartItems from './CartItems'
+import CartItem from './CartItem'
 
 const Cart = ({cart}) => {
+
+    console.log("CART!")
+    console.log(cart)
+
     return (
         <div>
-            <h3>Hello, cart!</h3>
-            <CartItems cart={cart}/>
+            {cart.map((item) => (
+            <CartItem 
+                item={item}
+            />)
+        )}
         </div>
     )
 }

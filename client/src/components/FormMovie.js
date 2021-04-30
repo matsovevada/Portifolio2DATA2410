@@ -86,7 +86,7 @@ export default function Register() {
                         name="image"
                     />
                 </Form.Group>
-                <Button block size='lg' type='submit' href='/'>Register</Button>
+                <Button block size='lg' type='submit'>Register</Button>
             </Form>   
         </div>
     )

@@ -4,6 +4,7 @@ const CartItem = ({item}) => {
     return (
         <div>
             <h3>Movie: {item.title}</h3>
+            <h3>Short description: {item.shortDescription}</h3>
         </div>
     )
 }

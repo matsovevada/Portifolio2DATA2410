@@ -47,14 +47,13 @@ useEffect(() => {
 }, []);
 
 function updateCart(movie) {
-  console.log('here1')
+  
   // only update database if user is logged in
   if (user) {
     async function updateCart() {
-      const cart = await addMovieToCart(movie.id);
+      const cart = await addMovieToCart(movie._id);
       setCart(cart)
     }
-    console.log('here')
     updateCart();
   }
 
@@ -66,7 +65,7 @@ function updateCart(movie) {
 async function addMovieToCart(id) {
 
   const inputData = {
-    "_id": "608bee034603217c3c68a854",
+    "_id": "608bf47246d0145381ed8397",
     "movieID": id
   }
 
@@ -85,7 +84,7 @@ async function addMovieToCart(id) {
 async function fetchCart() {
 
    
-    let id = "608bee034603217c3c68a854";
+    let id = "608bf47246d0145381ed8397";
     
     const requestOptions = {
       method: 'GET',
