@@ -125,7 +125,7 @@ async function fetchCart() {
     <div>
       <Header cart={cart}/>
       <Route
-        path='/'
+        exact path='/'
         render={(props) => (
           <Movies {...props} movies={movies} updateCart={updateCart} />
         )}
@@ -135,8 +135,6 @@ async function fetchCart() {
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
       <Route path='/cart' component={Cart} cart={cart}/>
-      <CartItems cartItems={cart}/>
-
     </div>
   );
 }
