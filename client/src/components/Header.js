@@ -7,7 +7,7 @@ import NavbarCart from './NavbarCart'
 
 const Header = ({cart}) => {
     return (
-        <RBS.Navbar bg="light" expand="lg">
+        <RBS.Navbar bg="light" expand="lg" fixed='top'>
             <img src={logo} alt='logo' id='headerLogo'></img>
             <RBS.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <RBS.Navbar.Collapse id="basic-navbar-nav">

@@ -180,7 +180,6 @@ router.get('/shoppingCart', (req, res) => {
 
 // Add item to shoppingcart
 router.put('/shoppingCart', async (req, res) => {
-
     if (!req.body._id) {
         return res.status(401).json('Log-in to add to shoppingcart')
     }
@@ -203,12 +202,15 @@ router.put('/shoppingCart', async (req, res) => {
             }) 
 
                         .catch(err => { 
+                            console.log(err)
                             res.status(400).json({
                         'Status' : 400,
                         'Message' : "Error while saving shoppingcart"
+                        
                         })
                     })
                     .catch(err => {
+                        console.log(err)
                         res.status(400).json({
                         'Status' : 400,
                         'Message' : "Error while updating shoppingcart" 

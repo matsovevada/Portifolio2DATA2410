@@ -3,13 +3,13 @@ import Cart from './Cart'
 
 const CartItems = ({cart}) => {
     return (
-        <>
+        <div>
         {cart.map((item) => (
             <Cart 
                 item={item}
             />)
         )}
-        </>
+        </div>
     )
 }
 

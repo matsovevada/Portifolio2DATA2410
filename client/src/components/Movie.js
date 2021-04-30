@@ -36,7 +36,7 @@ const Movie = ({movie, updateCart}) => {
 
             { showExtendedInformation ? <h3>Genre: {movie.genre}</h3> : null }
             <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} img={movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`}/> : null}/>
-            <RBS.Button variant='secondary' onClick={() => updateCart}>Add to cart</RBS.Button>
+            <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>
         </div>
     )
 }

@@ -47,13 +47,14 @@ useEffect(() => {
 }, []);
 
 function updateCart(movie) {
-
+  console.log('here1')
   // only update database if user is logged in
   if (user) {
     async function updateCart() {
       const cart = await addMovieToCart(movie.id);
       setCart(cart)
     }
+    console.log('here')
     updateCart();
   }
 
@@ -65,7 +66,7 @@ function updateCart(movie) {
 async function addMovieToCart(id) {
 
   const inputData = {
-    "_id": "608bddd94c12bd394ee31d43",
+    "_id": "608bee034603217c3c68a854",
     "movieID": id
   }
 
@@ -84,7 +85,7 @@ async function addMovieToCart(id) {
 async function fetchCart() {
 
    
-    let id = "608bddd94c12bd394ee31d43";
+    let id = "608bee034603217c3c68a854";
     
     const requestOptions = {
       method: 'GET',
@@ -134,7 +135,12 @@ async function fetchCart() {
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
-      <Route path='/cart' component={Cart} cart={cart}/>
+      <Route
+        path='/cart'
+        render={(props) => (
+          <Cart {...props}  cart={cart}/>
+        )}
+      />
     </div>
   );
 }
