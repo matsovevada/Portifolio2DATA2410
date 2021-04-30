@@ -124,6 +124,7 @@ async function fetchCart() {
       <Route path='/cart' component={Cart} cart={cart}/>
       <Movies movies={movies} updateCart={updateCart}/>
       <CartItems cartItems={cart}/>
+
     </div>
   );
 }
