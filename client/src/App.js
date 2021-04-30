@@ -64,10 +64,15 @@ function updateCart(movie) {
 
 async function addMovieToCart(id) {
 
+  const inputData = {
+    "_id": "608bddd94c12bd394ee31d43",
+    "movieID": id
+  }
+
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(id)
+    body: JSON.stringify(inputData)
   };
 
   const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
@@ -78,14 +83,17 @@ async function addMovieToCart(id) {
 
 async function fetchCart() {
 
+   
+    let id = "608bddd94c12bd394ee31d43";
+    
     const requestOptions = {
-        method: 'GET',
+      method: 'GET',
     };
 
-    const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
+    const res = await fetch('http://localhost:8080/user/' + id, requestOptions);
     const data = await res.json()
 
-    return data
+    return data.shoppingCart;
 }
 
 // async function fetchMovies() {
@@ -123,7 +131,6 @@ async function fetchCart() {
       <Route path='/formMovie' component={FormMovie}/>
       <Route path='/cart' component={Cart} cart={cart}/>
       <Movies movies={movies} updateCart={updateCart}/>
-      <CartItems cartItems={cart}/>
     </div>
   );
 }
