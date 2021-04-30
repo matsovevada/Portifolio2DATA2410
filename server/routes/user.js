@@ -16,8 +16,7 @@ router.post('/', (req, res) => {
         lastname: req.body.lastname,
         address: req.body.address,
         zipcode : req.body.zipcode,
-        city : req.body.city,
-        orderHistory: req.body.orderHistory
+        city : req.body.city
     });
 
     user.save()
@@ -30,10 +29,23 @@ router.post('/', (req, res) => {
     );
 })
 
-// Get user(s)
+// Get user
+router.get('/:id', (req, res) => {
+ 
+    User.findById(req.params.id)
+        .then((data) => {
+            res.status(200).json(data)
+        }) .catch(err => res.status(400)({
+            'Status' : 400,
+            'Message' : "User not found"
+        })
+    );
+})
+
+// get users
 router.get('/', (req, res) => {
-    if(req.body._id) {
-        User.findById(req.body._id)
+
+    User.find()
             .then((data) => {
                 res.status(200).json(data)
             }) .catch(err => res.status(400)({
@@ -41,16 +53,6 @@ router.get('/', (req, res) => {
                 'Message' : "User not found"
             })
         );
-    } else {
-        User.find()
-            .then((data) => {
-                res.status(200).json(data)
-            }) .catch(err => res.status(400)({
-                'Status' : 400,
-                'Message' : "User not found"
-            })
-        );
-    }
 })
 
 // Alter userdata for given _id
@@ -130,11 +132,10 @@ router.get('/orders', (req, res) => {
 
 // Add order to orderhistory
 router.put('/checkout', (req, res) => {
-    const order = req.body.shoppingCart
-
+  
     User.findById(req.body._id)
         .then((data) => {
-            data.orderHistory.push(order)
+            data.orderHistory.push(data.shoppingCart)
             data.save()
             deleteShoppingCart()
 
@@ -161,13 +162,13 @@ router.put('/checkout', (req, res) => {
 router.get('/shoppingCart', (req, res) => {
 
     if (!req.body._id) {
-        res.status(401).json('Log-in to get shoppingcart')
+        return res.status(401).json('Log-in to get shoppingcart')
     }
 
     User.findById(req.body._id)
         .then((data) => {
             res.status(200).json(data.shoppingCart)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while fetching orders"
         })
@@ -175,19 +176,19 @@ router.get('/shoppingCart', (req, res) => {
 }) 
 
 // Add item to shoppingcart
-router.put('/shoppingCart', (req, res) => {
+router.put('/shoppingCart', async (req, res) => {
 
     if (!req.body._id) {
-        res.status(401).json('Log-in to add to shoppingcart')
+        return res.status(401).json('Log-in to add to shoppingcart')
     }
 
     const movieID = req.body.movieID
-    let movie = ""
+    let movie = await Movie.findById(req.body.movieID);
 
-    Movie.findById(req.body.movieID)
-        .then((data) => {
-            movie = data
-        })
+    // Movie.findById(req.body.movieID)
+    //     .then((data) => {
+    //         movie = data
+    //     })
 
     User.findById(req.body._id)
         .then((data) => {
@@ -219,12 +220,12 @@ function deleteShoppingCart() {
     router.put('/shoppingCart/delete', (req, res) => {
 
         if (!req.body._id) {
-            res.status(401).json('Log-in to add to shoppingcart')
+            return res.status(401).json('Log-in to add to shoppingcart')
         }
 
         User.findById(req.body._id)
             .then((data) => {
-                data.shoppingCart = {}
+                data.shoppingCart = []
                 data.save()
                 res.status(200).json(data)
             })       
