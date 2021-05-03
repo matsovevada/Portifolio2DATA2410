@@ -164,13 +164,16 @@ router.put('/checkout', (req, res) => {
 
 
 // Add item to shoppingcart
-router.put('/shoppingCart', async (req, res) => {
+router.put('/shoppingCart2', async (req, res) => {
     if (!req.body._id) {
         return res.status(401).json('Log-in to add to shoppingcart')
     }
 
     const movieCount = req.body.count
     const movieID = req.body.movieID
+
+    console.log("\n\n\nCount for movie:")
+    console.log(movieCount)
 
     let movieExists = false
     //let movie = await Movie.findById(req.body.movieID);
@@ -182,12 +185,54 @@ router.put('/shoppingCart', async (req, res) => {
 
     User.findById(req.body._id)
         .then(async (data) => {
+
+            console.log("SHOPPING CART:")
+            data.shoppingCart.forEach((item) => {
+                console.log(item.title)
+                console.log(item.count)
+            })
+
             for (let obj of data.shoppingCart) {
+
+                console.log("Evaluating movie:")
+                console.log(obj.title)
+                console.log(obj.count)
 
                 if(obj._id == movieID) {
                     obj.count = movieCount
+
+                    console.log("Count is updated:")
+                    console.log(obj.title)
+                    console.log(obj.count)
+
                     movieExists = true
-                    break
+                    
+                    return data.save()
+                    .then((data) => {
+                        
+                        console.log("SCANNING ITEMS:")
+                        data.shoppingCart.forEach((item) => {
+                            console.log(item.title)
+                            console.log(item.count)
+                        })
+
+                        res.status(200).json(data.shoppingCart)
+                }) 
+                    .catch(err => { 
+                        console.log(err)
+                        res.status(400).json({
+                    'Status' : 400,
+                    'Message' : "Error while saving shoppingcart"
+                    
+                    })
+                })
+                    .catch(err => {
+                        console.log(err)
+                        res.status(400).json({
+                        'Status' : 400,
+                        'Message' : "Error while updating shoppingcart" 
+                    })
+                })
                 }
             }
 
@@ -195,12 +240,23 @@ router.put('/shoppingCart', async (req, res) => {
                 let movie = await Movie.findById(movieID);
                 movie = movie.toJSON();
                 movie.count = movieCount
+                console.log("Movie is added")
+                console.log(movie.title)
+            
+                console.log(movie.count)
                 data.shoppingCart.push(movie)
                         
             }
 
                 data.save()
                     .then((data) => {
+                        
+                        console.log("SCANNING ITEMS:")
+                        data.shoppingCart.forEach((item) => {
+                            console.log(item.title)
+                            console.log(item.count)
+                        })
+
                         res.status(200).json(data.shoppingCart)
                 }) 
                     .catch(err => { 
@@ -220,6 +276,44 @@ router.put('/shoppingCart', async (req, res) => {
                 })
             })
         })
+
+        // Add item to shoppingcart
+router.put('/shoppingCart', async (req, res) => {
+    if (!req.body._id) {
+        return res.status(401).json('Log-in to add to shoppingcart')
+    }
+
+    const movieCount = req.body.count
+    const movieID = req.body.movieID
+    const userID = req.body._id;
+
+    let user = await User.findById(userID);
+    // console.log(user.shoppingCart)
+
+    let movie = await Movie.findById(movieID);
+    movie = movie.toJSON();
+
+    for (movieInCart of user.shoppingCart) {
+
+        if (movieInCart._id == movieID) {
+            movieInCart.count = movieCount;
+
+            return User.findByIdAndUpdate(userID, user)
+                .then(data => {
+                    res.status(200).json(user.shoppingCart)
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+    movie.count = movieCount;
+    user.shoppingCart.push(movie)
+  
+    return user.save()
+        .then(data => {
+            res.status(200).json(data.shoppingCart)
+        })
+})
     
 
 // Update field shoppingcart to empty array
