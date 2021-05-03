@@ -40,7 +40,7 @@ useEffect(() => {
     if (!user) return; // only get shopping cart if user is logged in 
 
     async function getCart() {
-        const user = await fetchCart();
+        const user = await fetchUser();
         setCart(user.shoppingCart)
     }
     getCart();
