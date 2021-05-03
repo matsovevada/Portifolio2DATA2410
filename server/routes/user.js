@@ -161,22 +161,7 @@ router.put('/checkout', (req, res) => {
     })
 })
 
-// Get shoppingcart
-router.get('/shoppingCart', (req, res) => {
 
-    if (!req.body._id) {
-        return res.status(401).json('Log-in to get shoppingcart')
-    }
-
-    User.findById(req.body._id)
-        .then((data) => {
-            res.status(200).json(data.shoppingCart)
-        }) .catch(err => res.status(400).json({
-            'Status' : 400,
-            'Message' : "Error while fetching orders"
-        })
-    );    
-}) 
 
 // Add item to shoppingcart
 router.put('/shoppingCart', async (req, res) => {
@@ -184,8 +169,11 @@ router.put('/shoppingCart', async (req, res) => {
         return res.status(401).json('Log-in to add to shoppingcart')
     }
 
+    const movieCount = req.body.count
     const movieID = req.body.movieID
-    let movie = await Movie.findById(req.body.movieID);
+
+    let movieExists = false
+    //let movie = await Movie.findById(req.body.movieID);
 
     // Movie.findById(req.body.movieID)
     //     .then((data) => {
@@ -193,22 +181,36 @@ router.put('/shoppingCart', async (req, res) => {
     //     })
 
     User.findById(req.body._id)
-        .then((data) => {
-            data.shoppingCart.push(movie)
-            data.save()
+        .then(async (data) => {
+            for (let obj of data.shoppingCart) {
 
-                .then((data) => {
-                    res.status(200).json(data.shoppingCart)
-            }) 
+                if(obj._id == movieID) {
+                    obj.count = movieCount
+                    movieExists = true
+                    break
+                }
+            }
 
-                        .catch(err => { 
-                            console.log(err)
-                            res.status(400).json({
-                        'Status' : 400,
-                        'Message' : "Error while saving shoppingcart"
+            if(!movieExists) {
+                let movie = await Movie.findById(movieID);
+                movie = movie.toJSON();
+                movie.count = movieCount
+                data.shoppingCart.push(movie)
                         
-                        })
+            }
+
+                data.save()
+                    .then((data) => {
+                        res.status(200).json(data.shoppingCart)
+                }) 
+                    .catch(err => { 
+                        console.log(err)
+                        res.status(400).json({
+                    'Status' : 400,
+                    'Message' : "Error while saving shoppingcart"
+                    
                     })
+                })
                     .catch(err => {
                         console.log(err)
                         res.status(400).json({
@@ -221,7 +223,7 @@ router.put('/shoppingCart', async (req, res) => {
     
 
 // Update field shoppingcart to empty array
-function deleteShoppingCart() {
+//function deleteShoppingCart() {
     router.put('/shoppingCart/delete', (req, res) => {
 
         if (!req.body._id) {
@@ -242,7 +244,7 @@ function deleteShoppingCart() {
             })
         })
     })
-}
+//}
 
 
 module.exports = router;

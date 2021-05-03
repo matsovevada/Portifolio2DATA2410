@@ -46,27 +46,55 @@ useEffect(() => {
     getCart();
 }, []);
 
+
+
 function updateCart(movie) {
-  
   // only update database if user is logged in
   if (user) {
     async function updateCart() {
-      const cart = await addMovieToCart(movie._id);
-      setCart(cart)
+      if(checkCount(movie)) {
+        movie.count = Number(movie.count + 1)
+      }
+      else {
+        movie.count = 1 
+  
+      }
+
+      console.log("MOVIE FRONT:")
+      console.log(movie)
+      const cart = await addMovieToCart(movie);
+      setCart(cart)    
     }
     updateCart();
+    
   }
 
   else {
+    if(checkCount(movie)) {
+      cart.movie.count++
+    }
+    else {
+      cart.movie.count = 1 
+    }
     setCart(...cart, movie)
   }
 }
 
-async function addMovieToCart(id) {
+function checkCount(movie) {
+  for (let movieInCart of cart) {
+    if(movieInCart._id === movie._id) {
+      return true
+    }    
+  }
+  return false
+}
+
+async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608bee034603217c3c68a854",
-    "movieID": id
+    "_id": "608bc84639de82d66c1d1741",
+    "movieID": movie._id,
+    "count": movie.count
   }
 
   const requestOptions = {
@@ -83,8 +111,7 @@ async function addMovieToCart(id) {
 
 async function fetchCart() {
 
-   
-    let id = "608bee034603217c3c68a854";
+    let id = "608bc84639de82d66c1d1741";
     
     const requestOptions = {
       method: 'GET',
