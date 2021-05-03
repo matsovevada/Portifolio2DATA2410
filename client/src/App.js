@@ -47,7 +47,7 @@ useEffect(() => {
 }, []);
 
 function updateCart(movie) {
-  
+
   // only update database if user is logged in
   if (user) {
     async function updateCart() {
@@ -65,7 +65,7 @@ function updateCart(movie) {
 async function addMovieToCart(id) {
 
   const inputData = {
-    "_id": "608bee034603217c3c68a854",
+    "_id": "608fab497c53581e18fed043",
     "movieID": id
   }
 
@@ -84,7 +84,7 @@ async function addMovieToCart(id) {
 async function fetchCart() {
 
    
-    let id = "608bee034603217c3c68a854";
+    let id = "608fab497c53581e18fed043";
     
     const requestOptions = {
       method: 'GET',
