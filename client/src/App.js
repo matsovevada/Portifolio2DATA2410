@@ -40,8 +40,8 @@ useEffect(() => {
     if (!user) return; // only get shopping cart if user is logged in 
 
     async function getCart() {
-        const cart = await fetchCart();
-        setCart(cart)
+        const user = await fetchCart();
+        setCart(user.shoppingCart)
     }
     getCart();
 }, []);
@@ -109,7 +109,7 @@ async function addMovieToCart(movie) {
   return data
 }
 
-async function fetchCart() {
+async function fetchUser() {
 
     let id = "608bc84639de82d66c1d1741";
     
@@ -120,8 +120,46 @@ async function fetchCart() {
     const res = await fetch('http://localhost:8080/user/' + id, requestOptions);
     const data = await res.json()
 
-    return data.shoppingCart;
+    return data;
 }
+
+async function deleteCartAndUpdateOrderHistory() {
+
+  let id = "608bf47246d0145381ed8397"
+
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: id
+  };
+
+  const res = await fetch('http://localhost:8080/user/checkout', requestOptions);
+  const data = await res.json()
+
+  return data;
+}
+
+function checkout() {
+
+    async function checkout() {
+      const user = await deleteCartAndUpdateOrderHistory();
+      setCart([])
+      setOrderHistory(user.orderHistory)
+    }
+    checkout();
+}
+
+// order history
+const [orderHistory, setOrderHistory] = useState([])
+
+useEffect(() => {
+    async function getOrderHistory() {
+        const user = await fetchUser();
+        setOrderHistory(user.orderHistory)
+    }
+    fetchUser()
+}, [])
+
 
 // async function fetchMovies() {
 
@@ -164,7 +202,7 @@ async function fetchCart() {
       <Route
         path='/cart'
         render={(props) => (
-          <Cart {...props}  cart={cart}/>
+          <Cart {...props}  cart={cart} checkout={checkout}/>
         )}
       />
     </div>
