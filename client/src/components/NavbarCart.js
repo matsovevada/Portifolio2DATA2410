@@ -1,9 +1,19 @@
 import React from 'react'
 
 const NavbarCart = ({cart}) => {
+
+    function getNumberOfCartItems() {
+
+        let numberOfCartItems = 0;
+
+        cart.forEach((item) => {
+            numberOfCartItems += item.count;
+        })
+    }
+
     return (
         <div>
-            <h3>Cart ({cart.length})</h3>
+            <h3>Cart ({getNumberOfCartItems()})</h3>
         </div>
     )
 }
