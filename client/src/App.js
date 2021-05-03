@@ -65,7 +65,7 @@ function updateCart(movie) {
 async function addMovieToCart(id) {
 
   const inputData = {
-    "_id": "608bf47246d0145381ed8397",
+    "_id": "608bee034603217c3c68a854",
     "movieID": id
   }
 
@@ -84,7 +84,7 @@ async function addMovieToCart(id) {
 async function fetchCart() {
 
    
-    let id = "608bf47246d0145381ed8397";
+    let id = "608bee034603217c3c68a854";
     
     const requestOptions = {
       method: 'GET',
