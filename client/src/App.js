@@ -12,7 +12,7 @@ import {Route} from 'react-router-dom';
 function App() {
 
 // user
-const [user, setUser] = useState(false)
+const [user, setUser] = useState(true)
 
 // movies
 const [movies, setMovies] = useState([])
@@ -103,7 +103,7 @@ function checkCount(movie) {
 async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608285180168d645858083ed",
+    "_id": "608bf47246d0145381ed8397",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -122,7 +122,7 @@ async function addMovieToCart(movie) {
 
 async function fetchUser() {
 
-    let id = "608285180168d645858083ed";
+    let id = "608bf47246d0145381ed8397";
     
     const requestOptions = {
       method: 'GET',
@@ -136,12 +136,14 @@ async function fetchUser() {
 
 async function deleteCartAndUpdateOrderHistory() {
 
-  let id = "608285180168d645858083ed"
+  const inputData = {
+    "_id": "608bf47246d0145381ed8397",
+  }
 
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: id
+    body: JSON.stringify(inputData)
   };
 
   const res = await fetch('http://localhost:8080/user/checkout', requestOptions);

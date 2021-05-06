@@ -1,7 +1,7 @@
 import React from 'react'
 import CartItem from './CartItem'
 
-const Cart = ({cart}) => {
+const Cart = ({cart, checkout}) => {
 
     let cartman = localStorage.getItem('cart')
 
@@ -15,6 +15,7 @@ const Cart = ({cart}) => {
                 item={item}
             />)
         )}
+        <button onClick={() => checkout()}>Confirm order</button>
         </div>
     )
 }
