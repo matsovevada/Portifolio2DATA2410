@@ -135,23 +135,26 @@ router.get('/orders', (req, res) => {
 
 // Add order to orderhistory
 router.put('/checkout', (req, res) => {
-  
+    
     User.findById(req.body._id)
         .then((data) => {
-            data.orderHistory.push(data.shoppingCart)
-            data.save()
-            deleteShoppingCart()
 
+            // create timestamp
+            let timestamp = new Date().toString()
+            timestamp = timestamp.split(" ")
+            timestamp = `${timestamp[2]} ${timestamp[1]} ${timestamp[3]} ${timestamp[4]}`
+
+            let orderHistoryObject = {
+                "movies": data.shoppingCart,
+                "timestamp": timestamp
+            }
+
+            data.orderHistory.push(orderHistoryObject)
+            data.shoppingCart = [];
+            data.save()
                 .then((data) => {
                     res.status(200).json(data)
             }) 
-            
-                .catch(err => { 
-                    res.status(400).json({
-                'Status' : 400,
-                'Message' : "Error while saving order"
-                })
-            })
             .catch(err => {
                 res.status(400).json({
                 'Status' : 400,
