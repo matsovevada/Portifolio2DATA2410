@@ -8,6 +8,7 @@ import FormMovie from './components/FormMovie.js'
 import Cart from './components/Cart.js'
 import Movies from './components/Movies.js'
 import Test from './components/Test.js'
+import Orderhistory from './components/Orderhistory'
 import {Route} from 'react-router-dom';
 
 function App() {
@@ -166,12 +167,14 @@ function checkout() {
 // order history
 const [orderHistory, setOrderHistory] = useState([])
 
+
+
 useEffect(() => {
     async function getOrderHistory() {
         const user = await fetchUser();
         setOrderHistory(user.orderHistory)
     }
-    fetchUser()
+    getOrderHistory()
 }, [])
 
 
@@ -213,7 +216,12 @@ useEffect(() => {
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
-      <Route path='/test' component={Test}/>
+      <Route
+        path='/test'
+        render={(props) => (
+          <Orderhistory {...props}  orders={orderHistory}/>
+        )}
+      />
       <Route
         path='/cart'
         render={(props) => (
