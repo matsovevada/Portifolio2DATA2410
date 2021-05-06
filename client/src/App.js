@@ -12,7 +12,7 @@ import {Route} from 'react-router-dom';
 function App() {
 
 // user
-const [user, setUser] = useState(true)
+const [user, setUser] = useState(false)
 
 // movies
 const [movies, setMovies] = useState([])
@@ -36,15 +36,17 @@ async function fetchMovies() {
 const [cart, setCart] = useState([])
 
 useEffect(() => {
+// only get shopping cart if user is logged in 
+    if (!user) return 
 
-    if (!user) return; // only get shopping cart if user is logged in 
-
+  
     async function getCart() {
-        const user = await fetchUser();
-        setCart(user.shoppingCart)
+      const user = await fetchUser();
+      setCart(user.shoppingCart)
     }
     getCart();
-}, []);
+  }, []);
+
 
 
 
@@ -73,12 +75,19 @@ function updateCart(movie) {
 
   else {
     if(checkCount(movie)) {
-      cart.movie.count++
+      setCart(cart => [...cart, movie]);
+      localStorage.set('cart', cart)
+      console.log("CART IF")
+      console.log(cart) 
     }
     else {
-      cart.movie.count = 1 
+      setCart(cart => [...cart, movie]);
+      localStorage.set('cart', cart)
+
+      console.log("CART ELSE")
+      console.log(cart)
     }
-    setCart(...cart, movie)
+    
   }
 }
 

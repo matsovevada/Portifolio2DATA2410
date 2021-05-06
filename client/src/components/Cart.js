@@ -3,8 +3,10 @@ import CartItem from './CartItem'
 
 const Cart = ({cart}) => {
 
-    console.log("CART!")
-    console.log(cart)
+    let cartman = localStorage.getItem('cart')
+
+    console.log("CARTMAN!")
+    console.log(cartman)
 
     return (
         <div>
