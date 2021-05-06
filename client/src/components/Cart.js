@@ -3,14 +3,16 @@ import CartItem from './CartItem'
 
 const Cart = ({cart}) => {
 
-    let cartman = localStorage.getItem('cart')
 
     console.log("CARTMAN!")
+    let cartman = JSON.parse(window.localStorage.getItem('cart'))
     console.log(cartman)
+    console.log(JSON.parse(localStorage.getItem('cart')))
+    console.log(cart)
 
     return (
         <div>
-            {cart.map((item) => (
+            {cartman.map((item) => (
             <CartItem 
                 item={item}
             />)
