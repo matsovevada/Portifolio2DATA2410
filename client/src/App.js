@@ -7,6 +7,7 @@ import Register from './components/Register.js'
 import FormMovie from './components/FormMovie.js'
 import Cart from './components/Cart.js'
 import Movies from './components/Movies.js'
+import Test from './components/Test.js'
 import {Route} from 'react-router-dom';
 
 function App() {
@@ -134,6 +135,7 @@ async function fetchCart() {
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
+      <Route path='/test' component={Test}/>
       <Route
         path='/cart'
         render={(props) => (

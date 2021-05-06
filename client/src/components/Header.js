@@ -21,6 +21,7 @@ const Header = ({cart}) => {
                 </RBS.NavDropdown>
                 <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
                 <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>
+                <RBS.Nav.Link href="/test">Test</RBS.Nav.Link>
                 </RBS.Nav>
                 <RBS.Form inline>
                     <RBS.FormControl type="text" placeholder="Search" className="mr-sm-2" />
