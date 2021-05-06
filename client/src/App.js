@@ -53,17 +53,19 @@ function updateCart(movie) {
   if (user) {
     async function updateCart() {
       if(checkCount(movie)) {
-        movie.count = Number(movie.count + 1)
+        let movieInCart = checkCount(movie)
+        movieInCart.count = movieInCart.count + 1 
         console.log("MOVIE COUNT")
-        console.log(movie.count)
+        console.log(movieInCart.count)
+        const cart = await addMovieToCart(movieInCart);
+        setCart(cart)   
       }
       else {
         movie.count = 1 
+        const cart = await addMovieToCart(movie);
+        setCart(cart)   
   
-      }
-
-      const cart = await addMovieToCart(movie);
-      setCart(cart)    
+      }   
     }
     updateCart();
     
@@ -83,16 +85,16 @@ function updateCart(movie) {
 function checkCount(movie) {
   for (let movieInCart of cart) {
     if(movieInCart._id === movie._id) {
-      return true
+      return movieInCart
     }    
   }
-  return false
+  return null
 }
 
 async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608bf47246d0145381ed8397",
+    "_id": "608285180168d645858083ed",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -111,7 +113,7 @@ async function addMovieToCart(movie) {
 
 async function fetchUser() {
 
-    let id = "608bf47246d0145381ed8397";
+    let id = "608285180168d645858083ed";
     
     const requestOptions = {
       method: 'GET',
@@ -125,7 +127,7 @@ async function fetchUser() {
 
 async function deleteCartAndUpdateOrderHistory() {
 
-  let id = "608bf47246d0145381ed8397"
+  let id = "608285180168d645858083ed"
 
   const requestOptions = {
     method: 'PUT',
