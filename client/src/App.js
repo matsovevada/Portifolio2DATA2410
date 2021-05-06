@@ -54,14 +54,14 @@ function updateCart(movie) {
     async function updateCart() {
       if(checkCount(movie)) {
         movie.count = Number(movie.count + 1)
+        console.log("MOVIE COUNT")
+        console.log(movie.count)
       }
       else {
         movie.count = 1 
   
       }
 
-      console.log("MOVIE FRONT:")
-      console.log(movie)
       const cart = await addMovieToCart(movie);
       setCart(cart)    
     }
@@ -92,7 +92,7 @@ function checkCount(movie) {
 async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608bc84639de82d66c1d1741",
+    "_id": "608bf47246d0145381ed8397",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -111,7 +111,7 @@ async function addMovieToCart(movie) {
 
 async function fetchUser() {
 
-    let id = "608bc84639de82d66c1d1741";
+    let id = "608bf47246d0145381ed8397";
     
     const requestOptions = {
       method: 'GET',
