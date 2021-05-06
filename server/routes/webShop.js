@@ -48,4 +48,35 @@ router.get('/movies', (req, res) => {
     }
 })
 
+router.delete('/movies', (req, res) => {
+    
+    Movie.findById(req.params.id)
+        .then((data) => {
+            Movie.deleteOne(data)
+                .then((data) => {
+                    res.status(200).json(data)
+                }) 
+                
+            .catch(err => { 
+                res.status(400).json({
+                'Status' : 400,
+                'Message' : "Error while deleting a movie"
+            })
+        })
+    })
+})
+
+// Delete all users 
+router.delete('/movies', (req, res) => {
+
+    User.deleteMany({})
+        .then((data) => {
+            res.status(200).json(data)
+        }) .catch(err => res.status(400)({
+            'Status' : 400,
+            'Message' : "Error while deleting all movies"
+        }))
+    }
+)
+
 module.exports = router;

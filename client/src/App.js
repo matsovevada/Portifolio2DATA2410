@@ -7,6 +7,7 @@ import Register from './components/Register.js'
 import FormMovie from './components/FormMovie.js'
 import Cart from './components/Cart.js'
 import Movies from './components/Movies.js'
+import Test from './components/Test.js'
 import {Route} from 'react-router-dom';
 
 function App() {
@@ -103,9 +104,8 @@ function checkCount(movie) {
 async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608285180168d645858083ed",
-    "movieID": movie._id,
-    "count": movie.count
+    "_id": "608fab497c53581e18fed043",
+    "movieID": id
   }
 
   const requestOptions = {
@@ -122,7 +122,8 @@ async function addMovieToCart(movie) {
 
 async function fetchUser() {
 
-    let id = "608285180168d645858083ed";
+   
+    let id = "608fab497c53581e18fed043";
     
     const requestOptions = {
       method: 'GET',
@@ -210,6 +211,7 @@ useEffect(() => {
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
+      <Route path='/test' component={Test}/>
       <Route
         path='/cart'
         render={(props) => (
