@@ -53,7 +53,7 @@ router.delete('/movie/:id', (req, res) => {
         .then(data => {
             res.status(200).json(data)
         })
-        .catch((err) => {
+        .catch((err)  =>  {
             res.status(400).json({
                 "Status": 400,
                 "Message": "Couldn't delete movie"
@@ -62,19 +62,19 @@ router.delete('/movie/:id', (req, res) => {
 })
 
 // Update a movie
-router.put('/movie', upload.single('image'), (req, res) => {
+router.put('/movie/:id', upload.single('image'), (req, res) => {
 
-    Movie.findById(req.body._id)
+    Movie.findById({_id: req.params.id})
         .then(data => {
-      
+            
             data.title = req.body.title;
             data.shortDescription = req.body.shortDescription;
             data.longDescription = req.body.longDescription;
             data.price = req.body.price;
-            data.img = {
-                data: fs.readFileSync(path.join(__dirname + "../imageUploads/" + req.file.filename)),
-                contentType: 'image/png'
-            },
+            //data.img = {
+             //   data: fs.readFileSync(path.join(__dirname + "../imageUploads/" + req.file.filename)),
+             //   contentType: 'image/png'
+            //},
             data.genre = req.body.genre;
     
             data.save()

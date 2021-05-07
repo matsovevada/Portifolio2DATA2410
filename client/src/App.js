@@ -14,7 +14,10 @@ import {Route} from 'react-router-dom';
 function App() {
 
 // user
-const [user, setUser] = useState(true)
+const [user, setUser] = useState(false)
+
+//admin
+const [admin, setAdmin] = useState(true)
 
 // movies
 const [movies, setMovies] = useState([])
@@ -126,10 +129,49 @@ function checkCount(movie) {
   return null
 }
 
+function admin_deleteMovie(movie) {
+  if(admin) {
+      admin_deleteMovieFromDB(movie);
+      setMovies(movies.filter((movieInArray) => movieInArray._id !== movie._id))
+      }
+ 
+}
+
+//Render movies when edit is complete
+function admin_editMovie() {
+  async function getMovies() {
+    const movies = await fetchMovies();
+    setMovies(movies)
+  }
+getMovies();
+
+  async function fetchMovies() {  
+    const res = await fetch('http://localhost:8080/webshop/movies');
+    const data = await res.json()
+
+    return data
+  }
+} 
+
+async function admin_deleteMovieFromDB(movie) {
+
+  let id = movie._id
+
+  const requestOptions = {
+    method: 'DELETE'
+  };
+
+  const res = await fetch('http://localhost:8080/admin/movie/' + id, requestOptions);
+  const data = await res.json()
+
+  return data
+}
+
+
 async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608fab497c53581e18fed043",
+    "_id": "608292fa36b05d4b87f3334d",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -149,7 +191,7 @@ async function addMovieToCart(movie) {
 async function removeMovieFromCart(movie) {
 
   const inputData = {
-    "_id": "608285180168d645858083ed",
+    "_id": "608292fa36b05d4b87f3334d",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -168,7 +210,7 @@ async function removeMovieFromCart(movie) {
 
 async function fetchUser() {
 
-    let id = "608fab497c53581e18fed043";
+    let id = "608292fa36b05d4b87f3334d";
     
     const requestOptions = {
       method: 'GET',
@@ -183,7 +225,7 @@ async function fetchUser() {
 async function deleteCartAndUpdateOrderHistory() {
 
   const inputData = {
-    "_id": "608fab497c53581e18fed043",
+    "_id": "608292fa36b05d4b87f3334d",
   }
 
   const requestOptions = {
@@ -253,7 +295,7 @@ useEffect(() => {
       <Route
         exact path='/'
         render={(props) => (
-          <Movies {...props} movies={movies} updateCart={updateCart} />
+          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie} />
         )}
       />
       <Route path='/about-us' component={AboutUs}/>
