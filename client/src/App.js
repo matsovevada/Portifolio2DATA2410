@@ -14,7 +14,7 @@ import {Route} from 'react-router-dom';
 function App() {
 
 // user
-const [user, setUser] = useState(false)
+const [user, setUser] = useState(true)
 
 //admin
 const [admin, setAdmin] = useState(true)
