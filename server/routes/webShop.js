@@ -66,7 +66,7 @@ router.delete('/movies', (req, res) => {
     })
 })
 
-// Delete all users 
+// Delete all movies
 router.delete('/movies', (req, res) => {
 
     User.deleteMany({})
