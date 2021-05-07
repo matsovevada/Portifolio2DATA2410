@@ -1,7 +1,7 @@
 import React from 'react'
 import CartItem from './CartItem'
 
-const Cart = ({cart, updateCart, decreaseCount}) => {
+const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
 
 
     //console.log("CARTMAN!")
