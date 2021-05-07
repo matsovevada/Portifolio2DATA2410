@@ -3,7 +3,7 @@ import * as RBS from 'react-bootstrap'
 
 
 // onClick={() => inc()
-const CartItem = ({item}) => {
+const CartItem = ({item, updateCart,decreaseCount}) => {
     return (
         <div style={{ margin: 100}}> 
             {console.log(item)}
@@ -12,8 +12,8 @@ const CartItem = ({item}) => {
             <h3>Short description: {item.shortDescription}</h3>
             <h3>Movie: {item.title}</h3>
             <h3>Price: {item.price},-</h3>
-            <RBS.Button variant='dark'>+</RBS.Button>
-            <RBS.Button variant='dark'>-</RBS.Button>
+            <RBS.Button variant='dark' onClick={() => updateCart(item)}>+</RBS.Button>
+            <RBS.Button variant='dark' onClick={() => decreaseCount(item)}>-</RBS.Button>
         </div>
     )
 }

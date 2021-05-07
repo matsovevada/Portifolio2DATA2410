@@ -12,7 +12,7 @@ import {Route} from 'react-router-dom';
 function App() {
 
 // user
-const [user, setUser] = useState(false)
+const [user, setUser] = useState(true)
 
 // movies
 const [movies, setMovies] = useState([])
@@ -45,16 +45,16 @@ useEffect(() => {
     getCart();
   }, []);
 
-useEffect(() => {
-  if (user) { return }
+//useEffect(() => {
+  //if (user) { return }
 
-  async function getCart_nologin() {
-    if(localStorage.getItem('cart') === null) { return setCart([]) }
-    let localstorage_cart = JSON.parse(localStorage.getItem('cart'))
+  //async function getCart_nologin() {
+    //if(localStorage.getItem('cart') === null) { return setCart([]) }
+    //let localstorage_cart = JSON.parse(localStorage.getItem('cart'))
     //let set_localstorage_cart = window.localStorage.setItem('cart', )
-    setCart(localstorage_cart)}
-    getCart_nologin();
-  }, []);
+    //setCart(localstorage_cart)}
+    //getCart_nologin();
+  //}, []);
 
 function updateCart(movie) {
   // only update database if user is logged in
@@ -100,7 +100,19 @@ function updateCart(movie) {
         console.log(localStorage.getItem('cart'))
       } 
     }
+}
 
+function decreaseCount(movie) {
+  if (user) {
+    async function updateCart() {
+        let movieInCart = checkCount(movie)
+        movieInCart.count = movieInCart.count - 1
+        const cart = await removeMovieFromCart(movieInCart);
+        setCart(cart)    
+    }
+    updateCart();
+    
+  }
 }
 
 function checkCount(movie) {
@@ -127,6 +139,26 @@ async function addMovieToCart(movie) {
   };
 
   const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
+  const data = await res.json()
+
+  return data
+}
+
+async function removeMovieFromCart(movie) {
+
+  const inputData = {
+    "_id": "608285180168d645858083ed",
+    "movieID": movie._id,
+    "count": movie.count
+  }
+
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(inputData)
+  };
+
+  const res = await fetch('http://localhost:8080/user/shoppingCart/remove', requestOptions);
   const data = await res.json()
 
   return data
@@ -225,7 +257,7 @@ useEffect(() => {
       <Route
         path='/cart'
         render={(props) => (
-          <Cart {...props}  cart={cart} checkout={checkout}/>
+          <Cart {...props}  cart={cart} checkout={checkout} updateCart={updateCart} decreaseCount={decreaseCount} />
         )}
       />
     </div>
