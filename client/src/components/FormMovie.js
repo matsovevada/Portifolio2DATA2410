@@ -9,7 +9,7 @@ export default function Register() {
         const form = event.currentTarget;
         const url = form.action;
         const formData = new FormData(form);
-
+    
         const requestOptions = {
             method: 'POST',
             body: formData
