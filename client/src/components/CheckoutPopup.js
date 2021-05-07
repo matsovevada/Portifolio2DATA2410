@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-modal';
-import Order from './Order'
+import CartItem from './CartItem'
 
 const customStyles = {
   content : {
@@ -17,7 +17,7 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root')
 
-export default function ModalPop({checkout, orders}){
+export default function ModalPop({checkout, cart, decreaseCount, updateCart}){
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
   function openModal() {
@@ -41,13 +41,18 @@ export default function ModalPop({checkout, orders}){
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
         >
           <h2 ref={_subtitle => (subtitle = _subtitle)}>Checkout:</h2>
-          {orders.map((orders) => (
-          <Order order={orders}/>))}
+          {cart.map((item) => (
+            <CartItem 
+                item={item}
+                updateCart={updateCart}
+                decreaseCount={decreaseCount}
+            />)
+        )}
           <p>Congratulations! Your IP-address has been picked out to get 100% discount for the rest of your life!</p>
-          <Button variant='secondary' onClick={checkout}>Add to cart</Button>
+          <p>This is NOT a scam ;)</p>
+          <Button variant='secondary' onClick={checkout}>Checkout</Button>
           {' '}
           <Button onClick={closeModal}>Close</Button>
         </Modal>

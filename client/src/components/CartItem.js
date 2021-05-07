@@ -1,5 +1,5 @@
 import React from 'react'
-import * as RBS from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
 
 
 // onClick={() => inc()
@@ -12,8 +12,8 @@ const CartItem = ({item, updateCart,decreaseCount}) => {
             <h3>Short description: {item.shortDescription}</h3>
             <h3>Movie: {item.title}</h3>
             <h3>Price: {item.price},-</h3>
-            <RBS.Button variant='dark' onClick={() => updateCart(item)}>+</RBS.Button>
-            <RBS.Button variant='dark' onClick={() => decreaseCount(item)}>-</RBS.Button>
+            <Button variant='dark' onClick={() => updateCart(item)}>+</Button>
+            <Button variant='dark' onClick={() => decreaseCount(item)}>-</Button>
         </div>
     )
 }

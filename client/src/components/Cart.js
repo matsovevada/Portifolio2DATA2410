@@ -11,7 +11,7 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
 
 
     return (
-        <div>
+        <>
             {cart.map((item) => (
             <CartItem 
                 item={item}
@@ -19,8 +19,8 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
                 decreaseCount={decreaseCount}
             />)
         )}
-        <CheckoutPopup checkout={checkout} orders={cart}/>
-        </div>
+        <CheckoutPopup checkout={checkout} cart={cart} updateCart={updateCart} decreaseCount={decreaseCount}/>
+        </>
     )
 }
 
