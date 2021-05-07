@@ -129,7 +129,7 @@ function checkCount(movie) {
 async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608bf47246d0145381ed8397",
+    "_id": "608fab497c53581e18fed043",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -168,7 +168,7 @@ async function removeMovieFromCart(movie) {
 
 async function fetchUser() {
 
-    let id = "608bf47246d0145381ed8397";
+    let id = "608fab497c53581e18fed043";
     
     const requestOptions = {
       method: 'GET',
@@ -183,7 +183,7 @@ async function fetchUser() {
 async function deleteCartAndUpdateOrderHistory() {
 
   const inputData = {
-    "_id": "608bf47246d0145381ed8397",
+    "_id": "608fab497c53581e18fed043",
   }
 
   const requestOptions = {

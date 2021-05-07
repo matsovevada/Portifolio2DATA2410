@@ -1,5 +1,6 @@
 import React from 'react'
 import CartItem from './CartItem'
+import CheckoutPopup from './CheckoutPopup'
 
 const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
 
@@ -18,7 +19,7 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
                 decreaseCount={decreaseCount}
             />)
         )}
-        <button onClick={() => checkout()}>Confirm order</button>
+        <CheckoutPopup checkout={checkout} orders={cart}/>
         </div>
     )
 }

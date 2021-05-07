@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Input from './Input'
-import Button from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
 
 export default function ChangeUserInfo(){
     
@@ -68,6 +68,6 @@ export default function ChangeUserInfo(){
             <Input title='New Address' value={address} type='address' set={setAddress}/>
             <Input title='New Zipcode' value={zipcode} type='zipcode' set={setZipcode}/>
             <Input title='New City' value={city} type='city' set={setCity}/>
-            <Button disabled={!checkLength()} onClick={editUser}/>
+            <Button disabled={!checkLength()} onClick={editUser}>Change</Button>
         </div>
     )};
