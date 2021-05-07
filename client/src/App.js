@@ -39,9 +39,7 @@ const [cart, setCart] = useState([])
 
 useEffect(() => {
 // only get shopping cart if user is logged in 
-    if (!user) return 
-
-  
+  if(!user) {return}
     async function getCart() {
       const user = await fetchUser();
       setCart(user.shoppingCart)
@@ -49,8 +47,16 @@ useEffect(() => {
     getCart();
   }, []);
 
+//useEffect(() => {
+  //if (user) { return }
 
-
+  //async function getCart_nologin() {
+    //if(localStorage.getItem('cart') === null) { return setCart([]) }
+    //let localstorage_cart = JSON.parse(localStorage.getItem('cart'))
+    //let set_localstorage_cart = window.localStorage.setItem('cart', )
+    //setCart(localstorage_cart)}
+    //getCart_nologin();
+  //}, []);
 
 function updateCart(movie) {
   // only update database if user is logged in
@@ -76,19 +82,37 @@ function updateCart(movie) {
   }
 
   else {
-    if(checkCount(movie)) {
-      setCart(cart => [...cart, movie]);
-      localStorage.set('cart', cart)
-      console.log("CART IF")
-      console.log(cart) 
-    }
-    else {
-      setCart(cart => [...cart, movie]);
-      localStorage.set('cart', cart)
 
-      console.log("CART ELSE")
-      console.log(cart)
+      if(checkCount(movie)) {
+        let movieInCart = checkCount(movie)
+        movieInCart.count = movieInCart.count + 1 
+        setCart(cart => [...cart, movie])
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        console.log("CART IF")
+        console.log(localStorage.getItem('cart'))
+      }
+
+      else {
+        movie.count = 1 
+        setCart(cart => [...cart, movie])
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        console.log("CART ELSE")
+        console.log(localStorage.getItem('cart'))
+      } 
     }
+}
+
+function decreaseCount(movie) {
+  if (user) {
+    async function updateCart() {
+        let movieInCart = checkCount(movie)
+        movieInCart.count = movieInCart.count - 1
+        const cart = await removeMovieFromCart(movieInCart);
+        setCart(cart)    
+    }
+    updateCart();
     
   }
 }
@@ -117,6 +141,26 @@ async function addMovieToCart(movie) {
   };
 
   const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
+  const data = await res.json()
+
+  return data
+}
+
+async function removeMovieFromCart(movie) {
+
+  const inputData = {
+    "_id": "608285180168d645858083ed",
+    "movieID": movie._id,
+    "count": movie.count
+  }
+
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(inputData)
+  };
+
+  const res = await fetch('http://localhost:8080/user/shoppingCart/remove', requestOptions);
   const data = await res.json()
 
   return data
@@ -225,7 +269,7 @@ useEffect(() => {
       <Route
         path='/cart'
         render={(props) => (
-          <Cart {...props}  cart={cart} checkout={checkout}/>
+          <Cart {...props}  cart={cart} checkout={checkout} updateCart={updateCart} decreaseCount={decreaseCount} />
         )}
       />
     </div>

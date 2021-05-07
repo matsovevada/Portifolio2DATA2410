@@ -202,6 +202,47 @@ router.put('/shoppingCart', async (req, res) => {
             res.status(200).json(data.shoppingCart)
         })
 })
+
+//Remove or decrease count for item in shoppingcart
+router.put('/shoppingCart/remove', async (req, res) => {
+    if (!req.body._id) {
+        return res.status(401).json('Log-in to add to shoppingcart')
+    }
+
+    const movieCount = req.body.count
+    const movieID = req.body.movieID
+    const userID = req.body._id;
+
+    let user = await User.findById(userID);
+    // console.log(user.shoppingCart)
+
+    let movie = await Movie.findById(movieID);
+    movie = movie.toJSON();
+
+    for (movieInCart of user.shoppingCart) {
+        let index = user.shoppingCart.indexOf(movieInCart)
+        if (movieInCart._id == movieID) {
+            if(movieInCart.count == 1 && index > -1) {
+                user.shoppingCart.splice(index, 1)
+            }
+            else {
+            movieInCart.count = movieInCart.count-1;
+            }
+
+            return User.findByIdAndUpdate(userID, user)
+                .then(data => {
+                    res.status(200).json(user.shoppingCart)
+                })
+                .catch(err => console.log(err))
+        }
+    }
+  
+    return user.save()
+        .then(data => {
+            res.status(200).json(data.shoppingCart)
+        })
+})
+
     
 
 // Update field shoppingcart to empty array

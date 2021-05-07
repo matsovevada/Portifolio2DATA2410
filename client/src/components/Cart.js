@@ -1,18 +1,21 @@
 import React from 'react'
 import CartItem from './CartItem'
 
-const Cart = ({cart, checkout}) => {
+const Cart = ({cart, updateCart, decreaseCount}) => {
 
-    let cartman = localStorage.getItem('cart')
 
-    console.log("CARTMAN!")
-    console.log(cartman)
+    //console.log("CARTMAN!")
+    //let cartman = JSON.parse(window.localStorage.getItem('cart'))
+    //console.log(JSON.parse(localStorage.getItem('cart')))
+
 
     return (
         <div>
             {cart.map((item) => (
             <CartItem 
                 item={item}
+                updateCart={updateCart}
+                decreaseCount={decreaseCount}
             />)
         )}
         <button onClick={() => checkout()}>Confirm order</button>
