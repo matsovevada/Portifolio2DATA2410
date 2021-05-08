@@ -72,7 +72,7 @@ router.delete('/movies', (req, res) => {
     User.deleteMany({})
         .then((data) => {
             res.status(200).json(data)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while deleting all movies"
         }))

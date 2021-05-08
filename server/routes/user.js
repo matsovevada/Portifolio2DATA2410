@@ -25,18 +25,42 @@ router.post('/login', (req, res) => {
     });
     const payload = ticket.getPayload();
     const userid = payload['sub'];
-    console.log(userid)
     // If request specified a G Suite domain:
     // const domain = payload['hd'];
+
+    return userid
+
     }
+
     verify()
-        .then(() => {
-            console.log('setting cookie')
-            res.cookie('session-token', token, { maxAge: 90000 })
-            console.log('cookie set')
-            res.send('success')
-        })
-        .catch(console.error);
+    .then((userid) => {
+       
+        // check if user is in database
+        User.findById(userid)
+            .then(data => {
+
+                // user is in db
+                if (data) {
+                    console.log('user in db')
+                    res.cookie('session-token', token, { maxAge: 90000 })
+                    res.status(200).json({'userInDb': true})
+                }
+
+                // user not in db
+                else {
+                    console.log('user not in db')
+                    res.cookie('session-token', token, { maxAge: 90000 })
+                    res.status(200).json({'userInDb': false})
+                }
+
+            })
+        
+
+       
+    })
+    .catch(console.error);
+   
+    
 })
 
 router.get('/logout', (req, res) => {
@@ -45,9 +69,12 @@ router.get('/logout', (req, res) => {
 })
 
 // Create user 
-router.post('/', (req, res) => {
+router.post('/', middleware.checkAuthentification, (req, res) => {
+
+    let id = req.user.userId // get user id from authentification middleware
 
     const user = new User({
+        _id: id,
         email: req.body.email,
         password: req.body.password,
         firstname: req.body.firstname,
@@ -60,7 +87,7 @@ router.post('/', (req, res) => {
     user.save()
         .then((data) => {
             res.status(200).json(data)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while creating user"
         })
@@ -73,7 +100,7 @@ router.get('/:id', (req, res) => {
     User.findById(req.params.id)
         .then((data) => {
             res.status(200).json(data)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "User not found"
         })
@@ -86,7 +113,7 @@ router.get('/', (req, res) => {
     User.find()
             .then((data) => {
                 res.status(200).json(data)
-            }) .catch(err => res.status(400)({
+            }) .catch(err => res.status(400).json({
                 'Status' : 400,
                 'Message' : "User not found"
             })
@@ -152,7 +179,7 @@ router.delete('/', (req, res) => {
     User.deleteMany({})
         .then((data) => {
             res.status(200).json(data)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while deleting all users"
         }))
@@ -164,7 +191,7 @@ router.get('/orders', (req, res) => {
     User.findById(req.body._id)
         .then((data) => {
             res.status(200).json(data.orderHistory)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while fetching orders"
         })
@@ -204,14 +231,13 @@ router.put('/checkout', (req, res) => {
 
 
 // Add item to shoppingcart
-router.put('/shoppingCart', async (req, res) => {
+router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) => {
 
-    console.log('token:')
-    console.log(req.cookies['session-token'])
+    // if (!req.body._id) {
+    //     return res.status(401).json('Log-in to add to shoppingcart')
+    // }
 
-    if (!req.body._id) {
-        return res.status(401).json('Log-in to add to shoppingcart')
-    }
+    console.log(req.user)
 
     const movieCount = req.body.count
     const movieID = req.body.movieID
