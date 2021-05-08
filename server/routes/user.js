@@ -53,19 +53,14 @@ router.post('/login', (req, res) => {
                     res.status(200).json({'userInDb': false})
                 }
 
-            })
-        
-
-       
+            })    
     })
     .catch(console.error);
-   
-    
 })
 
 router.get('/logout', (req, res) => {
-    // res.clearCookie('session-token');
-   
+    res.clearCookie('session-token');
+    res.send('success')
 })
 
 // Create user 
@@ -95,9 +90,17 @@ router.post('/', middleware.checkAuthentification, (req, res) => {
 })
 
 // Get user
-router.get('/:id', (req, res) => {
+router.get('/', middleware.checkAuthentification, (req, res) => {
  
-    User.findById(req.params.id)
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
+
+    let id = req.user.userId // get user id from authentification middleware
+    console.log(id)
+
+
+    User.findById(id)
         .then((data) => {
             res.status(200).json(data)
         }) .catch(err => res.status(400).json({
@@ -108,7 +111,7 @@ router.get('/:id', (req, res) => {
 })
 
 // get users
-router.get('/', (req, res) => {
+router.get('s', (req, res) => {
 
     User.find()
             .then((data) => {
@@ -243,8 +246,10 @@ router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) =
     const movieID = req.body.movieID
     const userID = req.body._id;
 
+    console.log(userID)
+
     let user = await User.findById(userID);
-    // console.log(user.shoppingCart)
+    console.log(user.shoppingCart)
 
     let movie = await Movie.findById(movieID);
     movie = movie.toJSON();

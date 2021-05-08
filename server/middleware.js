@@ -1,4 +1,3 @@
-const googleAuth = require('./googleOAuth');
 const { oAuth2Client, OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = '289860901302-1k9vd8gfqi5ebp27datvvspesg1g27i1.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID)
@@ -34,14 +33,12 @@ function checkAuthentification(req, res, next) {
         }
         verify()
             .then((user) => {
-                console.log('Found user')
                 req.user = user;
                 next();
             })
             .catch(err => {
-                console.log(err)
-
-                // do something
+                req.user = null;
+                next();
             })
 
 }
