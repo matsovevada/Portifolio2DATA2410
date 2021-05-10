@@ -14,7 +14,29 @@ import {Route} from 'react-router-dom';
 function App() {
 
 // user
-const [user, setUser] = useState(true)
+const [user, setUser] = useState(null)
+
+async function fetchUser() {
+    
+  const requestOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+
+  const res = await fetch('http://localhost:8080/user', requestOptions);
+  const data = await res.json()
+
+  return data;
+}
+
+useEffect(() => {
+  async function getUser() {
+      const user = await fetchUser();
+      if (user) setUser(user)
+      else setUser(null)
+  }
+  getUser()
+}, [])
 
 //admin
 const [admin, setAdmin] = useState(true)
@@ -42,10 +64,10 @@ const [cart, setCart] = useState([])
 
 useEffect(() => {
 // only get shopping cart if user is logged in 
-  if(!user) {return}
     async function getCart() {
       const user = await fetchUser();
-      setCart(user.shoppingCart)
+      if (user) setCart(user.shoppingCart)
+      else setCart([])
     }
     getCart();
   }, []);
@@ -84,27 +106,8 @@ function updateCart(movie) {
     
   }
 
-  else {
+  else window.location = '/login'
 
-      if(checkCount(movie)) {
-        let movieInCart = checkCount(movie)
-        movieInCart.count = movieInCart.count + 1 
-        setCart(cart => [...cart, movie])
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        console.log("CART IF")
-        console.log(localStorage.getItem('cart'))
-      }
-
-      else {
-        movie.count = 1 
-        setCart(cart => [...cart, movie])
-        localStorage.setItem('cart', JSON.stringify(cart));
-        
-        console.log("CART ELSE")
-        console.log(localStorage.getItem('cart'))
-      } 
-    }
 }
 
 function decreaseCount(movie) {
@@ -116,8 +119,10 @@ function decreaseCount(movie) {
         setCart(cart)    
     }
     updateCart();
-    
-  }
+  } 
+
+  else window.location = '/login'
+
 }
 
 function checkCount(movie) {
@@ -158,7 +163,8 @@ async function admin_deleteMovieFromDB(movie) {
   let id = movie._id
 
   const requestOptions = {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: 'include',
   };
 
   const res = await fetch('http://localhost:8080/admin/movie/' + id, requestOptions);
@@ -171,7 +177,6 @@ async function admin_deleteMovieFromDB(movie) {
 async function addMovieToCart(movie) {
 
   const inputData = {
-    "_id": "608292fa36b05d4b87f3334d",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -179,6 +184,7 @@ async function addMovieToCart(movie) {
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(inputData)
   };
 
@@ -191,7 +197,6 @@ async function addMovieToCart(movie) {
 async function removeMovieFromCart(movie) {
 
   const inputData = {
-    "_id": "608292fa36b05d4b87f3334d",
     "movieID": movie._id,
     "count": movie.count
   }
@@ -199,6 +204,7 @@ async function removeMovieFromCart(movie) {
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(inputData)
   };
 
@@ -208,30 +214,12 @@ async function removeMovieFromCart(movie) {
   return data
 }
 
-async function fetchUser() {
-
-    let id = "608292fa36b05d4b87f3334d";
-    
-    const requestOptions = {
-      method: 'GET',
-    };
-
-    const res = await fetch('http://localhost:8080/user/' + id, requestOptions);
-    const data = await res.json()
-
-    return data;
-}
-
 async function deleteCartAndUpdateOrderHistory() {
-
-  const inputData = {
-    "_id": "608292fa36b05d4b87f3334d",
-  }
 
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(inputData)
+    credentials: 'include'
   };
 
   const res = await fetch('http://localhost:8080/user/checkout', requestOptions);
@@ -258,7 +246,8 @@ const [orderHistory, setOrderHistory] = useState([])
 useEffect(() => {
     async function getOrderHistory() {
         const user = await fetchUser();
-        setOrderHistory(user.orderHistory)
+        if (user) setOrderHistory(user.orderHistory)
+        else setOrderHistory([])
     }
     getOrderHistory()
 }, [])

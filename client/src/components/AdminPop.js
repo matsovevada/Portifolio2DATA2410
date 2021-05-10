@@ -81,10 +81,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
 
         <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit movie</h2>
           
-              <div>
-              {console.log(img)}
-                  {img}
-              </div>
+             
 
         <div className='editMovie'>
           <Form action={url_action} method="PUT" encType="multipart/form-data" onSubmit={handleSubmit}>
