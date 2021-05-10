@@ -82,6 +82,8 @@ useEffect(() => {
   //}, []);
 
 function updateCart(movie) {
+  console.log("USER (update cart")
+  console.log(user)
   // only update database if user is logged in
   if (user) {
     async function updateCart() {
@@ -289,7 +291,12 @@ useEffect(() => {
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
-      <Route path='/changeUserInfo' component={ChangeUserInfo}/>
+      <Route
+        exact path='/changeUserInfo'
+        render={(props) => (
+          <ChangeUserInfo {...props} user={user}/>
+        )}
+      />
       <Route
         path='/test'
         render={(props) => (
