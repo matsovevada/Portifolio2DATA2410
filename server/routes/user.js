@@ -97,8 +97,6 @@ router.get('/', middleware.checkAuthentification, (req, res) => {
     }
 
     let id = req.user.userId // get user id from authentification middleware
-    console.log(id)
-
 
     User.findById(id)
         .then((data) => {
@@ -124,7 +122,11 @@ router.get('s', (req, res) => {
 })
 
 // Alter userdata for given _id
-router.put('/', (req, res) => {
+router.put('/', middleware.checkAuthentification, (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
 
     User.findById(req.body._id)
         .then((data) => {
@@ -158,8 +160,12 @@ router.put('/', (req, res) => {
 })
 
 // Delete user for given _id
-router.delete('/id', (req, res) => {
+router.delete('/id', middleware.checkAuthentification, (req, res) => {
     
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
+
     User.findById(req.params.id)
         .then((data) => {
             User.deleteOne(data)
@@ -190,7 +196,12 @@ router.delete('/', (req, res) => {
 )
 
 // Get orderhistory
-router.get('/orders', (req, res) => {
+router.get('/orders', middleware.checkAuthentification, (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
+
     User.findById(req.body._id)
         .then((data) => {
             res.status(200).json(data.orderHistory)
@@ -202,9 +213,13 @@ router.get('/orders', (req, res) => {
 }) 
 
 // Add order to orderhistory
-router.put('/checkout', (req, res) => {
+router.put('/checkout', middleware.checkAuthentification, (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
  
-    User.findById(req.body._id)
+    User.findById(req.user.userId)
         .then((data) => {
 
             // create timestamp
@@ -236,17 +251,13 @@ router.put('/checkout', (req, res) => {
 // Add item to shoppingcart
 router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) => {
 
-    // if (!req.body._id) {
-    //     return res.status(401).json('Log-in to add to shoppingcart')
-    // }
-
-    console.log(req.user)
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
 
     const movieCount = req.body.count
     const movieID = req.body.movieID
-    const userID = req.body._id;
-
-    console.log(userID)
+    const userID = req.user.userId;
 
     let user = await User.findById(userID);
     console.log(user.shoppingCart)
@@ -281,11 +292,11 @@ router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) =
 //function deleteShoppingCart() {
     router.put('/shoppingCart/delete', (req, res) => {
 
-        if (!req.body._id) {
-            return res.status(401).json('Log-in to add to shoppingcart')
+        if (!req.user) {
+            return res.status(400).json(null)
         }
 
-        User.findById(req.body._id)
+        User.findById(req.user.userId)
             .then((data) => {
                 data.shoppingCart = []
                 data.save()
