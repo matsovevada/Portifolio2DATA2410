@@ -40,6 +40,7 @@ export default function Register() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: "include",
             body: JSON.stringify(data)
         };
         fetch('http://localhost:8080/user', requestOptions)
