@@ -66,11 +66,13 @@ router.get('/logout', (req, res) => {
 // Create user 
 router.post('/', middleware.checkAuthentification, (req, res) => {
 
-    let id = req.user.userId // get user id from authentification middleware
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
 
     const user = new User({
-        _id: id,
-        email: req.body.email,
+        _id: req.user.userId, // get user id from authentification middleware
+        email: req.user.email,
         password: req.body.password,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -128,10 +130,8 @@ router.put('/', middleware.checkAuthentification, (req, res) => {
         return res.status(400).json(null)
     }
 
-    User.findById(req.body._id)
+    User.findById(req.user.userId)
         .then((data) => {
-            data.email = req.body.email
-            data.password = req.body.password
             data.firstname = req.body.firstname
             data.lastname = req.body.lastname
             data.address = req.body.address
