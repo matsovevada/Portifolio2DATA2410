@@ -42,15 +42,18 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
     const form = event.currentTarget;
     const url = form.action;
     const formData = new FormData(form);
+  
+
 
     const requestOptions = {
         method: 'PUT',
-        body: formData,
+        body: formData, img
     };
     fetch(url, requestOptions)
         .then(async response => {
             const isJson = response.headers.get('content-type')?.includes('application/json');
             const data = isJson && await response.json();
+            console.log(data)
             admin_editMovie();
             closeModal();
 
@@ -68,6 +71,8 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
     
   }
 
+
+
     return (
       <div>
         <Button onClick={openModal}>Edit</Button>
@@ -76,15 +81,26 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
+          contentLabel="Admin modal"
         >
 
         <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit movie</h2>
-          
-             
 
+       
+        <div>{img}</div>
+        
         <div className='editMovie'>
           <Form action={url_action} method="PUT" encType="multipart/form-data" onSubmit={handleSubmit}>
+
+                <Form.Group size='lg' controlId='image'>
+                    <Form.Label>Edit image</Form.Label>
+                    <Form.Control
+                        autoFocus
+                        type="file"
+                        name="image"
+                    />
+                </Form.Group>  
+
                 <Form.Group size='lg' controlId='title'>
                     <Form.Label>Title</Form.Label>
                     <Form.Control
@@ -130,7 +146,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
                         type="genre"
                         defaultValue={genre}
                     />
-                </Form.Group>
+                </Form.Group>          
                 <Button block size='lg' type='submit'>Submit changes</Button>
             </Form> 
 
