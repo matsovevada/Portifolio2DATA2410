@@ -74,7 +74,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
 
 
     return (
-      <div>
+      <>
         <Button onClick={openModal}>Edit</Button>
         <Modal
           isOpen={modalIsOpen}
@@ -111,7 +111,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
                     />
                 </Form.Group>
                 <Form.Group size="lg" controlId="shortDescription">
-                    <Form.Label>Short description</Form.Label>
+                    <Form.Label className='Label'>Short description</Form.Label>
                     <Form.Control
                         autoFocus
                         name="shortDescription"
@@ -154,6 +154,6 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
        
           <Button onClick={closeModal}>Close</Button>
         </Modal>
-      </div>
+      </>
     );
 }

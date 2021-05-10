@@ -3,7 +3,7 @@ import Movie from './Movie'
 
 const Movies = ({movies, updateCart, admin_deleteMovie, admin_editMovie, user}) => {
     return (
-        <>
+        <div className='movieView'>
             {movies.map((movie) => (
                 <Movie 
                     movie={movie}
@@ -13,7 +13,7 @@ const Movies = ({movies, updateCart, admin_deleteMovie, admin_editMovie, user}) 
                     user = {user}
                 />)
             )}
-        </>
+        </div>
     )
 }
 

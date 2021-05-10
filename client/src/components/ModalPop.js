@@ -34,7 +34,7 @@ export default function ModalPop({title, longDescription, img, price, genre, upd
   }
 
     return (
-      <div>
+      <>
         <Button onClick={openModal}>Show more</Button>
         <Modal
           isOpen={modalIsOpen}
@@ -55,6 +55,6 @@ export default function ModalPop({title, longDescription, img, price, genre, upd
           {' '}
           <Button onClick={closeModal}>Close</Button>
         </Modal>
-      </div>
+      </>
     );
 }
