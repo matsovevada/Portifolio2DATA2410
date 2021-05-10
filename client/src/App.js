@@ -9,6 +9,7 @@ import Cart from './components/Cart.js'
 import Movies from './components/Movies.js'
 import Test from './components/Test.js'
 import Orderhistory from './components/Orderhistory'
+import ChangeUserInfo from './components/ChangeUserInfo'
 import {Route} from 'react-router-dom';
 
 function App() {
@@ -277,7 +278,7 @@ useEffect(() => {
 
   return (
     <div>
-      <Header cart={cart}/>
+      <Header cart={cart} user={user}/>
       <Route
         exact path='/'
         render={(props) => (
@@ -288,6 +289,7 @@ useEffect(() => {
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
       <Route path='/formMovie' component={FormMovie}/>
+      <Route path='/changeUserInfo' component={ChangeUserInfo}/>
       <Route
         path='/test'
         render={(props) => (

@@ -1,15 +1,12 @@
 import React, {useState} from 'react'
 import LoginGoogle from './LoginGoogle'
-import LogoutGoogle from './LogoutGoogle'
-
-
 
 export default function Login() {
 
     return (
         <div className='Login'>
+            <h1>Log in with your Google account here</h1>
             <LoginGoogle/>
-            <LogoutGoogle/>
         </div>
     )
 }

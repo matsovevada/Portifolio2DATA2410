@@ -26,7 +26,7 @@ const LoginGoogle = () => {
             ).then(data => {
                 
                 if (data.userInDb) {
-                    console.log('user is registered')
+                    window.location = '/'
                 }
                 else {
                     window.location = '/register'

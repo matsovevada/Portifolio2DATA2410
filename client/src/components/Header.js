@@ -2,10 +2,10 @@ import React from 'react'
 import * as RBS from 'react-bootstrap'
 import logo from '../pics/NewNewNideoVova.svg'
 import NavbarCart from './NavbarCart'
+import LogoutGoogle from './LogoutGoogle'
 
 
-
-const Header = ({cart}) => {
+const Header = ({cart, user}) => {
     return (
         <RBS.Navbar bg="light" expand="lg" fixed='top'>
             <img src={logo} alt='logo' id='headerLogo'></img>
@@ -27,8 +27,9 @@ const Header = ({cart}) => {
                     <RBS.FormControl type="text" placeholder="Search" className="mr-sm-2" />
                     <RBS.Button variant="outline-success" id='searchbar'>Search</RBS.Button>
                 </RBS.Form>
-                <RBS.Navbar.Brand href="/cart"><NavbarCart cart={cart}/></RBS.Navbar.Brand>
-                <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/login'>Login</RBS.Button>
+                {user != null && <RBS.Navbar.Brand href="/cart"><NavbarCart cart={cart}/></RBS.Navbar.Brand>}
+                {user == null ? <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/login'>Login</RBS.Button> : <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/changeUserInfo'>{user.email}</RBS.Button>}
+                {user != null && <LogoutGoogle/>}
             </RBS.Navbar.Collapse>
         </RBS.Navbar>
     )

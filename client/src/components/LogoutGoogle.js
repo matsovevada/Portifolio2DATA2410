@@ -15,6 +15,7 @@ const LogoutGoogle = () => {
           };
         
          fetch('http://localhost:8080/user/logout', requestOptions)
+          .then(() => window.location = '/')
     };
 
     return (
