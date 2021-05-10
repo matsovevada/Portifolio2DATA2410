@@ -260,7 +260,6 @@ router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) =
     const userID = req.user.userId;
 
     let user = await User.findById(userID);
-    console.log(user.shoppingCart)
 
     let movie = await Movie.findById(movieID);
     movie = movie.toJSON();
