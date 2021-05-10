@@ -2,7 +2,7 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import '../index.css'
 
-const Input = ({value, title, type, set, defaultValue}) => {
+const Input = ({value, title, type, set, placeholder}) => {
 
     
 
@@ -14,7 +14,7 @@ const Input = ({value, title, type, set, defaultValue}) => {
                     type={type}
                     value={value}
                     onChange={(e) => set(e.target.value)}
-                    defaultValue={defaultValue} 
+                    placeholder={placeholder} 
                 />
             </Form.Group>
         </>

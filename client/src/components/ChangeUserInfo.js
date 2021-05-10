@@ -31,6 +31,7 @@ export default function ChangeUserInfo({user}){
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
+            credentials: "include",
             body: JSON.stringify(data)
         };
         fetch('http://localhost:8080/user', requestOptions)
@@ -44,6 +45,8 @@ export default function ChangeUserInfo({user}){
                     const error = (data && data.message) || response.status;
                     return Promise.reject(error);
                 }
+
+                window.location = '/changeUserInfo'
     
             })
             .catch(error => {
@@ -54,11 +57,11 @@ export default function ChangeUserInfo({user}){
     return (
         <div>
             <h1>Change user info:</h1>
-            <Input title='New First name' value={firstname} type='firstname' set={setFirstname}/>
-            <Input title='New Last name' value={lastname} type='lastname' set={setLastname}/>
-            <Input title='New Address' value={address} type='address' set={setAddress}/>
-            <Input title='New Zipcode' value={zipcode} type='zipcode' set={setZipcode}/>
-            <Input title='New City' value={city} type='city' set={setCity}/>
+            <Input title={user != null && user.firstname} value={firstname} type='firstname' set={setFirstname} placeholder={'new firstname'}/>
+            <Input title={user != null && user.lastname} value={lastname} type='lastname' set={setLastname} placeholder={'new lastname'}/>
+            <Input title={user != null && user.address} value={address} type='address' set={setAddress} placeholder={'new address'}/>
+            <Input title={user != null && user.zipcode} value={zipcode} type='zipcode' set={setZipcode} placeholder={'new zipcode'}/>
+            <Input title={user != null && user.city} value={city} type='city' set={setCity} placeholder={'new city'}/>
             <Button disabled={!checkLength()} onClick={editUser}>Change</Button>
         </div>
     )};
