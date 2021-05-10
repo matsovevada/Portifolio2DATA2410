@@ -288,14 +288,15 @@ router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) =
 })
 
 //Remove or decrease count for item in shoppingcart
-router.put('/shoppingCart/remove', async (req, res) => {
-    if (!req.body._id) {
-        return res.status(401).json('Log-in to add to shoppingcart')
+router.put('/shoppingCart/remove', middleware.checkAuthentification, async (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
     }
 
     const movieCount = req.body.count
     const movieID = req.body.movieID
-    const userID = req.body._id;
+    const userID = req.user.userId
 
     let user = await User.findById(userID);
     // console.log(user.shoppingCart)
