@@ -10,8 +10,8 @@ const UserSchema = mongoose.Schema({
     zipcode: String,
     city: String,
     orderHistory: {type : [Object], default : [] },
-    shoppingCart: {type : [Object], default : [] }
-
+    shoppingCart: {type : [Object], default : [] },
+    isAdmin: {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model('User', UserSchema)

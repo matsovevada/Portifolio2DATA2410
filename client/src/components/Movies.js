@@ -1,7 +1,7 @@
 import React from 'react'
 import Movie from './Movie'
 
-const Movies = ({movies, updateCart, admin_deleteMovie, admin_editMovie}) => {
+const Movies = ({movies, updateCart, admin_deleteMovie, admin_editMovie, user}) => {
     return (
         <>
             {movies.map((movie) => (
@@ -10,6 +10,7 @@ const Movies = ({movies, updateCart, admin_deleteMovie, admin_editMovie}) => {
                     updateCart={updateCart}
                     admin_deleteMovie={admin_deleteMovie}
                     admin_editMovie={admin_editMovie}
+                    user = {user}
                 />)
             )}
         </>

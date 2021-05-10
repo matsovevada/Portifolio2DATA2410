@@ -38,9 +38,6 @@ useEffect(() => {
   getUser()
 }, [])
 
-//admin
-const [admin, setAdmin] = useState(true)
-
 // movies
 const [movies, setMovies] = useState([])
 
@@ -135,7 +132,7 @@ function checkCount(movie) {
 }
 
 function admin_deleteMovie(movie) {
-  if(admin) {
+  if(user.isAdmin) {
       admin_deleteMovieFromDB(movie);
       setMovies(movies.filter((movieInArray) => movieInArray._id !== movie._id))
       }
@@ -284,7 +281,7 @@ useEffect(() => {
       <Route
         exact path='/'
         render={(props) => (
-          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie} />
+          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie} user={user}/>
         )}
       />
       <Route path='/about-us' component={AboutUs}/>
