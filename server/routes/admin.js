@@ -34,6 +34,8 @@ router.post('/movie', upload.single('image'), (req, res) => {
         genre: req.body.genre,
     }) 
 
+    
+
     movie.save()
         .then((data) => {
             res.status(200).json(data)
@@ -71,12 +73,15 @@ router.put('/movie/:id', upload.single('image'), (req, res) => {
             data.shortDescription = req.body.shortDescription;
             data.longDescription = req.body.longDescription;
             data.price = req.body.price;
-            //data.img = {
-             //   data: fs.readFileSync(path.join(__dirname + "../imageUploads/" + req.file.filename)),
-             //   contentType: 'image/png'
-            //},
+            //Only update image if a new image is provided 
+            if(req.file) {
+                data.img = {
+                    data: fs.readFileSync(path.join(__dirname + "/imageUploads/" + req.file.filename)),
+                    contentType: 'image/png'
+                };
+            }
             data.genre = req.body.genre;
-    
+
             data.save()
                 .then(data => {
                     res.status(200).json(data)
