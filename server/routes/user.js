@@ -2,14 +2,74 @@ const express = require('express');
 const { db } = require('../models/User');
 const User = require('../models/User')
 const Movie = require('../models/Movie')
-
+const middleware = require('../middleware');
 
 const router = express.Router()
 
+// Google OAuth
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = '289860901302-1k9vd8gfqi5ebp27datvvspesg1g27i1.apps.googleusercontent.com'
+const client = new OAuth2Client(CLIENT_ID);
+
+// login 
+router.post('/login', (req, res) => {
+
+    let token = req.body.token;
+
+    async function verify() {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+        // Or, if multiple clients access the backend:
+        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    });
+    const payload = ticket.getPayload();
+    const userid = payload['sub'];
+    // If request specified a G Suite domain:
+    // const domain = payload['hd'];
+
+    return userid
+
+    }
+
+    verify()
+    .then((userid) => {
+       
+        // check if user is in database
+        User.findById(userid)
+            .then(data => {
+
+                // user is in db
+                if (data) {
+                    console.log('user in db')
+                    res.cookie('session-token', token, { maxAge: 90000 })
+                    res.status(200).json({'userInDb': true})
+                }
+
+                // user not in db
+                else {
+                    console.log('user not in db')
+                    res.cookie('session-token', token, { maxAge: 90000 })
+                    res.status(200).json({'userInDb': false})
+                }
+
+            })    
+    })
+    .catch(console.error);
+})
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('session-token');
+    res.send('success')
+})
+
 // Create user 
-router.post('/', (req, res) => {
+router.post('/', middleware.checkAuthentification, (req, res) => {
+
+    let id = req.user.userId // get user id from authentification middleware
 
     const user = new User({
+        _id: id,
         email: req.body.email,
         password: req.body.password,
         firstname: req.body.firstname,
@@ -22,7 +82,7 @@ router.post('/', (req, res) => {
     user.save()
         .then((data) => {
             res.status(200).json(data)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while creating user"
         })
@@ -30,12 +90,18 @@ router.post('/', (req, res) => {
 })
 
 // Get user
-router.get('/:id', (req, res) => {
+router.get('/', middleware.checkAuthentification, (req, res) => {
  
-    User.findById(req.params.id)
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
+
+    let id = req.user.userId // get user id from authentification middleware
+
+    User.findById(id)
         .then((data) => {
             res.status(200).json(data)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "User not found"
         })
@@ -43,12 +109,12 @@ router.get('/:id', (req, res) => {
 })
 
 // get users
-router.get('/', (req, res) => {
+router.get('s', (req, res) => {
 
     User.find()
             .then((data) => {
                 res.status(200).json(data)
-            }) .catch(err => res.status(400)({
+            }) .catch(err => res.status(400).json({
                 'Status' : 400,
                 'Message' : "User not found"
             })
@@ -56,7 +122,11 @@ router.get('/', (req, res) => {
 })
 
 // Alter userdata for given _id
-router.put('/', (req, res) => {
+router.put('/', middleware.checkAuthentification, (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
 
     User.findById(req.body._id)
         .then((data) => {
@@ -90,8 +160,12 @@ router.put('/', (req, res) => {
 })
 
 // Delete user for given _id
-router.delete('/id', (req, res) => {
+router.delete('/id', middleware.checkAuthentification, (req, res) => {
     
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
+
     User.findById(req.params.id)
         .then((data) => {
             User.deleteOne(data)
@@ -114,7 +188,7 @@ router.delete('/', (req, res) => {
     User.deleteMany({})
         .then((data) => {
             res.status(200).json(data)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while deleting all users"
         }))
@@ -122,11 +196,16 @@ router.delete('/', (req, res) => {
 )
 
 // Get orderhistory
-router.get('/orders', (req, res) => {
+router.get('/orders', middleware.checkAuthentification, (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
+
     User.findById(req.body._id)
         .then((data) => {
             res.status(200).json(data.orderHistory)
-        }) .catch(err => res.status(400)({
+        }) .catch(err => res.status(400).json({
             'Status' : 400,
             'Message' : "Error while fetching orders"
         })
@@ -134,9 +213,13 @@ router.get('/orders', (req, res) => {
 }) 
 
 // Add order to orderhistory
-router.put('/checkout', (req, res) => {
-    
-    User.findById(req.body._id)
+router.put('/checkout', middleware.checkAuthentification, (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
+ 
+    User.findById(req.user.userId)
         .then((data) => {
 
             // create timestamp
@@ -166,17 +249,18 @@ router.put('/checkout', (req, res) => {
 
 
 // Add item to shoppingcart
-router.put('/shoppingCart', async (req, res) => {
-    if (!req.body._id) {
-        return res.status(401).json('Log-in to add to shoppingcart')
+router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) => {
+
+    if (!req.user) {
+        return res.status(400).json(null)
     }
 
     const movieCount = req.body.count
     const movieID = req.body.movieID
-    const userID = req.body._id;
+    const userID = req.user.userId;
 
     let user = await User.findById(userID);
-    // console.log(user.shoppingCart)
+    console.log(user.shoppingCart)
 
     let movie = await Movie.findById(movieID);
     movie = movie.toJSON();
@@ -249,11 +333,11 @@ router.put('/shoppingCart/remove', async (req, res) => {
 //function deleteShoppingCart() {
     router.put('/shoppingCart/delete', (req, res) => {
 
-        if (!req.body._id) {
-            return res.status(401).json('Log-in to add to shoppingcart')
+        if (!req.user) {
+            return res.status(400).json(null)
         }
 
-        User.findById(req.body._id)
+        User.findById(req.user.userId)
             .then((data) => {
                 data.shoppingCart = []
                 data.save()
