@@ -97,6 +97,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
                         autoFocus
                         type="file"
                         name="image"
+                        accept="image/*"
                     />
                 </Form.Group>  
 
@@ -139,12 +140,15 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
                 </Form.Group>
                 <Form.Group size='lg' controlId='genre'>
                     <Form.Label>Genre</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        name="genre"
-                        type="genre"
-                        defaultValue={genre}
-                    />
+                    <Form.Control as="select" autoFocus name="genre" type="genre" defaultValue={genre}>
+                        <option>Action</option>
+                        <option>Comdedy</option>
+                        <option>Fantasy</option>
+                        <option>Horror</option>
+                        <option>Mystery</option>
+                        <option>Romance</option>
+                        <option>Thriller</option>
+                      </Form.Control>
                 </Form.Group>          
                 <Button block size='lg' type='submit'>Submit changes</Button>
             </Form> 

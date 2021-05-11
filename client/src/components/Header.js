@@ -16,13 +16,17 @@ const Header = ({cart, search_movie, filter_movies, user}) => {
             <RBS.Nav className="mr-auto">
                 <RBS.Nav.Link href="/">Home</RBS.Nav.Link>
                 <RBS.NavDropdown title="Genre" id="basic-nav-dropdown">
-                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Action</RBS.NavDropdown.Item>
-                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Comedy</RBS.NavDropdown.Item> 
-                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Drama</RBS.NavDropdown.Item>
-                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Rom-Com</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Action")}>Action</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Comedy")}>Comedy</RBS.NavDropdown.Item> 
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Drama")}>Drama</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Fantasy")}>Fantasy</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horror")}>Horror</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Mystery")}>Mystery</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Romance")}>Romance</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Thriller")}>Thriller</RBS.NavDropdown.Item>
                 </RBS.NavDropdown>
                 <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
-                <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>
+                {(user != null && user.isAdmin) && <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>}
                 <RBS.Nav.Link href="/test">Test</RBS.Nav.Link>
                 </RBS.Nav>
                 <RBS.Form inline>
