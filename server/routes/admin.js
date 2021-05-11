@@ -21,16 +21,20 @@ const router = express.Router();
 
 // Add a new movie
 router.post('/movie', upload.single('image'), (req, res) => {
+
+    let input_image = {}
+    
+    if(!req.file) input_image = null
+    else {
+        input_image = {data: fs.readFileSync(path.join(__dirname + "/imageUploads/" + req.file.filename)), contentType: 'image/png'}
+    }
     
     const movie = new Movie({
         title: req.body.title,
         shortDescription: req.body.shortDescription,
         longDescription: req.body.longDescription,
         price: req.body.price,
-        img: {
-            data: fs.readFileSync(path.join(__dirname + "/imageUploads/" + req.file.filename)),
-            contentType: 'image/png'
-        },
+        img: input_image,
         genre: req.body.genre,
     }) 
 
