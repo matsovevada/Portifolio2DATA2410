@@ -16,9 +16,9 @@ const Header = ({cart, search_movie, filter_movies}) => {
                 <RBS.Nav.Link href="/">Home</RBS.Nav.Link>
                 <RBS.NavDropdown title="Genre" id="basic-nav-dropdown">
                     <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Action</RBS.NavDropdown.Item>
-                    <RBS.NavDropdown.Item href="/tech">Comedy</RBS.NavDropdown.Item>
-                    <RBS.NavDropdown.Item href="/clothes">Drama</RBS.NavDropdown.Item>
-                    <RBS.NavDropdown.Item href="/furniture">Rom-Com</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Comedy</RBS.NavDropdown.Item> 
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Drama</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Rom-Com</RBS.NavDropdown.Item>
                 </RBS.NavDropdown>
                 <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
                 <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>

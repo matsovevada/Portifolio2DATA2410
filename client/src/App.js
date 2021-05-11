@@ -185,11 +185,13 @@ function filter_movies(filter) {
   const movies = await fetchMovies_filter();
 
     setMovies(movies)
+    //SET filterText visiblilty 
+    
   }
 getMovies_search();
 
     async function fetchMovies_filter() {
-        
+
       const requestOptions = {
         method: 'GET',
         credentials: 'include',
@@ -325,10 +327,13 @@ useEffect(() => {
   return (
     <div>
       <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} />
+      {<div id='show_filterText'></div>}
+      {<div id='show_searchText'></div>}
       <Route
         exact path='/'
         render={(props) => (
-          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie} />
+          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie}/>
+        
         )}
       />
       <Route path='/about-us' component={AboutUs}/>
