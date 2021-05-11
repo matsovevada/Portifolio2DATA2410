@@ -27,10 +27,10 @@ const Header = ({cart, search_movie, filter_movies, user}) => {
                 </RBS.NavDropdown>
                 <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
                 {(user != null && user.isAdmin) && <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>}
-                <RBS.Nav.Link href="/test">Test</RBS.Nav.Link>
+                {user != null && <RBS.Nav.Link href="/orderhistory">Orderhistory</RBS.Nav.Link>}
                 </RBS.Nav>
                 <RBS.Form inline>
-                    <RBS.FormControl type="text" id="search_string"  placeholder="Search" className="mr-sm-2" />
+                    <RBS.FormControl type="text" id="search_string"  placeholder="Search for title" className="mr-sm-2" />
                     <RBS.Button variant="outline-danger" id='searchbar' onClick={() => search_movie(document.getElementById('search_string').value)}>Search</RBS.Button>
                 </RBS.Form>
                 {user != null && <RBS.Navbar.Brand href="/cart"><NavbarCart cart={cart}/></RBS.Navbar.Brand>}
