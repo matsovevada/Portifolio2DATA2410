@@ -92,7 +92,19 @@ code {
   margin-right: 5px;
 
 }
-/*-----------------------------HEADER-----------------------------*/ 
+/*-----------------------------Register Movie-----------------------------*/ 
+.registerMovieErrorLabelHidden {
+  color: red;
+  margin-left: 20px;
+  visibility: hidden;
+}
+
+.registerMovieErrorLabelVisible {
+  color: red;
+  margin-left: 20px;
+  visibility: visible;
+}
+
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 

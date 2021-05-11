@@ -20,7 +20,7 @@ const Header = ({cart, user}) => {
                     <RBS.NavDropdown.Item href="/furniture">Rom-Com</RBS.NavDropdown.Item>
                 </RBS.NavDropdown>
                 <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
-                <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>
+                {(user != null && user.isAdmin) && <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>}
                 <RBS.Nav.Link href="/test">Test</RBS.Nav.Link>
                 </RBS.Nav>
                 <RBS.Form inline>
