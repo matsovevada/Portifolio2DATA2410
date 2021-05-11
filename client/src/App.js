@@ -90,8 +90,6 @@ function updateCart(movie) {
       if(checkCount(movie)) {
         let movieInCart = checkCount(movie)
         movieInCart.count = movieInCart.count + 1 
-        console.log("MOVIE COUNT")
-        console.log(movieInCart.count)
         const cart = await addMovieToCart(movieInCart);
         setCart(cart)   
       }
@@ -157,6 +155,54 @@ getMovies();
     return data
   }
 } 
+
+//Search db for movie for given string
+function search_movie(title) {
+  async function getMovies_search() {
+    const movies = await fetchMovies_search();
+
+    setMovies(movies)
+  }
+getMovies_search();
+
+    async function fetchMovies_search() {
+    
+      const requestOptions = {
+        method: 'GET',
+        credentials: 'include',
+      }
+
+      const res = await fetch('http://localhost:8080/webshop/movies/' + title, requestOptions);
+      const data = await res.json()
+
+      return data
+  }
+}
+
+//Filter movies for given string
+function filter_movies(filter) {
+  async function getMovies_search() {
+  const movies = await fetchMovies_filter();
+
+    setMovies(movies)
+    //SET filterText visiblilty 
+    
+  }
+getMovies_search();
+
+    async function fetchMovies_filter() {
+
+      const requestOptions = {
+        method: 'GET',
+        credentials: 'include',
+      }
+
+      const res = await fetch('http://localhost:8080/webshop/movies/filterBy/' + filter, requestOptions);
+      const data = await res.json()
+
+      return data
+  }
+}
 
 async function admin_deleteMovieFromDB(movie) {
 
@@ -280,11 +326,14 @@ useEffect(() => {
 
   return (
     <div>
-      <Header cart={cart} user={user}/>
+      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} />
+      {<div id='show_filterText'></div>}
+      {<div id='show_searchText'></div>}
       <Route
         exact path='/'
         render={(props) => (
-          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie} user={user}/>
+          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie}/>
+        
         )}
       />
       <Route path='/about-us' component={AboutUs}/>

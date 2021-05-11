@@ -2,9 +2,6 @@ import React from 'react'
 
 const NavbarCart = ({cart}) => {
 
-    console.log("TEST")
-    console.log(cart)
-
     function getNumberOfCartItems() {
 
         let numberOfCartItems = 0;

@@ -41,7 +41,6 @@ router.post('/movie', upload.single('image'), (req, res) => {
             res.status(200).json(data)
         })
         .catch((err) => {
-            console.log(err)
             res.status(400).json({
                 "Status": 400,
                 "Message": "Couldn't add movie"
