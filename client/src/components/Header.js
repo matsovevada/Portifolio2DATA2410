@@ -4,7 +4,7 @@ import logo from '../pics/NewNewNideoVova.svg'
 import NavbarCart from './NavbarCart'
 
 
-const Header = ({cart, search_movie}) => {
+const Header = ({cart, search_movie, filter_movies}) => {
 
 
     return (
@@ -15,7 +15,7 @@ const Header = ({cart, search_movie}) => {
             <RBS.Nav className="mr-auto">
                 <RBS.Nav.Link href="/">Home</RBS.Nav.Link>
                 <RBS.NavDropdown title="Genre" id="basic-nav-dropdown">
-                    <RBS.NavDropdown.Item href="/food">Action</RBS.NavDropdown.Item>
+                    <RBS.NavDropdown.Item onClick={() => filter_movies("Horor")}>Action</RBS.NavDropdown.Item>
                     <RBS.NavDropdown.Item href="/tech">Comedy</RBS.NavDropdown.Item>
                     <RBS.NavDropdown.Item href="/clothes">Drama</RBS.NavDropdown.Item>
                     <RBS.NavDropdown.Item href="/furniture">Rom-Com</RBS.NavDropdown.Item>

@@ -3,52 +3,49 @@ const Movie = require('../models/Movie')
 
 const router = express.Router();
 
+
+// get all movies matching search param
 router.get('/movies/:title', (req, res) => {
-
-    // get all movies matching search param
-    if (req.params.title) {
-        console.log("TITLE IN BACKEND")
-        console.log(req.params.title)
-        Movie.find({title: req.params.title})
-        .then((data) => {
-            res.status(200).json(data)
+    Movie.find({title: req.params.title})
+    .then((data) => {
+        res.status(200).json(data)
+    })
+    .catch((err) => {
+        res.status(404).json({
+            "Status": 404,
+            "Message": "Couldn't find movies"
         })
-        .catch((err) => {
-            res.status(404).json({
-                "Status": 404,
-                "Message": "Couldn't find movies"
-            })
-        });
-    }
-
-    // get all movies by genre
-    else if (req.body.genre) {
-        Movie.find({genre: req.body.genre})
-        .then((data) => {
-            res.status(200).json(data)
-        })
-        .catch((err) => {
-            res.status(404).json({
-                "Status": 404,
-                "Message": "Couldn't find movies"
-            })
-        });
-    }
-
-    // get all movies
-    else {
-        Movie.find()
-        .then((data) => {
-            res.status(200).json(data)
-        })
-        .catch((err) => {
-            res.status(404).json({
-                "Status": 404,
-                "Message": "Couldn't find movies"
-            })
-        });
-    }
+    });
 })
+
+// get all movies by genre
+router.get('/movies/filterBy/:genre', (req, res) => {
+    Movie.find({genre: req.params.genre})
+    .then((data) => {
+        res.status(200).json(data)
+    })
+    .catch((err) => {
+        res.status(404).json({
+            "Status": 404,
+            "Message": "Couldn't find movies"
+        })
+    });
+})
+
+// get all movies
+router.get('/movies/', (req, res) => {
+    Movie.find()
+    .then((data) => {
+        res.status(200).json(data)
+    })
+    .catch((err) => {
+        res.status(404).json({
+            "Status": 404,
+            "Message": "Couldn't find movies"
+        })
+    });    
+})
+
 
 router.delete('/movies', (req, res) => {
     
