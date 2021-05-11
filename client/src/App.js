@@ -7,7 +7,6 @@ import Register from './components/Register.js'
 import FormMovie from './components/FormMovie.js'
 import Cart from './components/Cart.js'
 import Movies from './components/Movies.js'
-import Test from './components/Test.js'
 import Orderhistory from './components/Orderhistory'
 import ChangeUserInfo from './components/ChangeUserInfo'
 import {Route} from 'react-router-dom';
@@ -162,7 +161,12 @@ function search_movie(title) {
     const movies = await fetchMovies_search();
 
     setMovies(movies)
+    document.getElementById('showSearchText').className = 'setSearchTextVisible'
+    document.getElementById('showSearchText').innerText = 'Search results for: ' +  title
+    if(movies.length == 0) {
+      document.getElementById('showSearchText').innerText = 'Search results for: ' +  title + '\n\n' + 'No result found. Try a different search term'
   }
+}
 getMovies_search();
 
     async function fetchMovies_search() {
@@ -184,10 +188,11 @@ function filter_movies(filter) {
   async function getMovies_search() {
   const movies = await fetchMovies_filter();
 
-    setMovies(movies)
-    //SET filterText visiblilty 
-    
-  }
+  setMovies(movies)
+  document.getElementById('showFilterText').className = 'setFilterTextVisible'
+  document.getElementById('showFilterText').innerText = 'Showing movies for genre: ' +  filter
+  
+}
 getMovies_search();
 
     async function fetchMovies_filter() {
@@ -275,7 +280,6 @@ async function deleteCartAndUpdateOrderHistory() {
 }
 
 function checkout() {
-
     async function checkout() {
       const user = await deleteCartAndUpdateOrderHistory();
       setCart([])
@@ -327,8 +331,8 @@ useEffect(() => {
   return (
     <div>
       <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} user={user} />
-      {<div id='show_filterText'></div>}
-      {<div id='show_searchText'></div>}
+      {<div id='showSearchText' className='setSearchTextHidden'></div>}
+      {<div id='showFilterText' className='setFilterTextHidden'></div>}
       <Route
         exact path='/'
         render={(props) => (
@@ -347,7 +351,7 @@ useEffect(() => {
         )}
       />
       <Route
-        path='/test'
+        path='/orderhistory'
         render={(props) => (
           <Orderhistory {...props}  orders={orderHistory}/>
         )}
