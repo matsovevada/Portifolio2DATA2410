@@ -326,7 +326,7 @@ useEffect(() => {
 
   return (
     <div>
-      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} />
+      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} user={user} />
       {<div id='show_filterText'></div>}
       {<div id='show_searchText'></div>}
       <Route

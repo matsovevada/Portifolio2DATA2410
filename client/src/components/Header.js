@@ -5,7 +5,7 @@ import NavbarCart from './NavbarCart'
 import LogoutGoogle from './LogoutGoogle'
 
 
-const Header = ({cart, search_movie, filter_movies}) => {
+const Header = ({cart, search_movie, filter_movies, user}) => {
 
 
     return (
