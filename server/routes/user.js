@@ -41,14 +41,12 @@ router.post('/login', (req, res) => {
 
                 // user is in db
                 if (data) {
-                    console.log('user in db')
                     res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000  }) // 24 hours
                     res.status(200).json({'userInDb': true})
                 }
 
                 // user not in db
                 else {
-                    console.log('user not in db')
                     res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000 }) // 24 hours
                     res.status(200).json({'userInDb': false})
                 }

@@ -1,5 +1,7 @@
 const express = require('express')
 const Movie = require('../models/Movie')
+const User = require('../models/User')
+const middleware = require('../middleware');
 
 // Image up/down-loading
 const fs = require('fs')
@@ -20,36 +22,50 @@ const upload = multer({ storage: storage });
 const router = express.Router();
 
 // Add a new movie
-router.post('/movie', upload.single('image'), (req, res) => {
+router.post('/movie', [upload.single('image'), middleware.checkAuthentification], (req, res) => {
 
-    let input_image = {}
-    
-    if(!req.file) input_image = null
-    else {
-        input_image = {data: fs.readFileSync(path.join(__dirname + "/imageUploads/" + req.file.filename)), contentType: 'image/png'}
+    if (!req.user) {
+        return res.status(400).json(null)
     }
-    
-    const movie = new Movie({
-        title: req.body.title,
-        shortDescription: req.body.shortDescription,
-        longDescription: req.body.longDescription,
-        price: req.body.price,
-        img: input_image,
-        genre: req.body.genre,
-    }) 
 
-    
+    User.findById(req.user.userId)
+        .then(data => {
 
-    movie.save()
-        .then((data) => {
-            res.status(200).json(data)
+            if (!data.isAdmin) return res.status(401).json({"illegalRequest": true})
+
+            else {
+
+                let input_image = {}
+    
+                if(!req.file) input_image = null
+                else {
+                    input_image = {data: fs.readFileSync(path.join(__dirname + "/imageUploads/" + req.file.filename)), contentType: 'image/png'}
+                }
+                
+                const movie = new Movie({
+                    title: req.body.title,
+                    shortDescription: req.body.shortDescription,
+                    longDescription: req.body.longDescription,
+                    price: req.body.price,
+                    img: input_image,
+                    genre: req.body.genre,
+                }) 
+
+                
+
+                movie.save()
+                    .then((data) => {
+                        res.status(200).json(data)
+                    })
+                    .catch((err) => {
+                        res.status(400).json({
+                            "Status": 400,
+                            "Message": "Couldn't add movie"
+                        })
+                    })
+            }
         })
-        .catch((err) => {
-            res.status(400).json({
-                "Status": 400,
-                "Message": "Couldn't add movie"
-            })
-        })
+        .catch(err => console.log(err))
 })
 
 // Delete a movie
