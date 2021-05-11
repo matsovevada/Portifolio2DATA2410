@@ -47,7 +47,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 { showExtendedInformation ? <h3>Genre: {movie.genre}</h3> : null }
                 <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} 
                 img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={DefaultPicture} className='MovieViewPicture'/>} />
-                {(user != null && user.isAdmin == false) && <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>}
+                {((user == null) || (user != null && user.isAdmin == false)) && <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>}
             </div>
         </div>
     )
