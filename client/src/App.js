@@ -332,7 +332,7 @@ useEffect(() => {
       <Route
         exact path='/'
         render={(props) => (
-          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie}/>
+          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie} user={user}/>
         
         )}
       />
