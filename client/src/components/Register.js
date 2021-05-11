@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Input from './Input.js'
@@ -11,16 +11,37 @@ export default function Register() {
     const [zipcode, setZipcode] = useState('')
     const [city, setCity] = useState('')
 
+    const [showErrorFirstname, setShowErrorFirstname] = useState(false)
+    const [showErrorLastname, setShowErrorLastname] = useState(false)
+    const [showErrorAddress, setShowErrorAddress] = useState(false)
+    const [showErrorZipcode, setShowErrorZipcode] = useState(false)
+    const [showErrorCity, setShowErrorCity] = useState(false)
 
-    function checkLength() {
-        return firstname.length > 2 
-        && lastname.length > 2
+    useEffect(() => {
+        if (firstname.length < 2) setShowErrorFirstname(true)
+        else setShowErrorFirstname(false)
+
+        if (lastname.length < 2) setShowErrorLastname(true)
+        else setShowErrorLastname(false)
+
+        if (address.length < 6) setShowErrorAddress(true)
+        else setShowErrorAddress(false)
+
+        if (zipcode.length < 4) setShowErrorZipcode(true)
+        else setShowErrorZipcode(false)
+
+        if (city.length < 2) setShowErrorCity(true)
+        else setShowErrorCity(false)
+      })
+
+      function checkLength() {
+        return firstname.length > 1 
+        && lastname.length > 1
         && address.length > 5
         && zipcode.length > 3
-        && city.length > 2;
+        && city.length > 1;
     }
-
-
+   
     function regUser(e){
         e.preventDefault()
         const data = {
@@ -61,11 +82,11 @@ export default function Register() {
     return (
         <div className='Register'>
             <Form>
-                <Input title='First name' value={firstname} type='firstname' set={setFirstname}/>
-                <Input title='Last name' value={lastname} type='lastname' set={setLastname}/>
-                <Input title='Address' value={address} type='address' set={setAddress}/>
-                <Input title='Zipcode' value={zipcode} type='zipcode' set={setZipcode}/>
-                <Input title='City' value={city} type='city' set={setCity}/>
+                <Input title='First name' value={firstname} type='firstname' set={setFirstname} errorText={'First name must have at least two characters'} setShowError={setShowErrorFirstname} showError={showErrorFirstname}/>
+                <Input title='Last name' value={lastname} type='lastname' set={setLastname} errorText={'Last name must have at least two characters'} setShowError={setShowErrorLastname} showError={showErrorLastname}/>
+                <Input title='Address' value={address} type='address' set={setAddress} errorText={'Address must have at least six characters'} setShowError={setShowErrorAddress} showError={showErrorAddress}/>
+                <Input title='Zipcode' value={zipcode} type='zipcode' set={setZipcode} errorText={'Zipcode name must have at least four characters'} setShowError={setShowErrorZipcode} showError={showErrorZipcode}/>
+                <Input title='City' value={city} type='city' set={setCity} errorText={'City must have at least two characters'} setShowError={setShowErrorCity} showError={showErrorCity}/>
                 <Button variant='danger' block size='lg' type='submit' disabled={!checkLength()} onClick={regUser}
                 >Register</Button>
             </Form>        

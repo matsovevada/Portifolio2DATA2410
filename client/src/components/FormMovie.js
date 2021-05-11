@@ -145,7 +145,7 @@ export default function Register() {
                     <Form.Label id='registerMovieGenreError' className='registerMovieErrorLabelHidden'>Price must be a number bigger than 0</Form.Label>
                     <Form.Control as="select" name="genre" type="genre" as='select' onChange={event => (event)}>
                         <option>Action</option>
-                        <option>Comdedy</option>
+                        <option>Comedy</option>
                         <option>Fantasy</option>
                         <option>Horror</option>
                         <option>Mystery</option>

@@ -184,6 +184,33 @@ code {
   text-align: center;
   text-decoration: underline;
 }
+/*-----------------------------Search and filter screens-----------------------------*/ 
+
+.setSearchTextHidden {
+  visibility: hidden;
+}
+
+.setSearchTextVisible {
+  color: black;
+  margin-left: 20px;
+  visibility: visible;
+  font-size: 40px;
+}
+
+.setFilterTextHidden {
+  visibility: hidden;
+}
+
+
+.setFilterTextVisible {
+  color: black;
+  margin-left: 100px;
+  visibility: visible;
+  font-size: 40px;
+}
+
+
+
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 
