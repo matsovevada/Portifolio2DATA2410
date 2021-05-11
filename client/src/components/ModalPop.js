@@ -43,17 +43,21 @@ export default function ModalPop({title, longDescription, img, price, genre, upd
           style={customStyles}
           contentLabel="Example Modal"
         >
-
-          <h2 ref={_subtitle => (subtitle = _subtitle)}>{title}</h2>
-          <div>
-            <p>Long description: {longDescription}</p>
-            <p>Genre: {genre}</p>
-            <p>Price: {price} NOK</p>
+          <div className='MoviePop'>
+            <div className='MoviePopImg'>{img}</div>
+            <div className='MoviePopInfo'>
+              <h2 ref={_subtitle => (subtitle = _subtitle)}>{title}</h2>
+              <div>
+                <p className='MoviePopDesc'>Description:</p>
+                <p>{longDescription}</p>
+                <p>Genre: {genre}</p>
+                <p>Price: {price} NOK</p>
+                <Button variant='secondary' onClick={updateCart}>Add to cart</Button>
+                {' '}
+                <Button onClick={closeModal}>Close</Button>
+              </div>
+            </div>
           </div>
-          <div>{img}</div>
-          <Button variant='secondary' onClick={updateCart}>Add to cart</Button>
-          {' '}
-          <Button onClick={closeModal}>Close</Button>
         </Modal>
       </>
     );

@@ -31,9 +31,11 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
         <div className='MovieViewBox'>
             { movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : null} 
             <div className='MovieViewInfo'>
-                <h3 className='movieViewTitle'>Title: {movie.title}</h3>
-                <h3 className='movieViewDescri'>Description: {movie.shortDescription}</h3>
-                <h3 className='movieViewPrice'>Price: {movie.price}</h3>
+                <h2 className='MovieViewTitle'>{movie.title}</h2>
+                <h3 className='MovieViewDesTitle'>Description:</h3>
+                <h3 className='MovieViewDescri'>{movie.shortDescription}</h3>
+                <h3 className='MovieViewGenre'>Genre: {movie.genre}</h3>
+                <h3 className='MovieViewPrice'>Price: {movie.price}</h3>
                 
                 {/* Adminfunction!! */}
                 {(user != null && user.isAdmin) && <RBS.Button variant='danger' onClick={() => admin_deleteMovie(movie)}>Delete</RBS.Button>}
