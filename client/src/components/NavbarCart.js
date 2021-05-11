@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from 'react-bootstrap/Button'
 
 const NavbarCart = ({cart}) => {
 
@@ -15,7 +16,7 @@ const NavbarCart = ({cart}) => {
 
     return (
         <div>
-            <h3>Cart ({getNumberOfCartItems()})</h3>
+            <Button variant='outline-danger'>Cart ({getNumberOfCartItems()})</Button>
         </div>
     )
 }

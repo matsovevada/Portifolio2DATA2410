@@ -9,7 +9,7 @@ const Header = ({cart, search_movie, filter_movies, user}) => {
 
 
     return (
-        <RBS.Navbar bg="light" expand="lg" fixed='top'>
+        <RBS.Navbar bg="light" expand="xl" fixed='top'>
             <img src={logo} alt='logo' id='headerLogo'></img>
             <RBS.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <RBS.Navbar.Collapse id="basic-navbar-nav">
@@ -27,10 +27,10 @@ const Header = ({cart, search_movie, filter_movies, user}) => {
                 </RBS.Nav>
                 <RBS.Form inline>
                     <RBS.FormControl type="text" id="search_string"  placeholder="Search" className="mr-sm-2" />
-                    <RBS.Button variant="outline-success" id='searchbar' onClick={() => search_movie(document.getElementById('search_string').value)}>Search</RBS.Button>
+                    <RBS.Button variant="outline-danger" id='searchbar' onClick={() => search_movie(document.getElementById('search_string').value)}>Search</RBS.Button>
                 </RBS.Form>
                 {user != null && <RBS.Navbar.Brand href="/cart"><NavbarCart cart={cart}/></RBS.Navbar.Brand>}
-                {user == null ? <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/login'>Login</RBS.Button> : <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/changeUserInfo'>{user.email}</RBS.Button>}
+                {user == null ? <RBS.Button variant="outline-danger" id='searchbar' type='submit' href='/login'>Login</RBS.Button> : <RBS.Button variant="outline-danger" id='searchbar' type='submit' href='/changeUserInfo'>{user.email}</RBS.Button>}
                 {user != null && <LogoutGoogle/>}
             </RBS.Navbar.Collapse>
         </RBS.Navbar>

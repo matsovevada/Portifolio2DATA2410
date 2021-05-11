@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Input from './Input'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 export default function ChangeUserInfo({user}){
     
@@ -55,13 +56,15 @@ export default function ChangeUserInfo({user}){
         }
 
     return (
-        <div>
-            <h1>Change user info:</h1>
-            <Input title={user != null && user.firstname} value={firstname} type='firstname' set={setFirstname} placeholder={'new firstname'}/>
-            <Input title={user != null && user.lastname} value={lastname} type='lastname' set={setLastname} placeholder={'new lastname'}/>
-            <Input title={user != null && user.address} value={address} type='address' set={setAddress} placeholder={'new address'}/>
-            <Input title={user != null && user.zipcode} value={zipcode} type='zipcode' set={setZipcode} placeholder={'new zipcode'}/>
-            <Input title={user != null && user.city} value={city} type='city' set={setCity} placeholder={'new city'}/>
-            <Button disabled={!checkLength()} onClick={editUser}>Change</Button>
+        <div className='ChangeUserInfo'>
+            <Form>
+                <h1>Change user info:</h1>
+                <Input title={user != null && user.firstname} value={firstname} type='firstname' set={setFirstname} placeholder={'new firstname'}/>
+                <Input title={user != null && user.lastname} value={lastname} type='lastname' set={setLastname} placeholder={'new lastname'}/>
+                <Input title={user != null && user.address} value={address} type='address' set={setAddress} placeholder={'new address'}/>
+                <Input title={user != null && user.zipcode} value={zipcode} type='zipcode' set={setZipcode} placeholder={'new zipcode'}/>
+                <Input title={user != null && user.city} value={city} type='city' set={setCity} placeholder={'new city'}/>
+                <Button variant='danger' disabled={!checkLength()} onClick={editUser}>Change</Button>
+            </Form>
         </div>
     )};

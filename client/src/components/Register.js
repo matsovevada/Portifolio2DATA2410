@@ -66,7 +66,7 @@ export default function Register() {
                 <Input title='Address' value={address} type='address' set={setAddress}/>
                 <Input title='Zipcode' value={zipcode} type='zipcode' set={setZipcode}/>
                 <Input title='City' value={city} type='city' set={setCity}/>
-                <Button block size='lg' type='submit' disabled={!checkLength()} onClick={regUser}
+                <Button variant='danger' block size='lg' type='submit' disabled={!checkLength()} onClick={regUser}
                 >Register</Button>
             </Form>        
         </div>
