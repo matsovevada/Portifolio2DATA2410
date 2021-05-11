@@ -139,87 +139,90 @@ function checkPrice(event) {
           contentLabel="Admin modal"
         >
 
-        <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit movie</h2>
+        <h2 ref={_subtitle => (subtitle = _subtitle)} className='AdminPopTitle'>Edit movie</h2>
 
-       
-        <div>{img}</div>
-        
-        <div className='editMovie'>
-          <Form action={url_action} method="PUT" encType="multipart/form-data" onSubmit={handleSubmit}>
+        <div className='AdminPop'>
+          <div className='AdminPopImg'>{img}</div>
+          
+          <div className='editMovie'>
+            <Form action={url_action} method="PUT" encType="multipart/form-data" onSubmit={handleSubmit}>
 
-                <Form.Group size='lg' controlId='image'>
-                    <Form.Label>Edit image</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="file"
-                        name="image"
-                        accept="image/*"
-                    />
-                </Form.Group>  
+                  <Form.Group size='lg' controlId='image'>
+                      <Form.Label>Edit image</Form.Label>
+                      <Form.Control
+                          autoFocus
+                          type="file"
+                          name="image"
+                          accept="image/*"
+                      />
+                  </Form.Group>  
 
-                <Form.Group size='lg' controlId='title'>
-                    <Form.Label>Title</Form.Label>
-                    <Form.Label id='registerMovieTitleError' className='registerMovieErrorLabelHidden'>Title can't be blank</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        name="title"
-                        type="title"
-                        defaultValue={title}
-                        onChange={event => checkTitle(event)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" controlId="shortDescription">
-                    <Form.Label className='Label'>Short description</Form.Label>
-                    <Form.Label id='registerMovieShortDescriptionError' className='registerMovieErrorLabelHidden'>Short description can't be blank</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        name="shortDescription"
-                        type="shortDescription"
-                        defaultValue={shortDescription}
-                        onChange={event => checkShortDescription(event)}
-                    />
-                </Form.Group>
-                <Form.Group size='lg' controlId='longDescription'>
-                    <Form.Label>Long description</Form.Label>
-                    <Form.Label id='registerMovieLongDescriptionError' className='registerMovieErrorLabelHidden'>Long description can't be blank</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        name="longDescription"
-                        type="longDescription"
-                        defaultValue={longDescription}
-                        as='textarea'
-                        onChange={event => checkLongDescription(event)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" controlId="price">
-                    <Form.Label>Price</Form.Label>
-                    <Form.Label id='registerMoviePriceError' className='registerMovieErrorLabelHidden'>Price must be a number bigger than 0</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        name="price"
-                        type="price"
-                        defaultValue={price}
-                        onChange={event => checkPrice(event)}
-                    />
-                </Form.Group>
-                <Form.Group size='lg' controlId='genre'>
-                    <Form.Label>Genre</Form.Label>
-                    <Form.Control as="select" autoFocus name="genre" type="genre" defaultValue={genre}>
-                        <option>Action</option>
-                        <option>Comdedy</option>
-                        <option>Fantasy</option>
-                        <option>Horror</option>
-                        <option>Mystery</option>
-                        <option>Romance</option>
-                        <option>Thriller</option>
-                      </Form.Control>
-                </Form.Group>          
-                <Button block size='lg' type='submit'>Submit changes</Button>
-            </Form> 
+                  <Form.Group size='lg' controlId='title'>
+                      <Form.Label>Title</Form.Label>
+                      <Form.Label id='registerMovieTitleError' className='registerMovieErrorLabelHidden'>Title can't be blank</Form.Label>
+                      <Form.Control
+                          autoFocus
+                          name="title"
+                          type="title"
+                          defaultValue={title}
+                          onChange={event => checkTitle(event)}
+                      />
+                  </Form.Group>
+                  <Form.Group size="lg" controlId="shortDescription">
+                      <Form.Label className='Label'>Short description</Form.Label>
+                      <Form.Label id='registerMovieShortDescriptionError' className='registerMovieErrorLabelHidden'>Short description can't be blank</Form.Label>
+                      <Form.Control
+                          autoFocus
+                          name="shortDescription"
+                          type="shortDescription"
+                          defaultValue={shortDescription}
+                          onChange={event => checkShortDescription(event)}
+                      />
+                  </Form.Group>
+                  <Form.Group size='lg' controlId='longDescription'>
+                      <Form.Label>Long description</Form.Label>
+                      <Form.Label id='registerMovieLongDescriptionError' className='registerMovieErrorLabelHidden'>Long description can't be blank</Form.Label>
+                      <Form.Control
+                          autoFocus
+                          name="longDescription"
+                          type="longDescription"
+                          defaultValue={longDescription}
+                          as='textarea'
+                          onChange={event => checkLongDescription(event)}
+                      />
+                  </Form.Group>
+                  <Form.Group size="lg" controlId="price">
+                      <Form.Label>Price</Form.Label>
+                      <Form.Label id='registerMoviePriceError' className='registerMovieErrorLabelHidden'>Price must be a number bigger than 0</Form.Label>
+                      <Form.Control
+                          autoFocus
+                          name="price"
+                          type="price"
+                          defaultValue={price}
+                          onChange={event => checkPrice(event)}
+                      />
+                  </Form.Group>
+                  <Form.Group size='lg' controlId='genre'>
+                      <Form.Label>Genre</Form.Label>
+                      <Form.Control as="select" autoFocus name="genre" type="genre" defaultValue={genre}>
+                          <option>Action</option>
+                          <option>Comdedy</option>
+                          <option>Fantasy</option>
+                          <option>Horror</option>
+                          <option>Mystery</option>
+                          <option>Romance</option>
+                          <option>Thriller</option>
+                        </Form.Control>
+                  </Form.Group>
+                  <div className='AdminPopBtn'>          
+                    <Button variant='outline-danger' block size='md' type='submit'>Submit changes</Button>
+                    <Button variant='danger' block size='md' onClick={closeModal}>Close</Button>
+                  </div>
+              </Form> 
 
+            </div>
           </div>
-       
-          <Button variant='danger' onClick={closeModal}>Close</Button>
+          
         </Modal>
       </>
     );
