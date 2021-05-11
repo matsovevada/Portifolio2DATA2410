@@ -4,8 +4,9 @@ import logo from '../pics/NewNewNideoVova.svg'
 import NavbarCart from './NavbarCart'
 
 
+const Header = ({cart, search_movie}) => {
 
-const Header = ({cart}) => {
+
     return (
         <RBS.Navbar bg="light" expand="lg" fixed='top'>
             <img src={logo} alt='logo' id='headerLogo'></img>
@@ -24,8 +25,8 @@ const Header = ({cart}) => {
                 <RBS.Nav.Link href="/test">Test</RBS.Nav.Link>
                 </RBS.Nav>
                 <RBS.Form inline>
-                    <RBS.FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <RBS.Button variant="outline-success" id='searchbar'>Search</RBS.Button>
+                    <RBS.FormControl type="text" id="search_string"  placeholder="Search" className="mr-sm-2" />
+                    <RBS.Button variant="outline-success" id='searchbar' onClick={() => search_movie(document.getElementById('search_string').value)}>Search</RBS.Button>
                 </RBS.Form>
                 <RBS.Navbar.Brand href="/cart"><NavbarCart cart={cart}/></RBS.Navbar.Brand>
                 <RBS.Button variant="outline-success" id='searchbar' type='submit' href='/login'>Login</RBS.Button>

@@ -3,11 +3,13 @@ const Movie = require('../models/Movie')
 
 const router = express.Router();
 
-router.get('/movies', (req, res) => {
+router.get('/movies/:title', (req, res) => {
 
     // get all movies matching search param
-    if (req.body.title) {
-        Movie.find({title: req.body.title})
+    if (req.params.title) {
+        console.log("TITLE IN BACKEND")
+        console.log(req.params.title)
+        Movie.find({title: req.params.title})
         .then((data) => {
             res.status(200).json(data)
         })

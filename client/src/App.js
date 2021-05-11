@@ -158,6 +158,32 @@ getMovies();
   }
 } 
 
+//Search db for movie for given string
+function search_movie(title) {
+  async function getMovies_search() {
+    const movies = await fetchMovies_search();
+
+    setMovies(movies)
+  }
+getMovies_search();
+
+    async function fetchMovies_search() {
+      console.log("TITLE I FRONT")
+      console.log(title)
+
+  
+      const requestOptions = {
+        method: 'GET',
+        credentials: 'include',
+      }
+
+      const res = await fetch('http://localhost:8080/webshop/movies/' + title, requestOptions);
+      const data = await res.json()
+
+      return data
+  }
+}
+
 async function admin_deleteMovieFromDB(movie) {
 
   let id = movie._id
@@ -280,7 +306,7 @@ useEffect(() => {
 
   return (
     <div>
-      <Header cart={cart}/>
+      <Header cart={cart} search_movie={search_movie} />
       <Route
         exact path='/'
         render={(props) => (
