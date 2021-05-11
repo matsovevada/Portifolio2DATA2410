@@ -17,7 +17,7 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root')
 
-export default function ModalPop({title, longDescription, img, price, genre, updateCart}){
+export default function ModalPop({movie, title, longDescription, img, price, genre, updateCart}){
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
   function openModal() {
@@ -52,7 +52,7 @@ export default function ModalPop({title, longDescription, img, price, genre, upd
                 <p>{longDescription}</p>
                 <p>Genre: {genre}</p>
                 <p>Price: {price} NOK</p>
-                <Button variant='secondary' onClick={updateCart}>Add to cart</Button>
+                <Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</Button>
                 {' '}
                 <Button onClick={closeModal}>Close</Button>
               </div>

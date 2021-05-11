@@ -47,7 +47,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 
                 {/* Toggle pop-up for more info. Display default image if not present in DB */}
                 { showExtendedInformation ? <h3>Genre: {movie.genre}</h3> : null }
-                <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price}
+                <ModalPop movie={movie} updateCart={updateCart} title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price}
                 img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={DefaultPicture} className='MovieViewPicture'/>} />
                 
                 {/* Display "add to cart" to all users except admin */}
