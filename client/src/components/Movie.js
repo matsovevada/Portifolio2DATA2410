@@ -29,7 +29,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
 
     return (
         <div className='MovieViewBox'>
-            { movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : null} 
+            { movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={'client/src/pics/default-movie-image.png'} className='MovieViewPicture'/>} 
             <div className='MovieViewInfo'>
                 <h3 className='movieViewTitle'>Title: {movie.title}</h3>
                 <h3 className='movieViewDescri'>Description: {movie.shortDescription}</h3>
@@ -41,7 +41,8 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 {(user != null && user.isAdmin) && <AdminPop admin_editMovie={admin_editMovie} _id={movie._id} title={movie.title} shortDescription={movie.shortDescription} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} img={movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`}/> : null}/>}
 
                 { showExtendedInformation ? <h3>Genre: {movie.genre}</h3> : null }
-                <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} img={movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`}/> : null}/>
+                <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} 
+                img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={'client/src/pics/default-movie-image.png'} className='MovieViewPicture'/>} />
                 <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>
             </div>
         </div>
