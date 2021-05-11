@@ -36,7 +36,7 @@ export default function ModalPop({checkout, cart, decreaseCount, updateCart}){
 
     return (
       <div>
-        <Button onClick={openModal}>Go to checkout</Button>
+        <Button variant='danger' onClick={openModal}>Go to checkout</Button>
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
@@ -53,7 +53,7 @@ export default function ModalPop({checkout, cart, decreaseCount, updateCart}){
           </div>
           <Button variant='secondary' onClick={checkout}>Checkout</Button>
           {' '}
-          <Button onClick={closeModal}>Close</Button>
+          <Button variant='danger' onClick={closeModal}>Close</Button>
         </Modal>
       </div>
     );

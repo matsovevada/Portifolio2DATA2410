@@ -35,7 +35,7 @@ export default function ModalPop({title, longDescription, img, price, genre, upd
 
     return (
       <>
-        <Button onClick={openModal}>Show more</Button>
+        <Button variant='danger' onClick={openModal}>Show more</Button>
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}

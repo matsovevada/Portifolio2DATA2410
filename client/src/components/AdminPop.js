@@ -74,7 +74,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
 
     return (
       <>
-        <Button onClick={openModal}>Edit</Button>
+        <Button variant='outline-danger' onClick={openModal}>Edit</Button>
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
@@ -155,7 +155,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
 
           </div>
        
-          <Button onClick={closeModal}>Close</Button>
+          <Button variant='danger' onClick={closeModal}>Close</Button>
         </Modal>
       </>
     );

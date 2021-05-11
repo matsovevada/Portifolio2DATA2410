@@ -10,7 +10,7 @@ function middlewareTest(req, res, next) {
 function checkAuthentification(req, res, next) {
 
     let token = req.cookies['session-token']
-    console.log(token)
+    
     async function verify() {
         const ticket = await client.verifyIdToken({
             idToken: token,
