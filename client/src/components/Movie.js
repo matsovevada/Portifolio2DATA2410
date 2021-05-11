@@ -4,6 +4,9 @@ import 'reactjs-popup/dist/index.css';
 import * as RBS from 'react-bootstrap'
 import ModalPop from './ModalPop.js'
 import AdminPop from './AdminPop.js'
+import DefaultPicture from '../pics/default-movie-image.png'
+
+
 
 const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) => {
 
@@ -29,7 +32,8 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
 
     return (
         <div className='MovieViewBox'>
-            { movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={'client/src/pics/default-movie-image.png'} className='MovieViewPicture'/>} 
+
+            { movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={DefaultPicture} className='MovieViewPicture'/>} 
             <div className='MovieViewInfo'>
                 <h2 className='MovieViewTitle'>{movie.title}</h2>
                 <h3 className='MovieViewDesTitle'>Description:</h3>
@@ -44,7 +48,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
 
                 { showExtendedInformation ? <h3>Genre: {movie.genre}</h3> : null }
                 <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} 
-                img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={'client/src/pics/default-movie-image.png'} className='MovieViewPicture'/>} />
+                img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={DefaultPicture} className='MovieViewPicture'/>} />
                 <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>
             </div>
         </div>
