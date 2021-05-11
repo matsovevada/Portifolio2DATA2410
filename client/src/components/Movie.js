@@ -1,5 +1,4 @@
 import React, { useState} from 'react'
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import * as RBS from 'react-bootstrap'
 import ModalPop from './ModalPop.js'
@@ -47,7 +46,9 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 
                 {/* Toggle pop-up for more info */}
                 { showExtendedInformation ? <h3>Genre: {movie.genre}</h3> : null }
-                <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} 
+                <ModalPop title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price}
+                
+                {/* Display default image of not present in DB */}
                 img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={DefaultPicture} className='MovieViewPicture'/>} />
                 
                 {/* Display "add to cart" to all users except admin */}
