@@ -18,7 +18,7 @@ const customStyle1 = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root')
 
-export default function CheckoutPopup({checkout, cart}){
+export default function CheckoutPopup({checkout, cart, totalPrice}){
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
   function openModal() {
@@ -46,10 +46,12 @@ export default function CheckoutPopup({checkout, cart}){
           <h2 ref={_subtitle => (subtitle = _subtitle)}>Checkout:</h2>
           <div>
             {cart.map((item) => (<CheckoutItem item={item}/>))}
+            <p>Total: {totalPrice()},-</p>
           </div>
           <div>
             <p>Congratulations! Your IP-address has been picked out to get 100% discount for the rest of your life!</p>
             <p>This is NOT a scam ;)</p>
+            <p>Checkout total: 0,-</p>
           </div>
           <Button variant='secondary' onClick={checkout}>Checkout</Button>
           {' '}

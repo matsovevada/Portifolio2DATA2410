@@ -20,9 +20,8 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
                 decreaseCount={decreaseCount}
             />)
             )}
-            <div className='CartShowTotalPrice'>Sum: {getTotalPrice()},-</div>
             <div className='CartPopBtn'>
-                {cart.length > 0 ? <CheckoutPopup checkout={checkout} cart={cart} updateCart={updateCart} decreaseCount={decreaseCount}/> : 
+                {cart.length > 0 ? <CheckoutPopup checkout={checkout} cart={cart} totalPrice={getTotalPrice}/> : 
                 <h1 className='EmptyCartTag'>Your cart is empty!</h1>}
             </div>
         </div>
