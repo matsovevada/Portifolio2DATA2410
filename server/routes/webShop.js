@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/movies/', (req, res) => {
     Movie.find()
     .then((data) => {
-        res.status(200).json(data)
+        res.status(200).json(data.reverse())
     })
     .catch((err) => {
         res.status(404).json({
@@ -22,7 +22,7 @@ router.get('/movies/', (req, res) => {
 router.get('/movies/:title', (req, res) => {
     Movie.find({title: {$regex : new RegExp(req.params.title, "i")}})
     .then((data) => {
-        res.status(200).json(data)
+        res.status(200).json(data.reverse())
     })
     .catch((err) => {
         res.status(404).json({
@@ -36,7 +36,7 @@ router.get('/movies/:title', (req, res) => {
 router.get('/movies/filterBy/:genre', (req, res) => {
     Movie.find({genre: req.params.genre})
     .then((data) => {
-        res.status(200).json(data)
+        res.status(200).json(data.reverse())
     })
     .catch((err) => {
         res.status(404).json({
