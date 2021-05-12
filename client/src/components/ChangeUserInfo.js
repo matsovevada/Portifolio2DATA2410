@@ -78,6 +78,23 @@ export default function ChangeUserInfo({user}){
             });
         }
 
+        function deleteUser(){
+
+            console.log(user._id)
+        
+            const requestOptions = {
+                method: 'DELETE',
+                credentials: "include"
+            };
+            fetch('http://localhost:8080/user/' + user._id, requestOptions)
+        
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+
+            window.location = '/'
+        }
+
     return (
         <div className='ChangeUserInfo'>
             <Form>
@@ -87,7 +104,8 @@ export default function ChangeUserInfo({user}){
                 <Input title={user != null && user.address} value={address} type='address' set={setAddress} placeholder={'new address'} errorText={'Address must have at least six characters'} setShowError={setShowErrorAddress} showError={showErrorAddress}/>
                 <Input title={user != null && user.zipcode} value={zipcode} type='zipcode' set={setZipcode} placeholder={'new zipcode'} errorText={'Zipcode name must have at least four characters'} setShowError={setShowErrorZipcode} showError={showErrorZipcode}/>
                 <Input title={user != null && user.city} value={city} type='city' set={setCity} placeholder={'new city'} errorText={'City must have at least two characters'} setShowError={setShowErrorCity} showError={showErrorCity}/>
-                <Button variant='danger' disabled={!checkLength()} onClick={editUser}>Change</Button>
+                <Button variant='secondary' disabled={!checkLength()} onClick={editUser}>Change</Button>
             </Form>
+                <Button variant='danger' onClick={deleteUser}>Delete user</Button>
         </div>
     )};

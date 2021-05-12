@@ -145,7 +145,7 @@ router.put('/', middleware.checkAuthentification, (req, res) => {
 })
 
 // Delete user for given _id
-router.delete('/id', middleware.checkAuthentification, (req, res) => {
+router.delete('/:id', middleware.checkAuthentification, (req, res) => {
     
     if (!req.user) {
         return res.status(400).json(null)
@@ -155,6 +155,7 @@ router.delete('/id', middleware.checkAuthentification, (req, res) => {
         .then((data) => {
             User.deleteOne(data)
                 .then((data) => {
+                    res.clearCookie('session-token');
                     res.status(200).json(data)
                 }) 
                 
