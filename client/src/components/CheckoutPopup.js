@@ -35,7 +35,7 @@ export default function CheckoutPopup({checkout, cart, totalPrice}){
   }
 
     return (
-      <div>
+      <div className='CheckoutPop'>
         <Button variant='danger' block size='xl' onClick={openModal}>Go to checkout</Button>
         <Modal
           isOpen={modalIsOpen}
@@ -46,12 +46,12 @@ export default function CheckoutPopup({checkout, cart, totalPrice}){
           <h2 ref={_subtitle => (subtitle = _subtitle)}>Checkout:</h2>
           <div>
             {cart.map((item) => (<CheckoutItem item={item}/>))}
-            <p>Total: {totalPrice()},-</p>
+            <p className='CheckoutPopTotal'>Total: {totalPrice()},-</p>
           </div>
-          <div>
+          <div className='CheckoutPopText'>
             <p>Congratulations! Your IP-address has been picked out to get 100% discount for the rest of your life!</p>
             <p>This is NOT a scam ;)</p>
-            <p>Checkout total: 0,-</p>
+            <p className='CheckoutPopFinalTotal'>Checkout total: 0,-</p>
           </div>
           <Button variant='secondary' onClick={checkout}>Checkout</Button>
           {' '}

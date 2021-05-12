@@ -300,7 +300,38 @@ code {
   margin-left: 40%;
 }
 
-/*-----------------------------HEADER-----------------------------*/ 
+/*-----------------------------Checkout Popup-----------------------------*/
+.CheckoutPop {
+  font-family: 'Poppins', sans-serif;
+}
+
+.CheckoutPopTotal {
+  font-size: 20px;
+  text-decoration: underline;
+  font: 'comic-sans'
+}
+
+.CheckoutPopText{
+  border: 1px solid red;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.CheckoutPopText p{
+  padding: 10px;
+  margin: 0;
+}
+
+.CheckoutPopText p1{
+  padding: 10px;
+  margin: 0;
+}
+
+.CheckoutPopFinalTotal {
+  text-decoration: double underline;
+  font-size: 20px;
+}
+
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 
