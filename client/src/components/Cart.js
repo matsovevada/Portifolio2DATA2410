@@ -20,7 +20,8 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
             />)
             )}
             <div className='CartPopBtn'>
-                <CheckoutPopup checkout={checkout} cart={cart} updateCart={updateCart} decreaseCount={decreaseCount}/>
+                {cart.length > 0 ? <CheckoutPopup checkout={checkout} cart={cart} updateCart={updateCart} decreaseCount={decreaseCount}/> : 
+                <h1 className='EmptyCartTag'>Your cart is empty!</h1>}
             </div>
         </div>
     )
