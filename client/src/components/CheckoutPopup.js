@@ -36,7 +36,7 @@ export default function ModalPop({checkout, cart, decreaseCount, updateCart}){
 
     return (
       <div>
-        <Button variant='danger' onClick={openModal}>Go to checkout</Button>
+        <Button variant='danger' block size='xl' onClick={openModal}>Go to checkout</Button>
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}

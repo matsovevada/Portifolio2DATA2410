@@ -11,16 +11,18 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
 
 
     return (
-        <>
+        <div>
             {cart.map((item) => (
             <CartItem 
                 item={item}
                 updateCart={updateCart}
                 decreaseCount={decreaseCount}
             />)
-        )}
-        <CheckoutPopup checkout={checkout} cart={cart} updateCart={updateCart} decreaseCount={decreaseCount}/>
-        </>
+            )}
+            <div className='CartPopBtn'>
+                <CheckoutPopup checkout={checkout} cart={cart} updateCart={updateCart} decreaseCount={decreaseCount}/>
+            </div>
+        </div>
     )
 }
 
