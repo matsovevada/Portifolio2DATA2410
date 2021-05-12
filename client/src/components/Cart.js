@@ -4,10 +4,11 @@ import CheckoutPopup from './CheckoutPopup'
 
 const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
 
-
-    //console.log("CARTMAN!")
-    //let cartman = JSON.parse(window.localStorage.getItem('cart'))
-    //console.log(JSON.parse(localStorage.getItem('cart')))
+    function getTotalPrice() {
+        let totalPrice = 0;
+        cart.map((item) => (totalPrice += (item.price * item.count)))
+        return totalPrice;
+    }
 
 
     return (
@@ -19,6 +20,7 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
                 decreaseCount={decreaseCount}
             />)
             )}
+            <div className='CartShowTotalPrice'>Sum: {getTotalPrice()},-</div>
             <div className='CartPopBtn'>
                 <CheckoutPopup checkout={checkout} cart={cart} updateCart={updateCart} decreaseCount={decreaseCount}/>
             </div>
