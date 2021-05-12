@@ -5,12 +5,7 @@ const Orderhistory = ({orders}) => {
 
     return (
         <div>
-            <h3>1</h3>
-            <h3>1</h3>
-            <h3>1</h3>
-            <h3>1</h3>
-            <h3>1</h3>
-            <h3>1</h3>
+            <h1 id="orderHistoryHeader">Orders</h1>
             {orders.map((order) => (
             <Order 
                 order={order}
