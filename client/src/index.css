@@ -252,6 +252,13 @@ code {
   margin-left: 50px;
   margin-right: 50px;
   margin-bottom: 40px;
+
+}
+
+.CartShowTotalPrice {
+  margin-left: 46%;
+  font-weight: bold;
+  font-size: 28px;
 }
 /*-----------------------------ORDER HISTORY-----------------------------*/ 
 
@@ -300,8 +307,41 @@ code {
   margin-left: 40%;
 }
 
-/*-----------------------------HEADER-----------------------------*/ 
-/*-----------------------------HEADER-----------------------------*/ 
+/*-----------------------------USER INFO-----------------------------*/ 
+
+#DeleteUserBtn {
+  margin-top: 70px;
+  margin-left: 46%; 
+}
+
+#DeleteUserCancelBtn {
+  margin-top: 15px;
+  margin-left: 50%;
+}
+
+#DeleteUserConfirmBtn {
+  margin-top: 15px;
+  margin-left: 5%;
+}
+/*-----------------------------LOG IN-----------------------------*/ 
+
+.Login {
+  border: solid;
+  border-color: lightgray;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+#LoginText {
+  font-size: 30px;
+  margin-left: 22%;
+}
+
+.LoginBtnGoogleContainer {
+  margin-left: 43%;
+  margin-top: 30px;
+}
+
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 
 /*-----------------------------HEADER-----------------------------*/ 
