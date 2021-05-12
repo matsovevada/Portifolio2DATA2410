@@ -1,9 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import Input from './Input'
 import Button from 'react-bootstrap/Button'
+import DeleteUserPop from './DeleteUserPop.js'
 import Form from 'react-bootstrap/Form'
 
 export default function ChangeUserInfo({user}){
+
+    //For delete pop-up
+    const [showExtendedInformation, setShowExtendedInformation] = useState(false);
+
+    const toggleShowExtendedInformation = () => {
+    if (showExtendedInformation) {setShowExtendedInformation(false)}
+    else setShowExtendedInformation(true) 
+    }
     
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
@@ -78,23 +87,6 @@ export default function ChangeUserInfo({user}){
             });
         }
 
-        function deleteUser(){
-
-            console.log(user._id)
-        
-            const requestOptions = {
-                method: 'DELETE',
-                credentials: "include"
-            };
-            fetch('http://localhost:8080/user/' + user._id, requestOptions)
-        
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
-
-            window.location = '/'
-        }
-
     return (
         <div className='ChangeUserInfo'>
             <Form>
@@ -106,6 +98,6 @@ export default function ChangeUserInfo({user}){
                 <Input title={user != null && user.city} value={city} type='city' set={setCity} placeholder={'new city'} errorText={'City must have at least two characters'} setShowError={setShowErrorCity} showError={showErrorCity}/>
                 <Button variant='secondary' disabled={!checkLength()} onClick={editUser}>Change</Button>
             </Form>
-                <Button variant='danger' onClick={deleteUser}>Delete user</Button>
+                <DeleteUserPop user={user} />
         </div>
     )};
