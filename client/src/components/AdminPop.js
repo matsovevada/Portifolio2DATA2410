@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import Form from 'react-bootstrap/Form'
 
+const MAX_FILE_SIZE = 500000 // 500 kb
+
 const customStyles = {
   content : {
     top                   : '50%',
@@ -97,10 +99,15 @@ function checkPrice(event) {
 
     if (!check()) return;
 
+    // check image file size
+    const file = document.getElementById('imageFile')
+    const fileSize = file.files.item(0).size;
+    if (fileSize > MAX_FILE_SIZE) return alert("The selected file is too big, please select a file less than 500 kb");
+
     const form = event.currentTarget;
     const url = form.action;
     const formData = new FormData(form);
-  
+
     const requestOptions = {
         method: 'PUT',
         credentials: "include",
@@ -152,6 +159,7 @@ function checkPrice(event) {
                   <Form.Group size='lg' controlId='image'>
                       <Form.Label>Edit image</Form.Label>
                       <Form.Control
+                          id='imageFile'
                           autoFocus
                           type="file"
                           name="image"
