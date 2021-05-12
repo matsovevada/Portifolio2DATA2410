@@ -41,14 +41,13 @@ const LoginGoogle = () => {
     };
 
     return (
-        <div>
-            <GoogleLogin
+        <div className='LoginBtnGoogleContainer' >
+            <GoogleLogin id='LoginBtnGoogle'
                 clientId={clientId}
                 buttonText="Login"
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
-                style={{ marginTop: '100px' }}
                 isSignedIn={true}
             />
         </div>
