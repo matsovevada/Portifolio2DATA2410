@@ -18,7 +18,7 @@ const customStyle1 = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root')
 
-export default function ModalPop({checkout, cart, decreaseCount, updateCart}){
+export default function CheckoutPopup({checkout, cart}){
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
   function openModal() {

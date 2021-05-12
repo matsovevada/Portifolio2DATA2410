@@ -3,7 +3,7 @@ import React from 'react'
 const CheckoutItem = ({item}) => {
     return (
         <> 
-            <h3>{item.title}, Qty: {item.count}, Price: {item.price * item.count},-</h3>
+            <h3>{item.count}x {item.title}, Price: {item.price * item.count},-</h3>
         </>
     )
 }
