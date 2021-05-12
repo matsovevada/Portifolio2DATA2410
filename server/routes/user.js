@@ -41,14 +41,12 @@ router.post('/login', (req, res) => {
 
                 // user is in db
                 if (data) {
-                    console.log('user in db')
                     res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000  }) // 24 hours
                     res.status(200).json({'userInDb': true})
                 }
 
                 // user not in db
                 else {
-                    console.log('user not in db')
                     res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000 }) // 24 hours
                     res.status(200).json({'userInDb': false})
                 }
@@ -110,19 +108,6 @@ router.get('/', middleware.checkAuthentification, (req, res) => {
     );
 })
 
-// get users
-router.get('s', (req, res) => {
-
-    User.find()
-            .then((data) => {
-                res.status(200).json(data)
-            }) .catch(err => res.status(400).json({
-                'Status' : 400,
-                'Message' : "User not found"
-            })
-        );
-})
-
 // Alter userdata for given _id
 router.put('/', middleware.checkAuthentification, (req, res) => {
 
@@ -181,19 +166,6 @@ router.delete('/id', middleware.checkAuthentification, (req, res) => {
         })
     })
 })
-
-// Delete all users 
-router.delete('/', (req, res) => {
-
-    User.deleteMany({})
-        .then((data) => {
-            res.status(200).json(data)
-        }) .catch(err => res.status(400).json({
-            'Status' : 400,
-            'Message' : "Error while deleting all users"
-        }))
-    }
-)
 
 // Get orderhistory
 router.get('/orders', middleware.checkAuthentification, (req, res) => {

@@ -134,7 +134,6 @@ function checkCount(movie) {
 function admin_deleteMovie(movie) {
   if(user.isAdmin) {
       admin_deleteMovieFromDB(movie);
-      setMovies(movies.filter((movieInArray) => movieInArray._id !== movie._id))
       }
  
 }
@@ -210,7 +209,7 @@ getMovies_search();
 }
 
 async function admin_deleteMovieFromDB(movie) {
-
+  console.log('ye')
   let id = movie._id
 
   const requestOptions = {
@@ -220,7 +219,10 @@ async function admin_deleteMovieFromDB(movie) {
 
   const res = await fetch('http://localhost:8080/admin/movie/' + id, requestOptions);
   const data = await res.json()
-
+  console.log(data)
+  if (data.illegalRequest) return alert("Illegal request: you do not have the permissions for this API call. Only admin users can add movies.")
+  else setMovies(movies.filter((movieInArray) => movieInArray._id !== movie._id))
+   
   return data
 }
 

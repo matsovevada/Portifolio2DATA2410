@@ -70,6 +70,7 @@ export default function Register() {
     
         const requestOptions = {
             method: 'POST',
+            credentials: 'include',
             body: formData
 
         };
@@ -80,6 +81,7 @@ export default function Register() {
     
                 // check for error response
                 if (!response.ok) {
+                    if (data.illegalRequest) alert("Illegal request: you do not have the permissions for this API call. Only admin users can add movies.")
                     // get error message from body or default to response status
                     const error = (data && data.message) || response.status;
                     return Promise.reject(error);
