@@ -22,7 +22,7 @@ router.get('/movies/', (req, res) => {
 router.get('/movies/:title', (req, res) => {
     Movie.find({title: {$regex : new RegExp(req.params.title, "i")}})
     .then((data) => {
-        res.status(200).json(data.reverse())
+        res.status(200).json(data)
     })
     .catch((err) => {
         res.status(404).json({

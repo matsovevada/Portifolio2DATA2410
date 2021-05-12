@@ -155,8 +155,11 @@ getMovies();
   }
 } 
 
+
 //Search db for movie for given string
 function search_movie(title) {
+  document.getElementById('showFilterText').className = 'setFilterTextVisible'
+
   async function getMovies_search() {
     const movies = await fetchMovies_search();
 
@@ -185,15 +188,17 @@ getMovies_search();
 
 //Filter movies for given string
 function filter_movies(filter) {
-  async function getMovies_search() {
-  const movies = await fetchMovies_filter();
+  document.getElementById('showSearchText').className = 'setSearchTextHidden'
 
-  setMovies(movies)
-  document.getElementById('showFilterText').className = 'setFilterTextVisible'
-  document.getElementById('showFilterText').innerText = 'Showing movies for genre: ' +  filter
+  async function getMovies_filter() {
+    const movies = await fetchMovies_filter();
+
+    setMovies(movies)
+    document.getElementById('showFilterText').className = 'setFilterTextVisible'
+    document.getElementById('showFilterText').innerText = 'Showing movies for genre: ' +  filter
   
 }
-getMovies_search();
+getMovies_filter();
 
     async function fetchMovies_filter() {
 
