@@ -7,6 +7,15 @@ import LogoutGoogle from './LogoutGoogle'
 
 const Header = ({cart, search_movie, filter_movies, user}) => {
 
+    const handleKeyPress = (event) => {
+        if (event.charCode==13 || event.key === 'Enter') {
+            event.preventDefault();
+            search_movie(document.getElementById('search_string').value)
+        }   
+    }
+
+  
+      
 
     return (
         <RBS.Navbar bg="light" expand="xl" fixed='top'>
@@ -30,7 +39,7 @@ const Header = ({cart, search_movie, filter_movies, user}) => {
                 {(user != null && user.isAdmin == false) && <RBS.Nav.Link href="/orderhistory">Orderhistory</RBS.Nav.Link>}
                 </RBS.Nav>
                 <RBS.Form inline>
-                    <RBS.FormControl type="text" id="search_string"  placeholder="Search for" className="mr-sm-2" />
+                    <RBS.FormControl type="text" id="search_string"  placeholder="Search for title" className="mr-sm-2" onKeyPress={handleKeyPress}/>
                     <RBS.Button variant="outline-danger" id='searchbar' onClick={() => search_movie(document.getElementById('search_string').value)}>Search</RBS.Button>
                 </RBS.Form>
                 {(user != null && user.isAdmin == false) && <RBS.Navbar.Brand href="/cart"><NavbarCart cart={cart}/></RBS.Navbar.Brand>}

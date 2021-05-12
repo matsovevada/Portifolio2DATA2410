@@ -198,6 +198,10 @@ router.put('/checkout', middleware.checkAuthentification, (req, res) => {
             let timestamp = new Date().toString()
             timestamp = timestamp.split(" ")
             timestamp = `${timestamp[2]} ${timestamp[1]} ${timestamp[3]} ${timestamp[4]}`
+            console.log("SHOPPING")
+            console.log(data.shoppingCart)
+
+            if(data.shoppingCart.length === 0) return res.status(405).json("Shoppingcart is empty - cannot proceed to checkout")  
 
             let orderHistoryObject = {
                 "movies": data.shoppingCart,
