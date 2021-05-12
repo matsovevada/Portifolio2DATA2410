@@ -3,17 +3,27 @@ import React from 'react'
 const Order = ({order}) => {
 
     function getMovieInformation() {
-        let information = ""
+        let information = "<table id='ordersTable'><tr><th>Title</th><th>Quantity</th><th>Price</th></tr>"
         order.movies.forEach(movie => {
-            information += `Count: ${movie.count}, Title: ${movie.title}, total price: ${movie.price*movie.count}`
+            information += `<tr><td>${movie.title}</td><td>${movie.count}</td><td>${movie.price*movie.count},-</td></tr>`
         })
-        return information;
+        information += '</table>'
+        return {__html: information};
+    }
+
+    function getTotalPrice() {
+        let totalPrice = 0;
+        order.movies.forEach(movie => {
+            totalPrice += (movie.price * movie.count);
+        })
+        return totalPrice;
     }
 
     return (
-        <div>
-            <h3>Order from  {order.timestamp}</h3>
-            {getMovieInformation()}
+        <div className='orderHistoryViewBox'>
+            <p id='orderTimestamp'>{order.timestamp}</p>
+            <div dangerouslySetInnerHTML={getMovieInformation()} />
+            <p id='orderTotalPrice'>Total price: {getTotalPrice()},-</p>
         </div>
     )
 }
