@@ -334,7 +334,7 @@ code {
 
 #LoginText {
   font-size: 30px;
-  margin-left: 22%;
+  text-align: center;
 }
 
 .LoginBtnGoogleContainer {

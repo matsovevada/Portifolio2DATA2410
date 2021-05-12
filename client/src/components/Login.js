@@ -5,7 +5,7 @@ export default function Login() {
 
     return (
         <div className='Login'>
-            <span id='LoginText'>Click to log in with your Google account:</span>
+            <p id='LoginText'>Click to log in with your Google account:</p>
             <LoginGoogle/>
         </div>
     )

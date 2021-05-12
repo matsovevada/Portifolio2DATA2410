@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-modal';
 import CheckoutItem from './CheckoutItem'
+import CheckoutCheckPop from './CheckoutCheckPop'
 
 const customStyle1 = {
   content : {
@@ -53,7 +54,7 @@ export default function CheckoutPopup({checkout, cart, totalPrice}){
             <p>This is NOT a scam ;)</p>
             <p className='CheckoutPopFinalTotal'>Checkout total: 0,-</p>
           </div>
-          <Button variant='secondary' onClick={checkout}>Checkout</Button>
+          <CheckoutCheckPop checkout={checkout}/>
           {' '}
           <Button variant='danger' onClick={closeModal}>Close</Button>
         </Modal>
