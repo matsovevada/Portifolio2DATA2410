@@ -2,6 +2,8 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
+const MAX_FILE_SIZE = 500000 // 500 kb
+
 export default function Register() {
 
     function checkTitle(event) {
@@ -64,10 +66,15 @@ export default function Register() {
         
         if (!check()) return;
 
+        // check image file size
+        const file = document.getElementById('imageFile')
+        const fileSize = file.files.item(0).size;
+        if (fileSize > MAX_FILE_SIZE) return alert("The selected file is too big, please select a file less than 500 kb");
+
         const form = event.currentTarget;
         const url = form.action;
         const formData = new FormData(form);
-    
+
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
@@ -158,6 +165,7 @@ export default function Register() {
                 <Form.Group size='lg' controlId='image'>
                     <Form.Label>Image</Form.Label>
                     <Form.Control
+                        id='imageFile'
                         autoFocus
                         type="file"
                         name="image"
