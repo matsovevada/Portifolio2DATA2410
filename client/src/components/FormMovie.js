@@ -68,9 +68,11 @@ export default function Register() {
 
         // check image file size
         const file = document.getElementById('imageFile')
-        const fileSize = file.files.item(0).size;
-        if (fileSize > MAX_FILE_SIZE) return alert("The selected file is too big, please select a file less than 500 kb");
-
+        if (file.files.length > 0) {
+            const fileSize = file.files.item(0).size;
+            if (fileSize > MAX_FILE_SIZE) return alert("The selected file is too big, please select a file less than 500 kb");
+        }
+       
         const form = event.currentTarget;
         const url = form.action;
         const formData = new FormData(form);
