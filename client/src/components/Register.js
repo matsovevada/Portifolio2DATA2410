@@ -5,6 +5,7 @@ import Input from './Input.js'
 
 export default function Register() {
 
+    //State for all inputs are used for input validating "on the fly"
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
     const [address, setAddress] = useState('')
@@ -41,7 +42,8 @@ export default function Register() {
         && zipcode.length > 3
         && city.length > 1;
     }
-   
+    
+    // Gets validated input from the form on submit and passes data to backend to create user. Redirect to main page if succesful
     function regUser(e){
         e.preventDefault()
         const data = {
