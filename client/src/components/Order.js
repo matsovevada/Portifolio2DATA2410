@@ -2,6 +2,7 @@ import React from 'react'
 
 const Order = ({order}) => {
 
+    //Creates table and iterates over user orders
     function getMovieInformation() {
         let information = "<table id='ordersTable'><tr><th>Title</th><th>Quantity</th><th>Price</th></tr>"
         order.movies.forEach(movie => {

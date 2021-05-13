@@ -1,7 +1,10 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+
+
+/*Modal module fetched from https://www.npmjs.com/package/react-modal. We have used the examplecode
+and tweaked it to fit our program.*/
 
 const customStyles = {
   content : {
@@ -17,7 +20,7 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root')
 
-export default function ModalPop({movie, title, longDescription, img, price, genre, updateCart}){
+export default function MovieViewPop({movie, title, longDescription, img, price, genre, updateCart}){
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
   function openModal() {
@@ -41,7 +44,7 @@ export default function ModalPop({movie, title, longDescription, img, price, gen
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
+          contentLabel="MovieViewPop Modal"
         >
           <div className='MoviePop'>
             <div className='MoviePopImg'>{img}</div>

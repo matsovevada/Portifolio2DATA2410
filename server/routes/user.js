@@ -144,7 +144,7 @@ router.put('/', middleware.checkAuthentification, (req, res) => {
     })
 })
 
-// Delete user for given _id
+// Delete user for given _id. Clear cookies from browser when the user is deleted. 
 router.delete('/:id', middleware.checkAuthentification, (req, res) => {
     
     if (!req.user) {
@@ -199,9 +199,7 @@ router.put('/checkout', middleware.checkAuthentification, (req, res) => {
             let timestamp = new Date().toString()
             timestamp = timestamp.split(" ")
             timestamp = `${timestamp[2]} ${timestamp[1]} ${timestamp[3]} ${timestamp[4]}`
-            console.log("SHOPPING")
-            console.log(data.shoppingCart)
-
+    
             if(data.shoppingCart.length === 0) return res.status(405).json("Shoppingcart is empty - cannot proceed to checkout")  
 
             let orderHistoryObject = {
@@ -225,7 +223,7 @@ router.put('/checkout', middleware.checkAuthentification, (req, res) => {
 })
 
 
-// Add item to shoppingcart
+// Add item to shoppingcart. Qty of each item in the shopping cart is stored backend. 
 router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) => {
 
     if (!req.user) {
@@ -275,11 +273,11 @@ router.put('/shoppingCart/remove', middleware.checkAuthentification, async (req,
     const userID = req.user.userId
 
     let user = await User.findById(userID);
-    // console.log(user.shoppingCart)
 
     let movie = await Movie.findById(movieID);
     movie = movie.toJSON();
 
+    //Iterate over all objects in users shoppingcart, decrease count if there are more then 1. Remove if only 1 left
     for (movieInCart of user.shoppingCart) {
         let index = user.shoppingCart.indexOf(movieInCart)
         if (movieInCart._id == movieID) {
@@ -307,28 +305,27 @@ router.put('/shoppingCart/remove', middleware.checkAuthentification, async (req,
     
 
 // Update field shoppingcart to empty array
-//function deleteShoppingCart() {
-    router.put('/shoppingCart/delete', (req, res) => {
+router.put('/shoppingCart/delete', (req, res) => {
 
-        if (!req.user) {
-            return res.status(400).json(null)
-        }
+    if (!req.user) {
+        return res.status(400).json(null)
+    }
 
-        User.findById(req.user.userId)
-            .then((data) => {
-                data.shoppingCart = []
-                data.save()
-                res.status(200).json(data)
-            })       
-                
-            .catch(err => { 
-                res.status(400).json({
-                'Status' : 400,
-                'Message' : "Error while deleting shoppingcart"
-            })
+    User.findById(req.user.userId)
+        .then((data) => {
+            data.shoppingCart = []
+            data.save()
+            res.status(200).json(data)
+        })       
+            
+        .catch(err => { 
+            res.status(400).json({
+            'Status' : 400,
+            'Message' : "Error while deleting shoppingcart"
         })
     })
-//}
+})
+
 
 
 module.exports = router;
