@@ -226,6 +226,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
                       <Form.Control as="select" autoFocus name="genre" type="genre" defaultValue={genre}>
                           <option>Action</option>
                           <option>Comdedy</option>
+                          <option>Drama</option>
                           <option>Fantasy</option>
                           <option>Horror</option>
                           <option>Mystery</option>

@@ -160,6 +160,7 @@ export default function Register() {
                     <Form.Control as="select" name="genre" type="genre" as='select' onChange={event => (event)}>
                         <option>Action</option>
                         <option>Comedy</option>
+                        <option>Drama</option>
                         <option>Fantasy</option>
                         <option>Horror</option>
                         <option>Mystery</option>
