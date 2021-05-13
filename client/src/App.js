@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Header from './components/Header.js'
 import Login from './components/Login.js'
-import Home from './components/Home.js'
 import AboutUs from './components/About.js'
 import Register from './components/Register.js'
 import FormMovie from './components/FormMovie.js'
@@ -69,29 +68,21 @@ useEffect(() => {
     getCart();
   }, []);
 
-//useEffect(() => {
-  //if (user) { return }
-
-  //async function getCart_nologin() {
-    //if(localStorage.getItem('cart') === null) { return setCart([]) }
-    //let localstorage_cart = JSON.parse(localStorage.getItem('cart'))
-    //let set_localstorage_cart = window.localStorage.setItem('cart', )
-    //setCart(localstorage_cart)}
-    //getCart_nologin();
-  //}, []);
-
 function updateCart(movie) {
-  console.log("USER (update cart")
-  console.log(user)
+
   // only update database if user is logged in
   if (user) {
     async function updateCart() {
-      if(checkCount(movie)) {
-        let movieInCart = checkCount(movie)
+
+      // movie exists in user's cart
+      if(isMovieInUserCart(movie)) {
+        let movieInCart = isMovieInUserCart(movie)
         movieInCart.count = movieInCart.count + 1 
         const cart = await addMovieToCart(movieInCart);
         setCart(cart)   
       }
+
+      // movie does not exist in user's cart
       else {
         movie.count = 1 
         const cart = await addMovieToCart(movie);
@@ -110,7 +101,7 @@ function updateCart(movie) {
 function decreaseCount(movie) {
   if (user) {
     async function updateCart() {
-        let movieInCart = checkCount(movie)
+        let movieInCart = isMovieInUserCart(movie)
         movieInCart.count = movieInCart.count - 1
         const cart = await removeMovieFromCart(movieInCart);
         setCart(cart)    
@@ -122,7 +113,8 @@ function decreaseCount(movie) {
 
 }
 
-function checkCount(movie) {
+// checks if the movie the user is adding to the cart already exists in the cart and returns it if it does
+function isMovieInUserCart(movie) {
   for (let movieInCart of cart) {
     if(movieInCart._id === movie._id) {
       return movieInCart
@@ -133,9 +125,8 @@ function checkCount(movie) {
 
 function admin_deleteMovie(movie) {
   if(user.isAdmin) {
-      admin_deleteMovieFromDB(movie);
-      }
- 
+    admin_deleteMovieFromDB(movie);
+  }
 }
 
 //Render movies when edit is complete
@@ -165,7 +156,7 @@ function search_movie(title) {
     setMovies(movies)
     document.getElementById('showSearchText').className = 'setSearchTextVisible'
     document.getElementById('showSearchText').innerText = 'Search results for: ' +  title
-    if(movies.length == 0) {
+    if(movies.length === 0) {
       document.getElementById('showSearchText').innerText = 'Search results for: ' +  title + '\n\n' + 'No result found. Try a different search term'
   }
 }
@@ -214,7 +205,7 @@ getMovies_filter();
 }
 
 async function admin_deleteMovieFromDB(movie) {
-  console.log('ye')
+
   let id = movie._id
 
   const requestOptions = {
@@ -298,8 +289,6 @@ function checkout() {
 // order history
 const [orderHistory, setOrderHistory] = useState([])
 
-
-
 useEffect(() => {
     async function getOrderHistory() {
         const user = await fetchUser();
@@ -308,32 +297,6 @@ useEffect(() => {
     }
     getOrderHistory()
 }, [])
-
-
-// async function fetchMovies() {
-
-//     const requestOptions = {
-//         method: 'GET',
-//     };
-
-//     fetch('http://localhost:8080/webshop/movies', requestOptions)
-//     .then(async response => {
-//         const isJson = response.headers.get('content-type')?.includes('application/json');
-//         const data = isJson && await response.json();
-        
-//         // check for error response
-//         if (!response.ok) {
-//             // get error message from body or default to response status
-//             const error = (data && data.message) || response.status;
-//             return Promise.reject(error);
-//         }
-//        console.log(data)
-//         return data
-//     })
-//     .catch(error => {
-//         console.error('There was an error!', error);
-//     });
-// } 
 
   return (
     <div>

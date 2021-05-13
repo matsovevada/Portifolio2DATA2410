@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const MovieSchema = mongoose.Schema({
-    title: String,
-    shortDescription: String,
-    longDescription: Object,
-    price: Number,
-    genre: String,
+    title: {type: String, required: true},
+    shortDescription: {type: String, required: true},
+    longDescription: {type: String, required: true},
+    price: {type: Number, required: true},
+    genre: {type: String, required: true},
     img: {
         data: Buffer,
         contentType: String
