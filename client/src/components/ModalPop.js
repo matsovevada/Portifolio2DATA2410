@@ -13,8 +13,8 @@ const customStyles = {
     transform             : 'translate(-50%, -50%)'
   }
 };
-
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+/*Modal module fetched from https://www.npmjs.com/package/react-modal. We have used the examplecode
+and tweaked it to fit our program.*/
 Modal.setAppElement('#root')
 
 export default function ModalPop({movie, title, longDescription, img, price, genre, updateCart}){

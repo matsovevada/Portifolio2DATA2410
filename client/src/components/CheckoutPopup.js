@@ -15,8 +15,8 @@ const customStyle1 = {
   }
 };
 
-
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+/*Modal module fetched from https://www.npmjs.com/package/react-modal. We have used the examplecode
+and tweaked it to fit our program.*/
 Modal.setAppElement('#root')
 
 export default function CheckoutPopup({checkout, cart, totalPrice}){
@@ -34,7 +34,7 @@ export default function CheckoutPopup({checkout, cart, totalPrice}){
   function closeModal(){
     setIsOpen(false);
   }
-
+    //HTML for the checkout popup
     return (
       <div className='CheckoutPop'>
         <Button variant='danger' block size='xl' onClick={openModal}>Go to checkout</Button>

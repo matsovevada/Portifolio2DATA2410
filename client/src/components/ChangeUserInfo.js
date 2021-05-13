@@ -14,18 +14,21 @@ export default function ChangeUserInfo({user}){
     else setShowExtendedInformation(true) 
     }
     
+    //UseStates for the different inputs in Edit user
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
     const [address, setAddress] = useState('')
     const [zipcode, setZipcode] = useState('')
     const [city, setCity] = useState('')
 
+    //UseStates for error messages in the Edit user form
     const [showErrorFirstname, setShowErrorFirstname] = useState(false)
     const [showErrorLastname, setShowErrorLastname] = useState(false)
     const [showErrorAddress, setShowErrorAddress] = useState(false)
     const [showErrorZipcode, setShowErrorZipcode] = useState(false)
     const [showErrorCity, setShowErrorCity] = useState(false)
 
+    //Shows error message if something is wrong with the inputs in the form
     useEffect(() => {
         if (firstname.length < 2) setShowErrorFirstname(true)
         else setShowErrorFirstname(false)
@@ -42,7 +45,8 @@ export default function ChangeUserInfo({user}){
         if (city.length < 2) setShowErrorCity(true)
         else setShowErrorCity(false)
       })
-
+    
+    //Checks the length of what the user has typed in in each input field in the form
     function checkLength() {
         return firstname.length > 1 
         && lastname.length > 1
@@ -51,6 +55,7 @@ export default function ChangeUserInfo({user}){
         && city.length > 1;
     }
 
+    //Function which handles API/DB calls
     function editUser(e){
         e.preventDefault()
         const data = {
@@ -86,7 +91,8 @@ export default function ChangeUserInfo({user}){
                 console.error('There was an error!', error);
             });
         }
-
+    
+    //The HTML for the edit user form
     return (
         <div className='ChangeUserInfo'>
             <Form>

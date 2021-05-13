@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 
 export default function DeleteUserPop({user}){
 
+  /*Modal module fetched from https://www.npmjs.com/package/react-modal. We have used the examplecode
+and tweaked it to fit our program.*/
 
 const customStyles = {
     content : {
@@ -31,6 +33,7 @@ function closeModal(){
     setIsOpen(false);
 }
 
+//API call for deleting the user from the website
 function deleteUser() {
         
     
@@ -47,7 +50,7 @@ function deleteUser() {
     window.location = '/'
 }
 
-
+    //The HTML for the delete user popup
     return (
         <>
           <Button id='DeleteUserBtn' variant='danger' onClick={openModal}>Delete user</Button>

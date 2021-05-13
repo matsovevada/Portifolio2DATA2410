@@ -1,5 +1,6 @@
 import React from 'react'
 
+//Lists all the items in the cart on the checkoutpopup
 const CheckoutItem = ({item}) => {
     return (
         <> 

@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import LoginGoogle from './LoginGoogle'
 
+//HTML for the login-page
 export default function Login() {
 
     return (

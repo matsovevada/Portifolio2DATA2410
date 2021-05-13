@@ -4,6 +4,7 @@ import CheckoutPopup from './CheckoutPopup'
 
 const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
 
+    //Gets total price of all items in the cart
     function getTotalPrice() {
         let totalPrice = 0;
         cart.map((item) => (totalPrice += (item.price * item.count)))
@@ -13,6 +14,7 @@ const Cart = ({cart, updateCart, decreaseCount, checkout}) => {
 
     return (
         <div>
+            {/*Uses map to list the users cart to the screen*/}
             {cart.map((item) => (
             <CartItem 
                 item={item}

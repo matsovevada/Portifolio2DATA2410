@@ -51,7 +51,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img src={DefaultPicture} className='MovieViewPicture'/>} />
                 
                 {/* Display "add to cart" to all users except admin */}
-                {((user == null) || (user != null && user.isAdmin == false)) && <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>}
+                {((user === null) || (user != null && user.isAdmin === false)) && <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>}
             </div>
         </div>
     )

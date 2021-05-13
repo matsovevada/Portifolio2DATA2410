@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import Form from 'react-bootstrap/Form'
 
@@ -17,7 +16,9 @@ const customStyles = {
   }
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+/*Modal module fetched from https://www.npmjs.com/package/react-modal. We have used the examplecode
+and tweaked it to fit our program.*/
+
 Modal.setAppElement('#root')
 
 export default function AdminPop({admin_editMovie, _id, title, shortDescription, longDescription, img, price, genre}){
@@ -39,6 +40,7 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
     setIsOpen(false);
   }
 
+  //OnChange which checks the length of Title in the form where Admin can edit movies 
   function checkTitle(event) {
     if (event.target.value.length < 1) {
         document.getElementById('registerMovieTitleError').className = 'registerMovieErrorLabelVisible'
@@ -46,26 +48,29 @@ export default function AdminPop({admin_editMovie, _id, title, shortDescription,
     else document.getElementById('registerMovieTitleError').className = 'registerMovieErrorLabelHidden' 
   }
 
-function checkShortDescription(event) {
-    if (event.target.value.length < 1) {
-        document.getElementById('registerMovieShortDescriptionError').className = 'registerMovieErrorLabelVisible'
+  //OnChange which checks the length of Short Description in the form where Admin can edit movies 
+  function checkShortDescription(event) {
+      if (event.target.value.length < 1) {
+          document.getElementById('registerMovieShortDescriptionError').className = 'registerMovieErrorLabelVisible'
+      }
+      else document.getElementById('registerMovieShortDescriptionError').className = 'registerMovieErrorLabelHidden' 
     }
-    else document.getElementById('registerMovieShortDescriptionError').className = 'registerMovieErrorLabelHidden' 
-  }
+  
+  //OnChange which checks the length of Long Description in the form where Admin can edit movies 
+  function checkLongDescription(event) {
+      if (event.target.value.length < 1) {
+          document.getElementById('registerMovieLongDescriptionError').className = 'registerMovieErrorLabelVisible'
+      }
+      else document.getElementById('registerMovieLongDescriptionError').className = 'registerMovieErrorLabelHidden' 
+    }
 
-function checkLongDescription(event) {
-    if (event.target.value.length < 1) {
-        document.getElementById('registerMovieLongDescriptionError').className = 'registerMovieErrorLabelVisible'
+  //OnChange which checks the length of price in the form where Admin can edit movies 
+  function checkPrice(event) {
+      if (isNaN(event.target.value) || event.target.value.length < 1 || event.target.value < 1) {
+          document.getElementById('registerMoviePriceError').className = 'registerMovieErrorLabelVisible'
+      }
+      else document.getElementById('registerMoviePriceError').className = 'registerMovieErrorLabelHidden' 
     }
-    else document.getElementById('registerMovieLongDescriptionError').className = 'registerMovieErrorLabelHidden' 
-  }
-
-function checkPrice(event) {
-    if (isNaN(event.target.value) || event.target.value.length < 1 || event.target.value < 1) {
-        document.getElementById('registerMoviePriceError').className = 'registerMovieErrorLabelVisible'
-    }
-    else document.getElementById('registerMoviePriceError').className = 'registerMovieErrorLabelHidden' 
-  }
 
   function check() {
     let title = document.getElementById('title').value;
@@ -94,6 +99,8 @@ function checkPrice(event) {
     else return false;
   }
 
+
+  //Handles the API/DB-calls when you submit changes to a movie as admin
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -136,7 +143,7 @@ function checkPrice(event) {
   }
 
 
-
+    //The HTML for the Admin Edit Popup
     return (
       <>
         <Button variant='outline-danger' onClick={openModal}>Edit</Button>

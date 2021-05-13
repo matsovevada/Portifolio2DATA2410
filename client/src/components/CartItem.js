@@ -2,6 +2,8 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 import DefaultPicture from '../pics/default-movie-image.png'
 
+//Converts from the objects buffered array representasion of the image to a Base64 string
+//Credit: https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
 const arrayBufferToBase64 = (buffer) => {
     let binary = '';
     let bytes = [].slice.call(new Uint8Array(buffer));
@@ -9,6 +11,7 @@ const arrayBufferToBase64 = (buffer) => {
     return window.btoa(binary);
 };
 
+//Controlls how each item in the carts looks
 const CartItem = ({item, updateCart,decreaseCount}) => {
     return (
         <div className='CartItem'>

@@ -4,7 +4,8 @@ import Modal from 'react-modal';
 
 export default function CheckoutCheckPop({checkout}){
 
-
+/*Modal module fetched from https://www.npmjs.com/package/react-modal. We have used the examplecode
+and tweaked it to fit our program.*/
 const customStyles = {
     content : {
       top                   : '50%',
@@ -30,7 +31,7 @@ function afterOpenModal() {
 function closeModal(){
     setIsOpen(false);
 }
-
+    //HTML for the after-checkout popup
     return (
         <>
           <Button id='' variant='danger' onClick={() => {
