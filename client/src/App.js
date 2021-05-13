@@ -156,7 +156,7 @@ function search_movie(title) {
     setMovies(movies)
     document.getElementById('showSearchText').className = 'setSearchTextVisible'
     document.getElementById('showSearchText').innerText = 'Search results for: ' +  title
-    if(movies.length == 0) {
+    if(movies.length === 0) {
       document.getElementById('showSearchText').innerText = 'Search results for: ' +  title + '\n\n' + 'No result found. Try a different search term'
   }
 }

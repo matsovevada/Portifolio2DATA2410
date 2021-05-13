@@ -6,6 +6,8 @@ const MAX_FILE_SIZE = 500000 // 500 kb
 
 export default function Register() {
 
+    // Checks for correct input on change
+
     function checkTitle(event) {
         if (event.target.value.length < 1) {
             document.getElementById('registerMovieTitleError').className = 'registerMovieErrorLabelVisible'
@@ -34,6 +36,7 @@ export default function Register() {
         else document.getElementById('registerMoviePriceError').className = 'registerMovieErrorLabelHidden' 
     }
 
+    // check for correct input on submit
     function check() {
         let title = document.getElementById('title').value;
         let shortDescription = document.getElementById('shortDescription').value;
