@@ -19,7 +19,7 @@ const Header = ({cart, search_movie, filter_movies, user}) => {
 
     return (
         <RBS.Navbar bg="light" expand="xl" fixed='top'>
-            <img src={logo} alt='logo' id='headerLogo'></img>
+            <a href='/'><img src={logo} alt='logo' id='headerLogo' href='/'></img></a>
             <RBS.Navbar.Toggle aria-controls="basic-navbar-nav" />
             <RBS.Navbar.Collapse id="basic-navbar-nav">
             <RBS.Nav className="mr-auto">
