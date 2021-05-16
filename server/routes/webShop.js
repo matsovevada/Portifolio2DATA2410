@@ -46,4 +46,65 @@ router.get('/movies/filterBy/:genre', (req, res) => {
     });
 })
 
+// get all movies sorted by price ascending
+router.get('/movies/sort/price_asc', (req, res) => {
+    Movie.find()
+    .then((data) => {
+        data_sorted = data.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        res.status(200).json(data_sorted)
+    })
+    .catch((err) => {
+        res.status(404).json({
+            "Status": 404,
+            "Message": "Couldn't find movies"
+        })
+    });    
+})
+
+// get all movies sorted by price descending
+router.get('/movies/sort/price_desc', (req, res) => {
+    Movie.find()
+    .then((data) => {
+        data_sorted = data.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        res.status(200).json(data_sorted)
+    })
+    .catch((err) => {
+        res.status(404).json({
+            "Status": 404,
+            "Message": "Couldn't find movies"
+        })
+    });    
+})
+
+// get all movies sorted by title alphabetical ascending
+router.get('/movies/sort/title_asc', (req, res) => {
+    Movie.find()
+    .then((data) => {
+        data_sorted = data.sort((a, b) => a.title.normalize().localeCompare(b.title.normalize()))
+        res.status(200).json(data_sorted)
+    })
+    .catch((err) => {
+        res.status(404).json({
+            "Status": 404,
+            "Message": "Couldn't find movies"
+        })
+    });    
+})
+
+
+// get all movies sorted by title alphabetical ascending
+router.get('/movies/sort/title_desc', (req, res) => {
+    Movie.find()
+    .then((data) => {
+        data_sorted = data.sort((a, b) => b.title.normalize().localeCompare(a.title.normalize()))
+        res.status(200).json(data_sorted)
+    })
+    .catch((err) => {
+        res.status(404).json({
+            "Status": 404,
+            "Message": "Couldn't find movies"
+        })
+    });    
+})
+
 module.exports = router;

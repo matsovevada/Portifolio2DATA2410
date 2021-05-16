@@ -204,6 +204,32 @@ getMovies_filter();
   }
 }
 
+//Filter movies for given string
+function sort_movies(route) {
+
+  async function getMovies_sort() {
+    const movies = await fetchMovies_sort();
+
+    setMovies(movies)
+
+  
+}
+getMovies_sort();
+
+    async function fetchMovies_sort() {
+
+      const requestOptions = {
+        method: 'GET',
+        credentials: 'include',
+      }
+
+      const res = await fetch('http://localhost:8080/webshop/movies/sort/' + route, requestOptions);
+      const data = await res.json()
+
+      return data
+  }
+}
+
 async function admin_deleteMovieFromDB(movie) {
 
   let id = movie._id
@@ -300,7 +326,7 @@ useEffect(() => {
 
   return (
     <div>
-      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} user={user} />
+      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} sort_movies={sort_movies} user={user} />
       {<div id='showSearchText' className='setSearchTextHidden'></div>}
       {<div id='showFilterText' className='setFilterTextHidden'></div>}
       <Route
@@ -332,6 +358,7 @@ useEffect(() => {
           <Cart {...props}  cart={cart} checkout={checkout} updateCart={updateCart} decreaseCount={decreaseCount} />
         )}
       />
+      
     </div>
   );
 }
