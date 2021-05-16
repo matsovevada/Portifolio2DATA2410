@@ -6,11 +6,11 @@ const Orderhistory = ({orders}) => {
     return (
         <div>
             <h1 id="orderHistoryHeader">Orders</h1>
-            {orders.map((order) => (
+            { orders.length > 0 ? orders.map((order) => (
             <Order 
                 order={order}
             />)
-        )}
+        ) : <h2 id="noOrders">You have no orders</h2>}
         </div>
     )
 }
