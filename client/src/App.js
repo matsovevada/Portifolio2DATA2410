@@ -148,7 +148,7 @@ getMovies();
 
 //Search db for movie for given string
 function search_movie(title) {
-  document.getElementById('showFilterText').className = 'setFilterTextVisible'
+  document.getElementById('showFilterText').className = 'setFilterTextHidden'
 
   async function getMovies_search() {
     const movies = await fetchMovies_search();
