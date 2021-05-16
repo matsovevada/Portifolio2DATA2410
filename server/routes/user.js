@@ -11,6 +11,19 @@ const {OAuth2Client} = require('google-auth-library');
 const CLIENT_ID = '289860901302-1k9vd8gfqi5ebp27datvvspesg1g27i1.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
 
+// backend-validation of inforamtion sent from frontend
+function isInformationValid(firstname, lastname, address, zipcode, city) {
+
+    if ( firstname.length < 2
+        || lastname.length < 2
+        || address.length < 6
+        || zipcode.length < 4
+        || city.length < 2 ) {
+            return false;
+        }
+    else return true;
+}
+
 // login 
 router.post('/login', (req, res) => {
 
@@ -68,9 +81,16 @@ router.post('/', middleware.checkAuthentification, (req, res) => {
         return res.status(400).json(null)
     }
 
+    if (!isInformationValid(req.body.firstname, req.body.lastname, req.body.address, req.body.zipcode, req.body.city)) {
+        return res.status(400).json({
+            'Status' : 400,
+            'Message' : "Error while creating user"
+        })
+    }
+
     const user = new User({
         _id: req.user.userId, // get user id from authentification middleware
-        email: req.user.email,
+        email: req.user.email, // get email from authentification middleware
         password: req.body.password,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -114,6 +134,14 @@ router.put('/', middleware.checkAuthentification, (req, res) => {
     if (!req.user) {
         return res.status(400).json(null)
     }
+
+    if (!isInformationValid(req.body.firstname, req.body.lastname, req.body.address, req.body.zipcode, req.body.city)) {
+        return res.status(400).json({
+            'Status' : 400,
+            'Message' : "Error while updating user"
+        })
+    }
+
 
     User.findById(req.user.userId)
         .then((data) => {

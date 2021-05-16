@@ -21,13 +21,33 @@ const upload = multer({ storage: storage });
 
 const router = express.Router();
 
+// backend-validation of inforamtion sent from frontend
+function isInformationValid(title, shortDescription, longDescription, price, genre) {
+
+    if ( title.length < 1
+        || shortDescription.length < 1
+        || longDescription.length < 1
+        || isNaN(price) || price.length < 1 || price < 1
+        || genre.length < 1 ) {
+            return false;
+        }
+    else return true;
+}
+
 // Add a new movie
-router.post('/movie', [upload.single('image'), middleware.checkAuthentification], (req, res) => {
+router.post('/movie', [upload.single('image'), middleware.checkAuthentification ], (req, res) => {
 
     if (!req.user) {
         return res.status(400).json(null)
     }
 
+    if (!isInformationValid(req.body.title, req.body.shortDescription, req.body.longDescription, req.body.price, req.body.genre)) {
+        return  res.status(400).json({
+            "Status": 400,
+            "Message": "Couldn't add movie"
+        })
+    }
+                  
     User.findById(req.user.userId)
         .then(data => {
 
@@ -50,8 +70,6 @@ router.post('/movie', [upload.single('image'), middleware.checkAuthentification]
                     img: input_image,
                     genre: req.body.genre,
                 }) 
-
-                
 
                 movie.save()
                     .then((data) => {
@@ -100,6 +118,13 @@ router.put('/movie/:id', [upload.single('image'), middleware.checkAuthentificati
 
     if (!req.user) {
         return res.status(400).json(null)
+    }
+
+    if (!isInformationValid(req.body.title, req.body.shortDescription, req.body.longDescription, req.body.price, req.body.genre)) {
+        return  res.status(400).json({
+            "Status": 400,
+            "Message": "Couldn't add movie"
+        })
     }
 
     User.findById(req.user.userId)
