@@ -148,7 +148,7 @@ getMovies();
 
 //Search db for movie for given string
 function search_movie(title) {
-  document.getElementById('showFilterText').className = 'setFilterTextVisible'
+  document.getElementById('showFilterText').className = 'setFilterTextHidden'
 
   async function getMovies_search() {
     const movies = await fetchMovies_search();
@@ -198,6 +198,32 @@ getMovies_filter();
       }
 
       const res = await fetch('http://localhost:8080/webshop/movies/filterBy/' + filter, requestOptions);
+      const data = await res.json()
+
+      return data
+  }
+}
+
+//Filter movies for given string
+function sort_movies(route) {
+
+  async function getMovies_sort() {
+    const movies = await fetchMovies_sort();
+
+    setMovies(movies)
+
+  
+}
+getMovies_sort();
+
+    async function fetchMovies_sort() {
+
+      const requestOptions = {
+        method: 'GET',
+        credentials: 'include',
+      }
+
+      const res = await fetch('http://localhost:8080/webshop/movies/sort/' + route, requestOptions);
       const data = await res.json()
 
       return data
@@ -308,7 +334,7 @@ useEffect(() => {
 
   return (
     <div>
-      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} user={user} />
+      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} sort_movies={sort_movies} user={user} />
       {<div id='showSearchText' className='setSearchTextHidden'></div>}
       {<div id='showFilterText' className='setFilterTextHidden'></div>}
       <Route
@@ -340,6 +366,7 @@ useEffect(() => {
           <Cart {...props}  cart={cart} checkout={checkout} updateCart={updateCart} decreaseCount={decreaseCount} />
         )}
       />
+      
     </div>
   );
 }
