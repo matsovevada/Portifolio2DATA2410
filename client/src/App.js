@@ -206,6 +206,8 @@ getMovies_filter();
 
 //Filter movies for given string
 function sort_movies(route) {
+  document.getElementById('showFilterText').className = 'setFilterTextHidden'
+  document.getElementById('showSearchText').className = 'setSearchTextHidden'
 
   async function getMovies_sort() {
     const movies = await fetchMovies_sort();
