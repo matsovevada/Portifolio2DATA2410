@@ -215,9 +215,12 @@ async function admin_deleteMovieFromDB(movie) {
 
   const res = await fetch('http://localhost:8080/admin/movie/' + id, requestOptions);
   const data = await res.json()
-  console.log(data)
-  if (data.illegalRequest) return alert("Illegal request: you do not have the permissions for this API call. Only admin users can add movies.")
-  else setMovies(movies.filter((movieInArray) => movieInArray._id !== movie._id))
+
+  if (data) {
+    if (data.illegalRequest) return alert("Illegal request: you do not have the permissions for this API call. Only admin users can add movies.")
+    else setMovies(movies.filter((movieInArray) => movieInArray._id !== movie._id))
+  }
+  else window.location = '/login'
    
   return data
 }
@@ -280,8 +283,13 @@ async function deleteCartAndUpdateOrderHistory() {
 function checkout() {
     async function checkout() {
       const user = await deleteCartAndUpdateOrderHistory();
-      setCart([])
-      setOrderHistory(user.orderHistory)
+
+      if (user) {
+        setCart([])
+        setOrderHistory(user.orderHistory)
+      }
+      else window.location = '/login'
+      
     }
     checkout();
 }
