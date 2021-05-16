@@ -28,7 +28,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 <h3 className='MovieViewDesTitle'>Description:</h3>
                 <h3 className='MovieViewDescri'>{movie.shortDescription}</h3>
                 <h3 className='MovieViewGenre'>Genre: {movie.genre}</h3>
-                <h3 className='MovieViewPrice'>Price: {movie.price}</h3>
+                <h3 className='MovieViewPrice'>Price: {movie.price},-</h3>
                 
                 {/* Adminfunctions, buttons for deleting and editing only visible for admin */}
                 {(user != null && user.isAdmin) && <RBS.Button variant='danger' onClick={() => admin_deleteMovie(movie)}>Delete</RBS.Button>}
