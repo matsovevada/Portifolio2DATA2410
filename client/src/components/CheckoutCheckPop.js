@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-modal';
+import {useHistory} from 'react-router-dom'
 
 export default function CheckoutCheckPop({checkout}){
 
@@ -17,7 +18,6 @@ const customStyles = {
     }
   };
 
-var subtitle;
 const [modalIsOpen,setIsOpen] = React.useState(false);
 function openModal() {
     setIsOpen(true);
@@ -30,6 +30,13 @@ function afterOpenModal() {
 
 function closeModal(){
     setIsOpen(false);
+}
+
+const history = useHistory();
+
+const routeChange = () =>{ 
+  let path = `/`; 
+  history.push(path);
 }
     //HTML for the after-checkout popup
     return (
@@ -47,7 +54,7 @@ function closeModal(){
           > 
             <h5>Checkout successful!</h5>
             <p>You can find you order under oredrehistory.</p>
-            <Button id='confirmCheckout' variant='danger' href='/'>OK</Button>
+            <Button id='confirmCheckout' variant='danger' onClick={() => routeChange}>OK</Button>
           </Modal>
         </>
       );

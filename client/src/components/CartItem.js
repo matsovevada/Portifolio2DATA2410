@@ -16,7 +16,7 @@ const CartItem = ({item, updateCart,decreaseCount}) => {
     return (
         <div className='CartItem'>
             <div>
-                { item.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(item.img.data.data)}`} className='CartImg' alt='Movie cover'/> : <img src={DefaultPicture} alt='Default movie cover' />}
+                { item.img ? <img alt='Movie img' src={`data:image/png;base64,${arrayBufferToBase64(item.img.data.data)}`} className='CartImg'/> : <img alt='Movie img' src={DefaultPicture} />}
             </div>
             <div className='CartInfo'>
                 <h3 className='CartTitle'>{item.title}</h3>

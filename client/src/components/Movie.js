@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React from 'react'
 import 'reactjs-popup/dist/index.css';
 import * as RBS from 'react-bootstrap'
 import MovieViewPop from './MovieViewPop.js'
@@ -22,7 +22,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
     return (
         <div className='MovieViewBox'>
             {/* Display default image if the movie does not have an image stored */}
-            { movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture' alt='Movie cover'/> : <img src={DefaultPicture} className='MovieViewPicture' alt='Default movie cover'/>} 
+            { movie.img ? <img alt='Movie img'src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img alt='Movie img' src={DefaultPicture} className='MovieViewPicture'/>} 
             <div className='MovieViewInfo'>
                 <h2 className='MovieViewTitle'>{movie.title}</h2>
                 <h3 className='MovieViewDesTitle'>Description:</h3>
@@ -35,11 +35,11 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 
                 {/* Passes data to "edit" pop-up. Display default image if not present in DB */}
                 {(user != null && user.isAdmin) && <AdminPop admin_editMovie={admin_editMovie} _id={movie._id} title={movie.title} shortDescription={movie.shortDescription} longDescription={movie.longDescription} genre={movie.genre} price={movie.price} 
-                img={movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} alt='Movie cover'/> : null}/>}
+                img={movie.img ? <img alt='Movie img' src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`}/> : null}/>}
                 
                 {/* Passes data to "show more" pop-up. Display default image if not present in DB */}
                 <MovieViewPop movie={movie} updateCart={updateCart} title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price}
-                img={ movie.img ? <img src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture' alt='Movie cover'/> : <img src={DefaultPicture} className='MovieViewPicture' alt='Default movie cover'/>} />
+                img={ movie.img ? <img alt='Movie img' src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img alt='Movie img' src={DefaultPicture} className='MovieViewPicture'/>} />
                 
                 {/* Display "add to cart" to all users except admin */}
                 {((user === null) || (user != null && user.isAdmin === false)) && <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>}

@@ -5,14 +5,6 @@ import DeleteUserPop from './DeleteUserPop.js'
 import Form from 'react-bootstrap/Form'
 
 export default function ChangeUserInfo({user}){
-
-    //For delete pop-up
-    const [showExtendedInformation, setShowExtendedInformation] = useState(false);
-
-    const toggleShowExtendedInformation = () => {
-    if (showExtendedInformation) {setShowExtendedInformation(false)}
-    else setShowExtendedInformation(true) 
-    }
     
     //UseStates for the different inputs in Edit user
     const [firstname, setFirstname] = useState('')
@@ -44,7 +36,7 @@ export default function ChangeUserInfo({user}){
 
         if (city.length < 2) setShowErrorCity(true)
         else setShowErrorCity(false)
-      })
+      },[firstname.length, lastname.length, address.length, zipcode.length, city.length])
     
     //Checks the length of what the user has typed in in each input field in the form
     function checkLength() {

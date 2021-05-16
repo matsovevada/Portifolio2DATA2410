@@ -1,4 +1,4 @@
-const { oAuth2Client, OAuth2Client } = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = '289860901302-1k9vd8gfqi5ebp27datvvspesg1g27i1.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID)
 

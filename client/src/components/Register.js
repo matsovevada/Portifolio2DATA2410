@@ -33,7 +33,7 @@ export default function Register() {
 
         if (city.length < 2) setShowErrorCity(true)
         else setShowErrorCity(false)
-      })
+      }, [firstname.length, lastname.length, address.length, zipcode.length, city.length])
 
       function checkLength() {
         return firstname.length > 1 

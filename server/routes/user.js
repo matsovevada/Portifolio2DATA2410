@@ -1,5 +1,4 @@
 const express = require('express');
-const { db } = require('../models/User');
 const User = require('../models/User')
 const Movie = require('../models/Movie')
 const middleware = require('../middleware');

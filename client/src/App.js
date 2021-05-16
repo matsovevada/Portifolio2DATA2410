@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './components/Header.js'
 import Login from './components/Login.js'
 import AboutUs from './components/About.js'
@@ -157,7 +157,7 @@ function search_movie(title) {
     document.getElementById('showSearchText').className = 'setSearchTextVisible'
     document.getElementById('showSearchText').innerText = 'Search results for: ' +  title
     if(movies.length === 0) {
-      document.getElementById('showSearchText').innerText = 'Search results for: ' +  title + '\n\n' + 'No result found. Try a different search term'
+      document.getElementById('showSearchText').innerText = 'Search results for: ' +  title + '\n\nNo result found. Try a different search term'
   }
 }
 getMovies_search();

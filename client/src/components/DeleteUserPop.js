@@ -18,7 +18,6 @@ const customStyles = {
     }
   };
 
-var subtitle;
 const [modalIsOpen,setIsOpen] = React.useState(false);
 function openModal() {
     setIsOpen(true);
