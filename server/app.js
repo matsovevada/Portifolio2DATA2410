@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require('mongoose');
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const fs = require('fs')
+const https = require('https')
 
 // database
 const path = require('path')
@@ -27,12 +29,15 @@ app.use(cors({origin:true, credentials: true}));
 // routes
 const webShop = require('./routes/webShop')
 const user = require('./routes/user')
-const admin = require('./routes/admin')
+const admin = require('./routes/admin');
 
 app.use('/webShop', webShop)
 app.use('/user', user)
 app.use('/admin', admin)
   
-app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-  });
+https.createServer({
+  key: fs.readFileSync('./server.key'),
+  cert: fs.readFileSync('./server.cert')
+}, app).listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+})
