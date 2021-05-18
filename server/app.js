@@ -7,7 +7,7 @@ const https = require('https')
 
 // database
 const path = require('path')
-mongoose.connect('mongodb://mongo:27017/WebShop', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/WebShop', {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
 mongoose.set('useFindAndModify', false);
@@ -36,8 +36,8 @@ app.use('/user', user)
 app.use('/admin', admin)
   
 https.createServer({
-  key: fs.readFileSync('./server.key'),
-  cert: fs.readFileSync('./server.cert')
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
 }, app).listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 })

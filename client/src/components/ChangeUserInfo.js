@@ -64,7 +64,7 @@ export default function ChangeUserInfo({user}){
             credentials: "include",
             body: JSON.stringify(data)
         };
-        fetch('http://localhost:8080/user', requestOptions)
+        fetch('https://localhost:8080/user', requestOptions)
             .then(async response => {
                 const isJson = response.headers.get('content-type')?.includes('application/json');
                 const data = isJson && await response.json();

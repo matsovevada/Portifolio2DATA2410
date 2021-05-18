@@ -23,7 +23,7 @@ Modal.setAppElement('#root')
 
 export default function AdminPop({admin_editMovie, _id, title, shortDescription, longDescription, img, price, genre}){
 
-  let url_action = "http://localhost:8080/admin/movie/" + _id
+  let url_action = "https://localhost:8080/admin/movie/" + _id
 
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);

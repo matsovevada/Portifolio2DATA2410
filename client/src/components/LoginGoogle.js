@@ -21,7 +21,7 @@ const LoginGoogle = () => {
             body: JSON.stringify(inputData)
           };
         
-         fetch('http://localhost:8080/user/login', requestOptions)
+         fetch('https://localhost:8080/user/login', requestOptions)
             .then(res => res.json()
             ).then(data => {
                 
