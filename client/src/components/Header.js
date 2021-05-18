@@ -42,7 +42,7 @@ const Header = ({cart, search_movie, filter_movies, user, sort_movies}) => {
                 
                 <RBS.Nav.Link href="/about-us">About Us</RBS.Nav.Link>
                 {(user != null && user.isAdmin) && <RBS.Nav.Link href="/formMovie">Add a movie</RBS.Nav.Link>}
-                {(user != null && user.isAdmin === false) && <RBS.Nav.Link href="/orderhistory">Order</RBS.Nav.Link>}
+                {(user != null && user.isAdmin === false) && <RBS.Nav.Link href="/orderhistory">Orders</RBS.Nav.Link>}
                 </RBS.Nav>
                 <RBS.Form inline>
                     <RBS.FormControl type="text" id="search_string"  placeholder="Search for title" className="mr-sm-2" onKeyPress={handleKeyPress}/>

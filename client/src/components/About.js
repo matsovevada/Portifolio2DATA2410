@@ -35,7 +35,7 @@ const contact = () => {
                     <h3 className='MovieViewDesTitle'>Description:</h3>
                     <h3 className='MovieViewDescri'>Zaka is a great guy!</h3>
                     <h3 className='MovieViewGenre'>Genre: Mystery</h3>
-                    <h3 className='MovieViewPrice'>Price: 15,-/h</h3>
+                    <h3 className='MovieViewPrice'>Price: 200,-/h</h3>
                 </div>
             </div>
             <div className='MovieViewBox'>
