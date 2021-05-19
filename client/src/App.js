@@ -12,6 +12,9 @@ import {Route} from 'react-router-dom';
 
 function App() {
 
+// api base
+const base = 'https://localhost:8080'
+
 // user
 const [user, setUser] = useState(null)
 
@@ -22,7 +25,7 @@ async function fetchUser() {
     credentials: 'include',
   };
 
-  const res = await fetch('http://localhost:8080/user', requestOptions);
+  const res = await fetch(base + '/user', requestOptions);
   const data = await res.json()
 
   return data;
@@ -49,7 +52,7 @@ useEffect(() => {
 }, [])
 
 async function fetchMovies() {
-    const res = await fetch('http://localhost:8080/webshop/movies');
+    const res = await fetch(base + '/webshop/movies');
     const data = await res.json()
 
     return data
@@ -138,7 +141,7 @@ function admin_editMovie() {
 getMovies();
 
   async function fetchMovies() {  
-    const res = await fetch('http://localhost:8080/webshop/movies');
+    const res = await fetch(base + '/webshop/movies');
     const data = await res.json()
 
     return data
@@ -169,7 +172,7 @@ getMovies_search();
         credentials: 'include',
       }
 
-      const res = await fetch('http://localhost:8080/webshop/movies/' + title, requestOptions);
+      const res = await fetch(base + '/webshop/movies/' + title, requestOptions);
       const data = await res.json()
 
       return data
@@ -197,7 +200,7 @@ getMovies_filter();
         credentials: 'include',
       }
 
-      const res = await fetch('http://localhost:8080/webshop/movies/filterBy/' + filter, requestOptions);
+      const res = await fetch(base + 'webshop/movies/filterBy/' + filter, requestOptions);
       const data = await res.json()
 
       return data
@@ -225,7 +228,7 @@ getMovies_sort();
         credentials: 'include',
       }
 
-      const res = await fetch('http://localhost:8080/webshop/movies/sort/' + route, requestOptions);
+      const res = await fetch(base + '/webshop/movies/sort/' + route, requestOptions);
       const data = await res.json()
 
       return data
@@ -241,7 +244,7 @@ async function admin_deleteMovieFromDB(movie) {
     credentials: 'include',
   };
 
-  const res = await fetch('http://localhost:8080/admin/movie/' + id, requestOptions);
+  const res = await fetch(base + '/admin/movie/' + id, requestOptions);
   const data = await res.json()
 
   if (data) {
@@ -268,7 +271,7 @@ async function addMovieToCart(movie) {
     body: JSON.stringify(inputData)
   };
 
-  const res = await fetch('http://localhost:8080/user/shoppingCart', requestOptions);
+  const res = await fetch(base + '/user/shoppingCart', requestOptions);
   const data = await res.json()
 
   return data
@@ -288,7 +291,7 @@ async function removeMovieFromCart(movie) {
     body: JSON.stringify(inputData)
   };
 
-  const res = await fetch('http://localhost:8080/user/shoppingCart/remove', requestOptions);
+  const res = await fetch(base + '/user/shoppingCart/remove', requestOptions);
   const data = await res.json()
 
   return data
@@ -302,7 +305,7 @@ async function deleteCartAndUpdateOrderHistory() {
     credentials: 'include'
   };
 
-  const res = await fetch('http://localhost:8080/user/checkout', requestOptions);
+  const res = await fetch(base + '/user/checkout', requestOptions);
   const data = await res.json()
 
   return data;

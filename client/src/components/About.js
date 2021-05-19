@@ -2,7 +2,7 @@ import React from 'react'
 
 const contact = () => {
 
-    const Url='http://localhost:8080/webShop'
+    const Url='https://localhost:8080/webShop'
     
     const othePram={
         headers:{

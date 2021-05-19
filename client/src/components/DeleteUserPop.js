@@ -40,7 +40,7 @@ function deleteUser() {
         method: 'DELETE',
         credentials: "include"
     };
-    fetch('http://localhost:8080/user/' + user._id, requestOptions)
+    fetch('https://localhost:8080/user/' + user._id, requestOptions)
 
     .catch(error => {
         console.error('There was an error!', error);

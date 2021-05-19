@@ -110,7 +110,7 @@ export default function Register() {
 
     return (
         <div className='Register'>
-            <Form action="http://localhost:8080/admin/movie" method="POST" encType="multipart/form-data" onSubmit={handleSubmit}>
+            <Form action="https://localhost:8080/admin/movie" method="POST" encType="multipart/form-data" onSubmit={handleSubmit}>
                 <Form.Group size='lg' controlId='title'>
                     <Form.Label>Title</Form.Label>
                     <Form.Label id='registerMovieTitleError' className='registerMovieErrorLabelHidden'>Title can't be blank</Form.Label>

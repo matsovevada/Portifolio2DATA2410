@@ -14,7 +14,7 @@ const LogoutGoogle = () => {
             credentials: 'include',
           };
         
-         fetch('http://localhost:8080/user/logout', requestOptions)
+         fetch('https://localhost:8080/user/logout', requestOptions)
           .then(() => window.location = '/')
     };
 
