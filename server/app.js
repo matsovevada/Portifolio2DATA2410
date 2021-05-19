@@ -4,6 +4,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const fs = require('fs')
 const https = require('https')
+const client = require('prom-client');
 
 // database
 const path = require('path')
@@ -38,3 +39,7 @@ app.use('/admin', admin)
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+const collectDefaultMetrics = client.collectDefaultMetrics;
+
+collectDefaultMetrics({ timeout: 5000 }) // collect every 5th second

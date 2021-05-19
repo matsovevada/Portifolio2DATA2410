@@ -6,11 +6,6 @@ const promClient = require('prom-client');
 
 const router = express.Router()
 
-// Prometheus monitoring
-const collectDefaultMetrics = promClient.collectDefaultMetrics;
-
-collectDefaultMetrics({ timeout: 5000 }) // collect every 5th second
-
 // Google OAuth
 const {OAuth2Client} = require('google-auth-library');
 const CLIENT_ID = '289860901302-1k9vd8gfqi5ebp27datvvspesg1g27i1.apps.googleusercontent.com'
@@ -30,12 +25,12 @@ function isInformationValid(firstname, lastname, address, zipcode, city) {
 }
 
 // Histogram and counter for login in as a user
-const counterLoginUser = new client.Counter({
+const counterLoginUser = new promClient.Counter({
     name: 'login_user_operations_total',
     help: 'Total number of processed requests for login in a user'
 })
 
-const histogramLoginUser = new client.Histogram({
+const histogramLoginUser = new promClient.Histogram({
     name: 'login_user_duration_seconds',
     help: 'Histogram for the duration in seconds for login in a user',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
@@ -44,12 +39,12 @@ const histogramLoginUser = new client.Histogram({
 
 // Histogram and counter for creating a user
 
-const counterCreateUser = new client.Counter({
+const counterCreateUser = new promClient.Counter({
     name: 'create_user_operations_total',
     help: 'Total number of processed requests for creating a user'
 })
 
-const histogramCreateUser = new client.Histogram({
+const histogramCreateUser = new promClient.Histogram({
     name: 'create_user_duration_seconds',
     help: 'Histogram for the duration in seconds for creating a user',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
@@ -57,12 +52,12 @@ const histogramCreateUser = new client.Histogram({
 
 // Histogram and counter for getting a user
 
-const counterGetUser = new client.Counter({
+const counterGetUser = new promClient.Counter({
     name: 'get_user_operations_total',
     help: 'Total number of processed requests for getting a user'
 })
 
-const histogramGetUser = new client.Histogram({
+const histogramGetUser = new promClient.Histogram({
     name: 'get_user_duration_seconds',
     help: 'Histogram for the duration in seconds for getting a user',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
@@ -70,12 +65,12 @@ const histogramGetUser = new client.Histogram({
 
 // Histogram and counter for editing a user
 
-const counterEditUser = new client.Counter({
+const counterEditUser = new promClient.Counter({
     name: 'edit_user_operations_total',
     help: 'Total number of processed requests for editing a user'
 })
 
-const histogramEditUser = new client.Histogram({
+const histogramEditUser = new promClient.Histogram({
     name: 'edit_user_duration_seconds',
     help: 'Histogram for the duration in seconds for editing a user',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
@@ -83,12 +78,12 @@ const histogramEditUser = new client.Histogram({
 
 // Histogram and counter for delete user based on given _id
 
-const counterDelUser = new client.Counter({
+const counterDelUser = new promClient.Counter({
     name: 'del_exact_user_operations_total',
     help: 'Total number of processed requests for deleting a user with given _id'
 })
 
-const histogramDelUser = new client.Histogram({
+const histogramDelUser = new promClient.Histogram({
     name: 'del_exact_user_duration_seconds',
     help: 'Histogram for the duration in seconds for deleting a user with given _id',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
@@ -96,12 +91,12 @@ const histogramDelUser = new client.Histogram({
 
 // Histogram and counter for getting orderhistory
 
-const counterGetOrderhistory = new client.Counter({
+const counterGetOrderhistory = new promClient.Counter({
     name: 'get_orderhistory_operations_total',
     help: 'Total number of processed requests for getting an orderhistory'
 })
 
-const histogramGetOrderhistory = new client.Histogram({
+const histogramGetOrderhistory = new promClient.Histogram({
     name: 'get_orderhistory_duration_seconds',
     help: 'Histogram for the duration in seconds for getting an orderhistory',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
@@ -109,12 +104,12 @@ const histogramGetOrderhistory = new client.Histogram({
 
 // Histogram and counter for adding an order to orderhistory
 
-const counterAddOrderhistory = new client.Counter({
+const counterAddOrderhistory = new promClient.Counter({
     name: 'add_orderhistory_operations_total',
     help: 'Total number of processed requests for adding an order to orderhistory'
 })
 
-const histogramAddOrderhistory = new client.Histogram({
+const histogramAddOrderhistory = new promClient.Histogram({
     name: 'add_orderhistory_duration_seconds',
     help: 'Histogram for the duration in seconds for adding an order to orderhistory',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
@@ -133,14 +128,14 @@ const histogramShoppingCartAdditem = new promClient.Histogram({
 })
 
 // Histogram and counter for Remove or decrease count for item in shoppingcart
-const counterShoppingCartChangeCount = new promClient.Counter({
-    name: 'shopping_cart_change_count_operations_total',
-    help: 'Total number of processed requests for shopping_cart_change_count'
+const counterShoppingCartDecreaseCount = new promClient.Counter({
+    name: 'shopping_cart_decrease_count_operations_total',
+    help: 'Total number of processed requests for shopping_cart_decrease_count'
 })
 
-const histogramShoppingCartChangeCount = new promClient.Histogram({
-    name: 'shopping_cart_change_count_duration_seconds',
-    help: 'Histogram for the duration in seconds for shopping_cart_change_count',
+const histogramShoppingCartDecreaseCount = new promClient.Histogram({
+    name: 'shopping_cart_decrease_count_duration_seconds',
+    help: 'Histogram for the duration in seconds for shopping_cart_decrease_count',
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
@@ -506,8 +501,8 @@ router.put('/shoppingCart/remove', middleware.checkAuthentification, async (req,
                 .then(data => {
 
                     let end = new Date() - start
-                    histogramShoppingCartChangeCount.observe(end / 1000)
-                    counterShoppingCartChangeCount.inc()
+                    histogramShoppingCartDecreaseCount.observe(end / 1000)
+                    counterShoppingCartDecreaseCount.inc()
 
                     res.status(200).json(user.shoppingCart)
                 })

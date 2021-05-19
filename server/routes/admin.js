@@ -9,11 +9,6 @@ const fs = require('fs')
 const path = require('path')
 const multer = require('multer')
 
-// Prometheus monitoring
-const collectDefaultMetrics = client.collectDefaultMetrics;
-
-collectDefaultMetrics({ timeout: 5000 }) // collect every 5th second
-
 //Multer (image-uploading)
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -53,7 +48,7 @@ const histogramAddMovies = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// Histogram and counter for deleting a movie
+// // Histogram and counter for deleting a movie
 
 const counterDeleteMovies = new client.Counter({
     name: 'delete_movie_operations_total',
@@ -66,7 +61,7 @@ const histogramDeleteMovies = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// Histogram and counter for editing a movie
+// // Histogram and counter for editing a movie
 
 const counterEditMovies = new client.Counter({
     name: 'edit_movie_operations_total',

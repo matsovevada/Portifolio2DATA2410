@@ -4,12 +4,7 @@ const client = require('prom-client');
 
 const router = express.Router();
 
-// Prometheus monitoring
-const collectDefaultMetrics = client.collectDefaultMetrics;
-
-collectDefaultMetrics({ timeout: 5000 }) // collect every 5th second
-
-// Get all movies
+// // Get all movies
 const counterGetMovies = new client.Counter({
     name: 'get_movies_operations_total',
     help: 'Total number of processed requests for getting movies'
@@ -21,7 +16,7 @@ const histogramGetMovies = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// Get all movies matching search param
+// // Get all movies matching search param
 const counterSearchMovies = new client.Counter({
     name: 'search_movies_operations_total',
     help: 'Total number of processed requests for searching movies'
@@ -33,7 +28,7 @@ const histogramSearchMovies = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// get all movies by genre
+// // get all movies by genre
 const counterGetMoviesGenre = new client.Counter({
     name: 'get_movies_genre_operations_total',
     help: 'Total number of processed requests for get_movies_genre'
@@ -45,7 +40,7 @@ const histogramGetMoviesGenre = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// get all movies sorted by price ascending
+// // get all movies sorted by price ascending
 const counterSortMoviesPriceAscending = new client.Counter({
     name: 'sort_movies_price_ascending_operations_total',
     help: 'Total number of processed requests for sort_movies_price_ascending'
@@ -57,7 +52,7 @@ const histogramSortMoviesPriceAscending = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// get all movies sorted by price descending
+// // get all movies sorted by price descending
 const counterSortMoviesPriceDescending = new client.Counter({
     name: 'sort_movies_price_descending_operations_total',
     help: 'Total number of processed requests for sort_movies_price_descending'
@@ -69,7 +64,7 @@ const histogramSortMoviesPriceDescending = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// get all movies sorted by title alphabetical ascending
+// // get all movies sorted by title alphabetical ascending
 const counterSortMoviesAlphabeticalDescending = new client.Counter({
     name: 'sort_movies_descending_alphabetical_operations_total',
     help: 'Total number of processed requests for sort_movies_descending'
@@ -81,7 +76,7 @@ const histogramSortMoviesAlphabeticalDescending = new client.Histogram({
     buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
 })
 
-// get all movies sorted by title alphabetical ascending
+// // get all movies sorted by title alphabetical ascending
 const counterSortMoviesAlphabeticalAscending = new client.Counter({
     name: 'sort_movies_ascending_alphabetical_operations_total',
     help: 'Total number of processed requests for sort_movies_ascending'
