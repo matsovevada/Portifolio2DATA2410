@@ -35,9 +35,6 @@ app.use('/webShop', webShop)
 app.use('/user', user)
 app.use('/admin', admin)
   
-https.createServer({
-  key: fs.readFileSync('./server.key'),
-  cert: fs.readFileSync('./server.cert')
-}, app).listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
-})
+});
