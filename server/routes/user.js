@@ -27,6 +27,8 @@ function isInformationValid(firstname, lastname, address, zipcode, city) {
 router.post('/login', (req, res) => {
 
     let token = req.body.token;
+    console.log("TOLKIEN")
+    console.log(token)
 
     async function verify() {
     const ticket = await client.verifyIdToken({
@@ -53,13 +55,13 @@ router.post('/login', (req, res) => {
 
                 // user is in db
                 if (data) {
-                    res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000  }) // 24 hours
+                    res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000, secure: true }) // 24 hours
                     res.status(200).json({'userInDb': true})
                 }
 
                 // user not in db
                 else {
-                    res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000 }) // 24 hours
+                    res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000, secure: true }) // 24 hours
                     res.status(200).json({'userInDb': false})
                 }
 
