@@ -4,6 +4,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const fs = require('fs')
 const https = require('https')
+const client = require('prom-client');
 
 // database
 const path = require('path')
@@ -44,3 +45,7 @@ const httpsOptions = {
 https.createServer(httpsOptions, app).listen(PORT, () => {
   console.log('Server running at ' + PORT)
 })
+
+const collectDefaultMetrics = client.collectDefaultMetrics;
+
+collectDefaultMetrics({ timeout: 5000 }) // collect every 5th second

@@ -2,6 +2,7 @@ const express = require('express')
 const Movie = require('../models/Movie')
 const User = require('../models/User')
 const middleware = require('../middleware');
+const client = require('prom-client');
 
 // Image up/down-loading
 const fs = require('fs')
@@ -34,8 +35,55 @@ function isInformationValid(title, shortDescription, longDescription, price, gen
     else return true;
 }
 
+// Histogram and counter for add a new movie
+
+const counterAddMovies = new client.Counter({
+    name: 'add_movie_operations_total',
+    help: 'Total number of processed requests for adding movies'
+})
+
+const histogramAddMovies = new client.Histogram({
+    name: 'add_movie_duration_seconds',
+    help: 'Histogram for the duration in seconds for adding movies',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
+
+// // Histogram and counter for deleting a movie
+
+const counterDeleteMovies = new client.Counter({
+    name: 'delete_movie_operations_total',
+    help: 'Total number of processed requests for deleting movies'
+})
+
+const histogramDeleteMovies = new client.Histogram({
+    name: 'delete_movie_duration_seconds',
+    help: 'Histogram for the duration in seconds for deleting movies',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
+
+// // Histogram and counter for editing a movie
+
+const counterEditMovies = new client.Counter({
+    name: 'edit_movie_operations_total',
+    help: 'Total number of processed requests for editing movies'
+})
+
+const histogramEditMovies = new client.Histogram({
+    name: 'edit_movie_duration_seconds',
+    help: 'Histogram for the duration in seconds for editing movies',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
+
+// Metrics endpoint
+router.get('/metrics', (req, res) => {
+    res.set('Content-Type', client.register.contentType)
+    res.end(client.register.metrics())
+})
+
 // Add a new movie
 router.post('/movie', [upload.single('image'), middleware.checkAuthentification ], (req, res) => {
+
+    let start = new Date()
 
     if (!req.user) {
         return res.status(400).json(null)
@@ -73,6 +121,9 @@ router.post('/movie', [upload.single('image'), middleware.checkAuthentification 
 
                 movie.save()
                     .then((data) => {
+                        let end = new Date() - start
+                        histogramAddMovies.observe(end / 1000)
+                        counterAddMovies.inc()
                         res.status(200).json(data)
                     })
                     .catch((err) => {
@@ -89,6 +140,8 @@ router.post('/movie', [upload.single('image'), middleware.checkAuthentification 
 // Delete a movie
 router.delete('/movie/:id', middleware.checkAuthentification, (req, res) => {
 
+    let start = new Date()
+
     if (!req.user) {
         return res.status(400).json(null)
     }
@@ -100,6 +153,9 @@ router.delete('/movie/:id', middleware.checkAuthentification, (req, res) => {
             else {
                 Movie.deleteOne({_id: req.params.id})
                 .then(data => {
+                    let end = new Date() - start
+                    histogramDeleteMovies.observe(end / 1000)
+                    counterDeleteMovies.inc()
                     res.status(200).json(data)
                 })
                 .catch((err)  =>  {
@@ -115,6 +171,8 @@ router.delete('/movie/:id', middleware.checkAuthentification, (req, res) => {
 
 // Update a movie
 router.put('/movie/:id', [upload.single('image'), middleware.checkAuthentification], (req, res) => {
+
+    let start = new Date()
 
     if (!req.user) {
         return res.status(400).json(null)
@@ -150,6 +208,9 @@ router.put('/movie/:id', [upload.single('image'), middleware.checkAuthentificati
 
                     data.save()
                         .then(data => {
+                            let end = new Date() - start
+                            histogramEditMovies.observe(end / 1000)
+                            counterEditMovies.inc()
                             res.status(200).json(data)
                         })
                         .catch((err) => {
