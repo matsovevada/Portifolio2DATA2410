@@ -29,26 +29,96 @@ function isInformationValid(firstname, lastname, address, zipcode, city) {
     else return true;
 }
 
+// Histogram and counter for login in as a user
+const counterLoginUser = new client.Counter({
+    name: 'login_user_operations_total',
+    help: 'Total number of processed requests for login in a user'
+})
+
+const histogramLoginUser = new client.Histogram({
+    name: 'login_user_duration_seconds',
+    help: 'Histogram for the duration in seconds for login in a user',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
+
+
+// Histogram and counter for creating a user
+
+const counterCreateUser = new client.Counter({
+    name: 'create_user_operations_total',
+    help: 'Total number of processed requests for creating a user'
+})
+
+const histogramCreateUser = new client.Histogram({
+    name: 'create_user_duration_seconds',
+    help: 'Histogram for the duration in seconds for creating a user',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
+
+// Histogram and counter for getting a user
+
+const counterGetUser = new client.Counter({
+    name: 'get_user_operations_total',
+    help: 'Total number of processed requests for getting a user'
+})
+
+const histogramGetUser = new client.Histogram({
+    name: 'get_user_duration_seconds',
+    help: 'Histogram for the duration in seconds for getting a user',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
+
 // Histogram and counter for editing a user
 
+const counterEditUser = new client.Counter({
+    name: 'edit_user_operations_total',
+    help: 'Total number of processed requests for editing a user'
+})
 
-// Histogram and counter for editing a user
+const histogramEditUser = new client.Histogram({
+    name: 'edit_user_duration_seconds',
+    help: 'Histogram for the duration in seconds for editing a user',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
 
+// Histogram and counter for delete user based on given _id
 
-// Histogram and counter for editing a user
+const counterDelUser = new client.Counter({
+    name: 'del_exact_user_operations_total',
+    help: 'Total number of processed requests for deleting a user with given _id'
+})
 
+const histogramDelUser = new client.Histogram({
+    name: 'del_exact_user_duration_seconds',
+    help: 'Histogram for the duration in seconds for deleting a user with given _id',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
 
-// Histogram and counter for editing a user
+// Histogram and counter for getting orderhistory
 
+const counterGetOrderhistory = new client.Counter({
+    name: 'get_orderhistory_operations_total',
+    help: 'Total number of processed requests for getting an orderhistory'
+})
 
-// Histogram and counter for editing a user
+const histogramGetOrderhistory = new client.Histogram({
+    name: 'get_orderhistory_duration_seconds',
+    help: 'Histogram for the duration in seconds for getting an orderhistory',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
 
+// Histogram and counter for adding an order to orderhistory
 
-// Histogram and counter for editing a user
+const counterAddOrderhistory = new client.Counter({
+    name: 'add_orderhistory_operations_total',
+    help: 'Total number of processed requests for adding an order to orderhistory'
+})
 
-
-// Histogram and counter for editing a user
-
+const histogramAddOrderhistory = new client.Histogram({
+    name: 'add_orderhistory_duration_seconds',
+    help: 'Histogram for the duration in seconds for adding an order to orderhistory',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
 
 // Histogram and counter for add item to shoppingcart
 const counterShoppingCartAddItem = new promClient.Counter({
@@ -97,6 +167,8 @@ router.get('/metrics', (req, res) => {
 // login 
 router.post('/login', (req, res) => {
 
+    let start = new Date()
+
     let token = req.body.token;
 
     async function verify() {
@@ -124,12 +196,18 @@ router.post('/login', (req, res) => {
 
                 // user is in db
                 if (data) {
+                    let end = new Date() - start
+                    histogramLoginUser.observe(end / 1000)
+                    counterLoginUser.inc()
                     res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000  }) // 24 hours
                     res.status(200).json({'userInDb': true})
                 }
 
                 // user not in db
                 else {
+                    let end = new Date() - start
+                    histogramLoginUser.observe(end / 1000)
+                    counterLoginUser.inc()
                     res.cookie('session-token', token, { maxAge: 24 * 60 * 60 * 1000 }) // 24 hours
                     res.status(200).json({'userInDb': false})
                 }
@@ -146,6 +224,8 @@ router.get('/logout', (req, res) => {
 
 // Create user 
 router.post('/', middleware.checkAuthentification, (req, res) => {
+
+    let start = new Date()
 
     if (!req.user) {
         return res.status(400).json(null)
@@ -171,6 +251,9 @@ router.post('/', middleware.checkAuthentification, (req, res) => {
 
     user.save()
         .then((data) => {
+            let end = new Date() - start
+            histogramCreateUser.observe(end / 1000)
+            counterCreateUser.inc()
             res.status(200).json(data)
         }) .catch(err => res.status(400).json({
             'Status' : 400,
@@ -181,6 +264,8 @@ router.post('/', middleware.checkAuthentification, (req, res) => {
 
 // Get user
 router.get('/', middleware.checkAuthentification, (req, res) => {
+
+    let start = new Date()
  
     if (!req.user) {
         return res.status(400).json(null)
@@ -190,6 +275,9 @@ router.get('/', middleware.checkAuthentification, (req, res) => {
 
     User.findById(id)
         .then((data) => {
+            let end = new Date() - start
+            histogramGetUser.observe(end / 1000)
+            counterGetUser.inc()
             res.status(200).json(data)
         }) .catch(err => res.status(400).json({
             'Status' : 400,
@@ -200,6 +288,8 @@ router.get('/', middleware.checkAuthentification, (req, res) => {
 
 // Alter userdata for given _id
 router.put('/', middleware.checkAuthentification, (req, res) => {
+
+    let start = new Date()
 
     if (!req.user) {
         return res.status(400).json(null)
@@ -223,6 +313,9 @@ router.put('/', middleware.checkAuthentification, (req, res) => {
                  
                 data.save()
                     .then((data) => {
+                        let end = new Date() - start
+                        histogramEditUser.observe(end / 1000)
+                        counterEditUser.inc()
                         res.status(200).json(data)
                 }) 
                 
@@ -244,6 +337,8 @@ router.put('/', middleware.checkAuthentification, (req, res) => {
 
 // Delete user for given _id. Clear cookies from browser when the user is deleted. 
 router.delete('/:id', middleware.checkAuthentification, (req, res) => {
+
+    let start = new Date()
     
     if (!req.user) {
         return res.status(400).json(null)
@@ -253,6 +348,9 @@ router.delete('/:id', middleware.checkAuthentification, (req, res) => {
         .then((data) => {
             User.deleteOne(data)
                 .then((data) => {
+                    let end = new Date() - start
+                    histogramDelUser.observe(end / 1000)
+                    counterDelUser.inc()
                     res.clearCookie('session-token');
                     res.status(200).json(data)
                 }) 
@@ -269,12 +367,17 @@ router.delete('/:id', middleware.checkAuthentification, (req, res) => {
 // Get orderhistory
 router.get('/orders', middleware.checkAuthentification, (req, res) => {
 
+    let start = new Date()
+
     if (!req.user) {
         return res.status(400).json(null)
     }
 
     User.findById(req.body._id)
         .then((data) => {
+            let end = new Date() - start
+            histogramGetOrderhistory.observe(end / 1000)
+            counterGetOrderhistory.inc()
             res.status(200).json(data.orderHistory)
         }) .catch(err => res.status(400).json({
             'Status' : 400,
@@ -285,6 +388,8 @@ router.get('/orders', middleware.checkAuthentification, (req, res) => {
 
 // Add order to orderhistory
 router.put('/checkout', middleware.checkAuthentification, (req, res) => {
+
+    let start = new Date()
 
     if (!req.user) {
         return res.status(400).json(null)
@@ -308,6 +413,9 @@ router.put('/checkout', middleware.checkAuthentification, (req, res) => {
             data.shoppingCart = [];
             data.save()
                 .then((data) => {
+                    let end = new Date() - start
+                    histogramAddOrderhistory.observe(end / 1000)
+                    counterAddOrderhistory.inc()
                     res.status(200).json(data)
             }) 
             .catch(err => {
