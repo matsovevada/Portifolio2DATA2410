@@ -2,6 +2,7 @@ const express = require('express')
 const Movie = require('../models/Movie')
 const User = require('../models/User')
 const middleware = require('../middleware');
+const client = require('prom-client');
 
 // Image up/down-loading
 const fs = require('fs')

@@ -2,11 +2,12 @@ const express = require('express');
 const User = require('../models/User')
 const Movie = require('../models/Movie')
 const middleware = require('../middleware');
+const promClient = require('prom-client');
 
 const router = express.Router()
 
 // Prometheus monitoring
-const collectDefaultMetrics = client.collectDefaultMetrics;
+const collectDefaultMetrics = promClient.collectDefaultMetrics;
 
 collectDefaultMetrics({ timeout: 5000 }) // collect every 5th second
 
@@ -49,14 +50,41 @@ function isInformationValid(firstname, lastname, address, zipcode, city) {
 // Histogram and counter for editing a user
 
 
-// Histogram and counter for editing a user
+// Histogram and counter for add item to shoppingcart
+const counterShoppingCartAddItem = new promClient.Counter({
+    name: 'shopping_cart_add_item_operations_total',
+    help: 'Total number of processed requests for shopping_cart_add_item'
+})
 
+const histogramShoppingCartAdditem = new promClient.Histogram({
+    name: 'shopping_cart_add_item_duration_seconds',
+    help: 'Histogram for the duration in seconds for shopping_cart_add_item',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
 
-// Histogram and counter for editing a user
+// Histogram and counter for Remove or decrease count for item in shoppingcart
+const counterShoppingCartChangeCount = new promClient.Counter({
+    name: 'shopping_cart_change_count_operations_total',
+    help: 'Total number of processed requests for shopping_cart_change_count'
+})
 
+const histogramShoppingCartChangeCount = new promClient.Histogram({
+    name: 'shopping_cart_change_count_duration_seconds',
+    help: 'Histogram for the duration in seconds for shopping_cart_change_count',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
 
-// Histogram and counter for editing a user
+// Histogram and counter for emptyShoppingCart
+const counterEmptyShoppingCart = new promClient.Counter({
+    name: 'empty_shopping_cart_operations_total',
+    help: 'Total number of processed requests for empty_shopping_cart'
+})
 
+const histogramEmptyShoppingCart = new promClient.Histogram({
+    name: 'empty_shopping_cart_duration_seconds',
+    help: 'Histogram for the duration in seconds for getting movies',
+    buckets: [1, 2, 5, 6, 10] // Prometheus will observe the time an operation takes and put it in one of these buckets
+})
 
 
 // Metrics endpoint
@@ -295,6 +323,8 @@ router.put('/checkout', middleware.checkAuthentification, (req, res) => {
 // Add item to shoppingcart. Qty of each item in the shopping cart is stored backend. 
 router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) => {
 
+    let start = new Date()
+
     if (!req.user) {
         return res.status(400).json(null)
     }
@@ -315,6 +345,11 @@ router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) =
 
             return User.findByIdAndUpdate(userID, user)
                 .then(data => {
+
+                    let end = new Date() - start
+                    histogramShoppingCartAdditem.observe(end / 1000)
+                    counterShoppingCartAddItem.inc()
+
                     res.status(200).json(user.shoppingCart)
                 })
                 .catch(err => console.log(err))
@@ -332,6 +367,8 @@ router.put('/shoppingCart', middleware.checkAuthentification, async (req, res) =
 
 //Remove or decrease count for item in shoppingcart
 router.put('/shoppingCart/remove', middleware.checkAuthentification, async (req, res) => {
+
+    let start = new Date()
 
     if (!req.user) {
         return res.status(400).json(null)
@@ -359,6 +396,11 @@ router.put('/shoppingCart/remove', middleware.checkAuthentification, async (req,
 
             return User.findByIdAndUpdate(userID, user)
                 .then(data => {
+
+                    let end = new Date() - start
+                    histogramShoppingCartChangeCount.observe(end / 1000)
+                    counterShoppingCartChangeCount.inc()
+
                     res.status(200).json(user.shoppingCart)
                 })
                 .catch(err => console.log(err))
@@ -376,6 +418,8 @@ router.put('/shoppingCart/remove', middleware.checkAuthentification, async (req,
 // Update field shoppingcart to empty array
 router.put('/shoppingCart/delete', (req, res) => {
 
+    let start = new Date()
+
     if (!req.user) {
         return res.status(400).json(null)
     }
@@ -384,6 +428,11 @@ router.put('/shoppingCart/delete', (req, res) => {
         .then((data) => {
             data.shoppingCart = []
             data.save()
+
+            let end = new Date() - start
+            histogramEmptyShoppingCart.observe(end / 1000)
+            counterEmptyShoppingCart.inc()
+
             res.status(200).json(data)
         })       
             
