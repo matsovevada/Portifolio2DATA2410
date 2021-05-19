@@ -5,6 +5,11 @@ const middleware = require('../middleware');
 
 const router = express.Router()
 
+// Prometheus monitoring
+const collectDefaultMetrics = client.collectDefaultMetrics;
+
+collectDefaultMetrics({ timeout: 5000 }) // collect every 5th second
+
 // Google OAuth
 const {OAuth2Client} = require('google-auth-library');
 const CLIENT_ID = '289860901302-1k9vd8gfqi5ebp27datvvspesg1g27i1.apps.googleusercontent.com'
@@ -22,6 +27,44 @@ function isInformationValid(firstname, lastname, address, zipcode, city) {
         }
     else return true;
 }
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+// Histogram and counter for editing a user
+
+
+
+// Metrics endpoint
+router.get('/metrics', (req, res) => {
+    res.set('Content-Type', client.register.contentType)
+    res.end(client.register.metrics())
+})
+
 
 // login 
 router.post('/login', (req, res) => {
