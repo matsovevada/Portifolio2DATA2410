@@ -20,7 +20,7 @@ const customStyles = {
 and tweaked it to fit our program.*/
 Modal.setAppElement('#root')
 
-export default function MovieViewPop({movie, title, longDescription, img, price, genre, updateCart}){
+export default function MovieViewPop({movie, title, longDescription, img, price, genre, updateCart, user}){
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
   function openModal() {
@@ -55,9 +55,9 @@ export default function MovieViewPop({movie, title, longDescription, img, price,
                 <p>{longDescription}</p>
                 <p>Genre: {genre}</p>
                 <p>Price: {price} NOK</p>
-                <Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</Button>
+                {(user != null && !user.isAdmin) && <Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</Button>}
                 {' '}
-                <Button onClick={closeModal}>Close</Button>
+                <Button onClick={closeModal} variant='danger'>Close</Button>
               </div>
             </div>
           </div>

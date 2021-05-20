@@ -165,8 +165,6 @@ router.post('/login', (req, res) => {
     let start = new Date()
 
     let token = req.body.token;
-    console.log("TOLKIEN")
-    console.log(token)
 
     async function verify() {
     const ticket = await client.verifyIdToken({

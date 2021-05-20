@@ -39,7 +39,7 @@ const Movie = ({movie, updateCart, admin_deleteMovie, admin_editMovie, user}) =>
                 
                 {/* Passes data to "show more" pop-up. Display default image if not present in DB */}
                 <MovieViewPop movie={movie} updateCart={updateCart} title={movie.title} longDescription={movie.longDescription} genre={movie.genre} price={movie.price}
-                img={ movie.img ? <img alt='Movie img' src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img alt='Movie img' src={DefaultPicture} className='MovieViewPicture'/>} />
+                img={ movie.img ? <img alt='Movie img' src={`data:image/png;base64,${arrayBufferToBase64(movie.img.data.data)}`} className='MovieViewPicture'/> : <img alt='Movie img' src={DefaultPicture} className='MovieViewPicture'/>} user={user}/>
                 
                 {/* Display "add to cart" to all users except admin */}
                 {((user === null) || (user != null && user.isAdmin === false)) && <RBS.Button variant='secondary' onClick={() => updateCart(movie)}>Add to cart</RBS.Button>}
