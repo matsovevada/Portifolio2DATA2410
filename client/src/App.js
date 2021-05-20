@@ -200,7 +200,7 @@ getMovies_filter();
         credentials: 'include',
       }
 
-      const res = await fetch(base + 'webshop/movies/filterBy/' + filter, requestOptions);
+      const res = await fetch(base + '/webshop/movies/filterBy/' + filter, requestOptions);
       const data = await res.json()
 
       return data
