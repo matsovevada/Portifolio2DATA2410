@@ -5,7 +5,6 @@ const client = new OAuth2Client(CLIENT_ID)
 function checkAuthentification(req, res, next) {
 
     let token = req.cookies['session-token']
-    console.log(token)
     
     async function verify() {
         const ticket = await client.verifyIdToken({
