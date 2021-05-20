@@ -8,7 +8,7 @@ const client = require('prom-client');
 
 // database
 const path = require('path')
-mongoose.connect('mongodb://mongo:27017/WebShop', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/WebShop', {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
 mongoose.set('useFindAndModify', false);

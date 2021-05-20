@@ -339,14 +339,12 @@ useEffect(() => {
 
   return (
     <div>
-      <Header cart={cart} search_movie={search_movie} filter_movies={filter_movies} sort_movies={sort_movies} user={user} />
-      {<div id='showSearchText' className='setSearchTextHidden'></div>}
-      {<div id='showFilterText' className='setFilterTextHidden'></div>}
+      <Header cart={cart} user={user} />
       <Route
         exact path='/'
         render={(props) => (
-          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie} user={user}/>
-        
+          <Movies {...props} movies={movies} updateCart={updateCart} admin_deleteMovie={admin_deleteMovie} admin_editMovie={admin_editMovie}
+           user={user} filter_movies={filter_movies} sort_movies={sort_movies} search_movie={search_movie}/>
         )}
       />
       <Route path='/about-us' component={AboutUs}/>
