@@ -53,7 +53,7 @@ const routeChange = () =>{
             contentLabel="Confirm Checkout modal"
           > 
             <h5>Checkout successful!</h5>
-            <p>You can find you order under oredrehistory.</p>
+            <p>You can find you order under orderhistory.</p>
             <Button id='confirmCheckout' variant='danger' onClick={() => routeChange}>OK</Button>
           </Modal>
         </>
